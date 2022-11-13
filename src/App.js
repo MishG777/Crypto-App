@@ -1,7 +1,7 @@
-import React from "react";
+import React, { Fragment } from "react";
 
 function App() {
-  return <div></div>;
+  return <Fragment></Fragment>;
 }
 
 export default App;

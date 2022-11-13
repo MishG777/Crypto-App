@@ -1,0 +1,39 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+.coin-text {
+  color: rgb(18, 126, 145);
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+}
+.coin-search {
+  display: flex;
+  flex-direction: column;
+}
+
+.all-coins {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+}
+.coin-input {
+  appearance: none;
+  width: 100%;
+  outline: none;
+  border: 1px solid rgb(34, 207, 127);
+  border-radius: 10px;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+  height: 50px;
+  font-size: 12px;
+  font-weight: 400;
+  background: rgba(rgb(34, 207, 127), 0.02);
+  box-shadow: inset 0 -1px 0 rgba(rgb(34, 207, 127), 0.3);
+  color: rgb(34, 207, 127);
+  transition: all 0.15s ease;
+}

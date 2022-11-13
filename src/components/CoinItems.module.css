@@ -1,0 +1,49 @@
+.coin-container {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-direction: column;
+  border: 0.1px solid rgb(41, 167, 62);
+  margin: 10px;
+  border-radius: 30px;
+  width: 230px;
+  height: 310px;
+  cursor: pointer;
+}
+
+.coin-container:hover {
+  box-shadow: 0px 0px 25px rgb(1, 121, 75);
+}
+
+.coin-container img {
+  width: 50%;
+}
+h4,
+p {
+  margin: 0;
+}
+
+.coin-data {
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+  color: rgb(13, 134, 104);
+  font-weight: bold;
+
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: column;
+  height: 10rem;
+  width: 90%;
+}
+
+.inner-data {
+  border: 1px solid rgb(26, 121, 85);
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  width: 95%;
+  height: 70%;
+}

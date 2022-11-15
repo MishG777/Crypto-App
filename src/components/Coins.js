@@ -2,16 +2,18 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import CoinItems from "./CoinItems";
 import classes from "./Coins.module.css";
+import loader from "../components/img/loading.png";
 
 const URL =
   "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false";
 
 function Coins() {
   const [coins, setCoins] = useState([]);
-
+  const [isLoading, setIsLoading] = useState(true);
   const [search, setSearch] = useState("");
 
   useEffect(() => {
+    setIsLoading(true);
     axios
       .get(URL)
       .then((res) => {
@@ -20,6 +22,7 @@ function Coins() {
         console.log(CoinsData);
       })
       .catch((error) => console.log(error));
+    setIsLoading(false);
   }, []);
 
   const handleChange = (e) => {
@@ -43,12 +46,17 @@ function Coins() {
           />
         </form>
       </div>
+      {isLoading && (
+        <img src={loader} alt="loading..." className={classes.loader} />
+      )}
 
-      <div className={classes["all-coins"]}>
-        {filteredCoins.map((coin) => {
-          return <CoinItems key={coin.id} {...coin} />;
-        })}
-      </div>
+      {!isLoading && (
+        <div className={classes["all-coins"]}>
+          {filteredCoins.map((coin) => {
+            return <CoinItems key={coin.id} {...coin} />;
+          })}
+        </div>
+      )}
     </div>
   );
 }

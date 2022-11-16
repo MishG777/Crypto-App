@@ -1,25 +1,42 @@
-import React, { Fragment } from "react";
-import { Switch, Route, Redirect } from "react-router-dom";
+import React, { Fragment, useState } from "react";
+import { Switch, Route, Redirect, useHistory } from "react-router-dom";
 import CoinDetails from "./components/CoinDetails";
 import Coins from "./components/Coins";
 import MainHeader from "./components/Navbar/MainHeader";
+import LogIn from "./components/UserLogging/LogIn";
 
 function App() {
+  const [login, setLogin] = useState(false);
+  const history = useHistory();
+
+  const logOutHandler = () => {
+    setLogin(false);
+  };
+
+  const logInHandler = () => {
+    setLogin(true);
+    history.push("/all-coins");
+  };
+
   return (
     <Fragment>
       <header>
-        <MainHeader />
+        <MainHeader logOutHandler={logOutHandler} login={login} />
       </header>
       <main>
         <Switch>
           <Route path="/" exact>
-            <Redirect to="/all-coins" />
+            <Redirect to="/log-in" />
           </Route>
+
           <Route path="/all-coins" exact>
-            <Coins />
+            {login && <Coins />}
           </Route>
           <Route path="/all-coins/:coins">
             <CoinDetails />
+          </Route>
+          <Route path="/log-in">
+            {!login && <LogIn logInHandler={logInHandler} />}
           </Route>
         </Switch>
       </main>

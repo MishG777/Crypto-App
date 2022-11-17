@@ -6,7 +6,7 @@ import MainHeader from "./components/Navbar/MainHeader";
 import LogIn from "./components/UserLogging/LogIn";
 
 function App() {
-  const [login, setLogin] = useState(false);
+  const [login, setLogin] = useState(true);
   const history = useHistory();
 
   const logOutHandler = () => {

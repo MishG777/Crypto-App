@@ -16,7 +16,11 @@ const MainHeader = ({ logOutHandler, login }) => {
       {login && (
         <ul>
           <li>
-            <NavLink activeClassName={classes.active} to="/all-coins">
+            <NavLink
+              activeClassName={classes.active}
+              id={classes.coins}
+              to="/all-coins"
+            >
               Search Coins
             </NavLink>
           </li>

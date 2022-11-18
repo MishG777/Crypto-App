@@ -1,3 +1,6 @@
+//this component is connected to the Coins.js
+//here are all pages buttons, when i click a number it goes to appropriate page
+
 export const CoinPages = ({ setFetchNextPage }) => {
   return (
     <div>

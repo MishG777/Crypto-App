@@ -46,7 +46,7 @@ function Coins() {
   const fetchMoreCoins = () => {
     setIsLoading(true);
     setFetchedCoinsAmount((moreCoins) => moreCoins + moreCoins * 2);
-    console.log(fetchedCoinsAmount);
+    // console.log(fetchedCoinsAmount);
     if (fetchedCoinsAmount > 250) {
       setNoMoreCoins(true);
 
@@ -67,8 +67,8 @@ function Coins() {
   const prevousPageHandler = () => {
     setFetchNextPage((nextPage) => nextPage - 1);
     console.log(fetchNextPage);
-    if (fetchNextPage <= 0) {
-      console.log("no more pages back");
+    if (fetchNextPage <= 1) {
+      fetchSecondPageHandler();
     }
   };
 

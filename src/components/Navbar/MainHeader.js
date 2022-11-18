@@ -1,25 +1,25 @@
 import { NavLink, Link } from "react-router-dom";
 import classes from "./MainHeader.module.css";
 
-const MainHeader = ({ logOutHandler, login }) => {
+const MainHeader = ({ logOutHandler, logIn }) => {
+  console.log(logIn);
   return (
     <header className={classes.header}>
-      <ul>
-        <li>
-          {!login && (
-            <NavLink activeClassName={classes.active} to="/log-in">
+      {!logIn ? (
+        <ul>
+          <li>
+            <NavLink activeClassName={classes.active} to="/">
               Log In
             </NavLink>
-          )}
-        </li>
-      </ul>
-      {login && (
+          </li>
+        </ul>
+      ) : (
         <ul>
           <li>
             <NavLink
               activeClassName={classes.active}
               id={classes.coins}
-              to="/all-coins"
+              to="all-coins"
             >
               Search Coins
             </NavLink>

@@ -6,37 +6,40 @@ import MainHeader from "./components/Navbar/MainHeader";
 import LogIn from "./components/UserLogging/LogIn";
 
 function App() {
-  const [login, setLogin] = useState(true);
+  const [logIn, setLogin] = useState(false);
+
   const history = useHistory();
 
   const logOutHandler = () => {
     setLogin(false);
+
+    //history.push("/log-in");
   };
 
   const logInHandler = () => {
     setLogin(true);
+
     history.push("/all-coins");
   };
 
   return (
     <Fragment>
       <header>
-        <MainHeader logOutHandler={logOutHandler} login={login} />
+        <MainHeader logOutHandler={logOutHandler} logIn={logIn} />
       </header>
       <main>
         <Switch>
           <Route path="/" exact>
             <Redirect to="/log-in" />
           </Route>
-
           <Route path="/all-coins" exact>
-            {login && <Coins />}
+            <Coins />
           </Route>
           <Route path="/all-coins/:coins">
             <CoinDetails />
           </Route>
           <Route path="/log-in">
-            {!login && <LogIn logInHandler={logInHandler} />}
+            <LogIn logInHandler={logInHandler} />
           </Route>
         </Switch>
       </main>

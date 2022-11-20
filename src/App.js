@@ -3,6 +3,7 @@ import { Switch, Route, Redirect, useHistory } from "react-router-dom";
 import CoinDetails from "./components/CoinDetails";
 import Coins from "./components/Coins";
 import MainHeader from "./components/Navbar/MainHeader";
+
 import LogIn from "./components/UserLogging/LogIn";
 
 function App() {
@@ -10,7 +11,8 @@ function App() {
 
   const history = useHistory();
 
-  const logOutHandler = () => {
+  const logOutHandler = (e) => {
+    e.preventDefault();
     setLogin(false);
 
     //history.push("/log-in");
@@ -32,9 +34,11 @@ function App() {
           <Route path="/" exact>
             <Redirect to="/log-in" />
           </Route>
+
           <Route path="/all-coins" exact>
             <Coins />
           </Route>
+
           <Route path="/all-coins/:coins">
             <CoinDetails />
           </Route>

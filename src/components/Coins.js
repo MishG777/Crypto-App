@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import axios from "axios";
 import CoinItems from "./CoinItems";
 import classes from "./Coins.module.css";
 import loader from "../components/img/loading.png";
 import { CoinPages } from "./CoinPages";
+import Button from "./UI/Button";
 
 function Coins() {
   const [coins, setCoins] = useState([]);
@@ -73,44 +74,45 @@ function Coins() {
   };
 
   return (
-    <div className={classes.main}>
-      <div className={classes["coin-search"]}>
-        <h1 className={classes["coin-text"]}>Search a Currency</h1>
-        <form>
-          <input
-            type="search"
-            placeholder="Search for Crypto Currencies"
-            className={classes["coin-input"]}
-            onChange={handleChange}
-          />
-        </form>
+    <Fragment>
+      <div className={classes.main}>
+        <div className={classes["coin-search"]}>
+          <h1 className={classes["coin-text"]}>Search a Currency</h1>
+          <form>
+            <input
+              type="search"
+              placeholder="Search for Crypto Currencies"
+              className={classes["coin-input"]}
+              onChange={handleChange}
+            />
+          </form>
+        </div>
+        {!isLoading && coins.length > 0 && (
+          <div className={classes["all-coins"]}>
+            {filteredCoins.map((coin) => {
+              return <CoinItems key={coin.id} {...coin} />;
+            })}
+          </div>
+        )}
+        {!noMoreCoins && <Button onClick={fetchMoreCoins}>fetch more</Button>}
+
+        {noMoreCoins && (
+          <div>
+            {!secondPageFetched && <h4>No more coins to fetch!</h4>}
+            {secondPageFetched && (
+              <Button onClick={prevousPageHandler}>previous page</Button>
+            )}
+            <Button onClick={fetchSecondPageHandler}>go to next page</Button>
+          </div>
+        )}
+
+        {isLoading && (
+          <img src={loader} alt="loading..." className={classes.loader} />
+        )}
+        <h2 className={classes.error}>{error}</h2>
       </div>
-      {!isLoading && coins.length > 0 && (
-        <div className={classes["all-coins"]}>
-          {filteredCoins.map((coin) => {
-            return <CoinItems key={coin.id} {...coin} />;
-          })}
-        </div>
-      )}
-      {!noMoreCoins && <button onClick={fetchMoreCoins}>fetch more</button>}
-
-      {noMoreCoins && (
-        <div>
-          {!secondPageFetched && <h4>No more coins to fetch!</h4>}
-          {secondPageFetched && (
-            <button onClick={prevousPageHandler}>previous page</button>
-          )}
-          <button onClick={fetchSecondPageHandler}>go to next page</button>
-        </div>
-      )}
-
       <CoinPages setFetchNextPage={setFetchNextPage} />
-
-      {isLoading && (
-        <img src={loader} alt="loading..." className={classes.loader} />
-      )}
-      <h2 className={classes.error}>{error}</h2>
-    </div>
+    </Fragment>
   );
 }
 

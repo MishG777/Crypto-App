@@ -8,7 +8,7 @@ const MainHeader = ({ logOutHandler, logIn }) => {
       {!logIn ? (
         <ul>
           <li>
-            <NavLink activeClassName={classes.active} to="/">
+            <NavLink activeClassName={classes.active} to="/log-in">
               Log In
             </NavLink>
           </li>

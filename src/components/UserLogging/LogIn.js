@@ -50,6 +50,10 @@ const LogIn = ({ logInHandler }) => {
 
   const startsWithError = enteredEmail.startsWith("@"); //if email starts with '@'
 
+  const OnButtonClick = () => {
+    setIsEntering(false);
+    // history.push("/all-coins");
+  };
   //when we click/focus on form
   const formFocusHandler = () => {
     setIsEntering(true);
@@ -112,7 +116,7 @@ const LogIn = ({ logInHandler }) => {
 
         <div className={classes["form-actions"]}>
           <button
-            onClick={() => setIsEntering(false)}
+            onClick={OnButtonClick}
             disabled={!formIsValid}
             className={classes.loginBtn}
           >

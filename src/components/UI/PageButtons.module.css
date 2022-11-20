@@ -1,0 +1,11 @@
+.pageButtons {
+  width: 2rem;
+  height: 2rem;
+  margin: 1rem;
+  background-color: white;
+  color: rgb(17, 112, 116);
+  border: none;
+  outline: none;
+  border-radius: 5px;
+  cursor: pointer;
+}

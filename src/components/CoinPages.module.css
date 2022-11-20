@@ -1,0 +1,8 @@
+.CoinPages {
+  width: 100%;
+  height: 4rem;
+  background-color: rgb(65, 193, 197);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

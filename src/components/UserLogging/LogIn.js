@@ -52,8 +52,8 @@ const LogIn = ({ logInHandler }) => {
 
   const OnButtonClick = () => {
     setIsEntering(false);
-    // history.push("/all-coins");
   };
+
   //when we click/focus on form
   const formFocusHandler = () => {
     setIsEntering(true);

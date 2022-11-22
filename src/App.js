@@ -27,12 +27,15 @@ function App() {
     }
     if (OnLogInPage) {
       setLogin(false);
+      localStorage.removeItem("CryptoPage");
     }
+    return () => {
+      console.log("CLEAN UUPP");
+    };
   }, [OnLogInPage]);
 
   const logOutHandler = () => {
     setLogin(false);
-    localStorage.removeItem("CryptoPage");
   };
 
   const logInHandler = () => {

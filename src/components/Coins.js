@@ -1,10 +1,11 @@
-import React, { useState, useEffect, Fragment } from "react";
+import React, { useState, useEffect, Fragment, useCallback } from "react";
 import axios from "axios";
 import CoinItems from "./CoinItems";
 import classes from "./Coins.module.css";
 import loader from "../components/img/loading.png";
-import { CoinPages } from "./CoinPages";
+import { CoinPages } from "./Footer/CoinPages";
 import Button from "./UI/Button";
+import { useHistory, useLocation } from "react-router-dom";
 
 function Coins() {
   const [coins, setCoins] = useState([]);
@@ -18,6 +19,9 @@ function Coins() {
   const [fetchNextPage, setFetchNextPage] = useState(1);
   const [secondPageFetched, setSecondPageFetched] = useState(false);
 
+  const history = useHistory();
+  const location = useLocation();
+
   let URL = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=${fetchedCoinsAmount}&page=${fetchNextPage}&sparkline=false`;
 
   useEffect(() => {
@@ -28,7 +32,7 @@ function Coins() {
       .then((res) => {
         const CoinsData = res.data;
         setCoins(CoinsData);
-        console.log(CoinsData);
+        // console.log(CoinsData);
       })
       .catch((error) => setError(error.message));
     setIsLoading(false);
@@ -47,30 +51,48 @@ function Coins() {
   const fetchMoreCoins = () => {
     setIsLoading(true);
     setFetchedCoinsAmount((moreCoins) => moreCoins + moreCoins * 2);
-    // console.log(fetchedCoinsAmount);
     if (fetchedCoinsAmount > 250) {
       setNoMoreCoins(true);
-
-      console.log("No more Coins to Fetch");
     }
     setIsLoading(false);
   };
 
+  const showPagesNumHandler = useCallback(
+    (page) => {
+      history.push(`/all-coins?page=${page}`);
+      if (fetchNextPage) {
+        history.push(`/all-coins?page=${fetchNextPage}`);
+      }
+    },
+    [history, fetchNextPage]
+  );
+  useEffect(() => {
+    showPagesNumHandler();
+  }, [showPagesNumHandler, history, location.search]);
+
   //=================== FETCH NEXT PAGE
 
   const fetchSecondPageHandler = () => {
+    setIsLoading(true);
+    // history.push(`/all-coins?page=${fetchNextPage}`);
+    showPagesNumHandler();
     setFetchNextPage((nextPage) => nextPage + 1);
     setSecondPageFetched(true);
+    setIsLoading(false);
   };
 
   //================= PREVIOUS PAGE
 
   const prevousPageHandler = () => {
+    setIsLoading(true);
+    // history.push(`/all-coins?page=${fetchNextPage}`);
+    showPagesNumHandler();
     setFetchNextPage((nextPage) => nextPage - 1);
-    console.log(fetchNextPage);
+    // console.log(fetchNextPage);
     if (fetchNextPage <= 1) {
       fetchSecondPageHandler();
     }
+    setIsLoading(false);
   };
 
   return (
@@ -98,7 +120,9 @@ function Coins() {
 
         {noMoreCoins && (
           <div>
-            {!secondPageFetched && <h4>No more coins to fetch!</h4>}
+            {!secondPageFetched && (
+              <h4 className={classes.noMoreFetch}>No more coins to fetch!</h4>
+            )}
             {secondPageFetched && (
               <Button onClick={prevousPageHandler}>previous page</Button>
             )}
@@ -111,7 +135,10 @@ function Coins() {
         )}
         <h2 className={classes.error}>{error}</h2>
       </div>
-      <CoinPages setFetchNextPage={setFetchNextPage} />
+      <CoinPages
+        showPagesNumHandler={showPagesNumHandler}
+        setFetchNextPage={setFetchNextPage}
+      />
     </Fragment>
   );
 }

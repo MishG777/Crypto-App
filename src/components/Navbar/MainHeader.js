@@ -1,8 +1,7 @@
 import { NavLink, Link } from "react-router-dom";
 import classes from "./MainHeader.module.css";
 
-const MainHeader = ({ logOutHandler, logIn, stay }) => {
-  console.log(logIn);
+const MainHeader = ({ logOutHandler, logIn }) => {
   return (
     <header className={classes.header}>
       <h1 className={classes.logo}>CRYPToAPP</h1>

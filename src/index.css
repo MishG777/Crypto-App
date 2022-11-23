@@ -17,3 +17,9 @@ main {
   margin-top: 1rem;
   text-align: center;
 }
+
+.optional {
+  background: linear-gradient(rgb(211, 81, 81), rgb(103, 177, 103));
+  color: white;
+  font-size: 2rem;
+}

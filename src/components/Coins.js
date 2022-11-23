@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment, useCallback } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import axios from "axios";
 import CoinItems from "./CoinItems";
 import classes from "./Coins.module.css";
@@ -6,6 +6,16 @@ import loader from "../components/img/loading.png";
 import { CoinPages } from "./Footer/CoinPages";
 import Button from "./UI/Button";
 import { useHistory, useLocation } from "react-router-dom";
+
+// const sortCoins = (coins, ascending) => {
+//   return coins.sort((quoteA, quoteB) => {
+//     if (ascending) {
+//       return quoteA.id > quoteB.id ? 1 : -1;
+//     } else {
+//       return quoteA.id < quoteB.id ? 1 : -1;
+//     }
+//   });
+// };
 
 function Coins() {
   const [coins, setCoins] = useState([]);
@@ -22,7 +32,13 @@ function Coins() {
   const history = useHistory();
   const location = useLocation();
 
-  let URL = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=${fetchedCoinsAmount}&page=${fetchNextPage}&sparkline=false`;
+  const queryParams = new URLSearchParams(location.search);
+  // const isSortingAscending = queryParams.get("Namesort") === "asc";
+  const mcSorting = queryParams.get("McSort") === "asc";
+
+  let URL = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_${
+    mcSorting ? "asc" : "desc"
+  }&per_page=${fetchedCoinsAmount}&page=${fetchNextPage}&sparkline=false`;
 
   useEffect(() => {
     setIsLoading(true);
@@ -32,7 +48,6 @@ function Coins() {
       .then((res) => {
         const CoinsData = res.data;
         setCoins(CoinsData);
-        // console.log(CoinsData);
       })
       .catch((error) => setError(error.message));
     setIsLoading(false);
@@ -57,26 +72,18 @@ function Coins() {
     setIsLoading(false);
   };
 
-  const showPagesNumHandler = useCallback(
-    (page) => {
-      history.push(`/all-coins?page=${page}`);
-      if (fetchNextPage) {
-        history.push(`/all-coins?page=${fetchNextPage}`);
-      }
-    },
-    [history, fetchNextPage]
-  );
-  useEffect(() => {
-    showPagesNumHandler();
-  }, [showPagesNumHandler, history, location.search]);
+  const showPagesNumHandler = (page) => {
+    history.push(`/all-coins?page=${page}`);
+  };
 
   //=================== FETCH NEXT PAGE
 
   const fetchSecondPageHandler = () => {
     setIsLoading(true);
-    // history.push(`/all-coins?page=${fetchNextPage}`);
-    showPagesNumHandler();
     setFetchNextPage((nextPage) => nextPage + 1);
+    // showPagesNumHandler();
+    history.push(`/all-coins?page=${fetchNextPage + 1}`);
+
     setSecondPageFetched(true);
     setIsLoading(false);
   };
@@ -85,15 +92,23 @@ function Coins() {
 
   const prevousPageHandler = () => {
     setIsLoading(true);
-    // history.push(`/all-coins?page=${fetchNextPage}`);
-    showPagesNumHandler();
     setFetchNextPage((nextPage) => nextPage - 1);
-    // console.log(fetchNextPage);
-    if (fetchNextPage <= 1) {
-      fetchSecondPageHandler();
-    }
+    // showPagesNumHandler();
+    history.push(`/all-coins?page=${fetchNextPage - 1}`);
     setIsLoading(false);
   };
+
+  //=================== SORTING COINS
+
+  // const changeSortingHandler = () => {
+  //   history.push(`/all-coins?Namesort=${isSortingAscending ? "desc" : "asc"}`);
+  // };
+
+  const sortByMcHandler = () => {
+    history.push(`/all-coins?McSort=${mcSorting ? "desc" : "asc"}`);
+  };
+
+  // const sortedCoinsByName = sortCoins(filteredCoins, isSortingAscending);
 
   return (
     <Fragment>
@@ -109,6 +124,15 @@ function Coins() {
             />
           </form>
         </div>
+        <div>
+          {/* <Button onClick={changeSortingHandler}>
+            Sort {isSortingAscending ? "Ascending" : "Descending"}
+          </Button> */}
+          <Button onClick={sortByMcHandler}>
+            Sort MC by {mcSorting ? "Ascending" : "Descending"}
+          </Button>
+        </div>
+
         {!isLoading && coins.length > 0 && (
           <div className={classes["all-coins"]}>
             {filteredCoins.map((coin) => {
@@ -123,7 +147,7 @@ function Coins() {
             {!secondPageFetched && (
               <h4 className={classes.noMoreFetch}>No more coins to fetch!</h4>
             )}
-            {secondPageFetched && (
+            {secondPageFetched && fetchNextPage > 1 && (
               <Button onClick={prevousPageHandler}>previous page</Button>
             )}
             <Button onClick={fetchSecondPageHandler}>go to next page</Button>

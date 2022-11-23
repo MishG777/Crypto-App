@@ -9,6 +9,7 @@ import {
 import CoinDetails from "./components/CoinDetails";
 import Coins from "./components/Coins";
 import MainHeader from "./components/Navbar/MainHeader";
+import NotFound from "./components/NotFound";
 
 import LogIn from "./components/UserLogging/LogIn";
 
@@ -42,7 +43,7 @@ function App() {
     localStorage.setItem("CryptoPage", "2");
     setLogin(true);
 
-    history.push("/all-coins");
+    history.push(`/all-coins`);
   };
 
   return (
@@ -65,6 +66,9 @@ function App() {
           </Route>
           <Route path="/log-in">
             <LogIn logInHandler={logInHandler} />
+          </Route>
+          <Route path="*">
+            <NotFound />
           </Route>
         </Switch>
       </main>

@@ -9,6 +9,7 @@ const CoinItems = ({
   current_price,
   market_cap,
   market_cap_rank,
+  currency,
 }) => {
   return (
     <Link to={`/all-coins/${name}`} className={classes["coin-container"]}>
@@ -19,8 +20,8 @@ const CoinItems = ({
         <div className={classes["inner-data"]}>
           <p className={classes.rank}>rank: {market_cap_rank}</p>
           <p>symbol: {symbol}</p>
-          <p>Price: ${current_price}</p>
-          <p>MC: ${market_cap.toLocaleString()}</p>
+          <p>{`Price:${currency ? "€" : "$"}${current_price}`}</p>
+          <p>{`MC:${currency ? "€" : "$"}${market_cap.toLocaleString()}`}</p>
         </div>
       </div>
     </Link>

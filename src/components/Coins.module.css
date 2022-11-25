@@ -6,7 +6,7 @@
   align-items: center;
 }
 .coin-text {
-  color: rgb(26, 121, 85);
+  color: rgb(42, 117, 119);
   font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
     "Lucida Sans", Arial, sans-serif;
 }
@@ -19,7 +19,7 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  width: 100%;
+  width: 83%;
 }
 .coin-input {
   appearance: none;

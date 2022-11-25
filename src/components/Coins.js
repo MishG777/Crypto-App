@@ -17,7 +17,7 @@ import { useHistory, useLocation } from "react-router-dom";
 //   });
 // };
 
-function Coins() {
+function Coins({ currency }) {
   const [coins, setCoins] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [search, setSearch] = useState("");
@@ -36,9 +36,13 @@ function Coins() {
   // const isSortingAscending = queryParams.get("Namesort") === "asc";
   const mcSorting = queryParams.get("McSort") === "asc";
 
-  let URL = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_${
+  let URL = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${
+    currency ? "eur" : "usd"
+  }&order=market_cap_${
     mcSorting ? "asc" : "desc"
   }&per_page=${fetchedCoinsAmount}&page=${fetchNextPage}&sparkline=false`;
+
+  console.log(currency);
 
   useEffect(() => {
     setIsLoading(true);
@@ -104,8 +108,12 @@ function Coins() {
   //   history.push(`/all-coins?Namesort=${isSortingAscending ? "desc" : "asc"}`);
   // };
 
+  //==================== CURRENCY
+
+  //==================== SORT BY MARKET CAP
+
   const sortByMcHandler = () => {
-    history.push(`/all-coins?McSort=${mcSorting ? "desc" : "asc"}`);
+    history.push(`${location.pathname}?McSort=${mcSorting ? "desc" : "asc"}`);
   };
 
   // const sortedCoinsByName = sortCoins(filteredCoins, isSortingAscending);
@@ -129,14 +137,14 @@ function Coins() {
             Sort {isSortingAscending ? "Ascending" : "Descending"}
           </Button> */}
           <Button onClick={sortByMcHandler}>
-            Sort MC by {mcSorting ? "Ascending" : "Descending"}
+            Sort MC by {mcSorting ? "Ascending ⇧" : "Descending ⇩"}
           </Button>
         </div>
 
         {!isLoading && coins.length > 0 && (
           <div className={classes["all-coins"]}>
             {filteredCoins.map((coin) => {
-              return <CoinItems key={coin.id} {...coin} />;
+              return <CoinItems currency={currency} key={coin.id} {...coin} />;
             })}
           </div>
         )}

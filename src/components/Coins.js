@@ -35,14 +35,14 @@ function Coins({ currency }) {
   const queryParams = new URLSearchParams(location.search);
   // const isSortingAscending = queryParams.get("Namesort") === "asc";
   const mcSorting = queryParams.get("McSort") === "asc";
+  const chosenCurrency = queryParams.get("currency") === "usd";
+  console.log(chosenCurrency);
 
   let URL = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${
-    currency ? "eur" : "usd"
+    chosenCurrency ? "usd" : "eur"
   }&order=market_cap_${
     mcSorting ? "asc" : "desc"
   }&per_page=${fetchedCoinsAmount}&page=${fetchNextPage}&sparkline=false`;
-
-  console.log(currency);
 
   useEffect(() => {
     setIsLoading(true);
@@ -108,8 +108,6 @@ function Coins({ currency }) {
   //   history.push(`/all-coins?Namesort=${isSortingAscending ? "desc" : "asc"}`);
   // };
 
-  //==================== CURRENCY
-
   //==================== SORT BY MARKET CAP
 
   const sortByMcHandler = () => {
@@ -144,7 +142,9 @@ function Coins({ currency }) {
         {!isLoading && coins.length > 0 && (
           <div className={classes["all-coins"]}>
             {filteredCoins.map((coin) => {
-              return <CoinItems currency={currency} key={coin.id} {...coin} />;
+              return (
+                <CoinItems currency={chosenCurrency} key={coin.id} {...coin} />
+              );
             })}
           </div>
         )}

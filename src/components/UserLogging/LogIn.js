@@ -2,6 +2,7 @@ import React, { Fragment, useState } from "react";
 import Uselogin from "../../hooks/use-login";
 import classes from "./Login.module.css";
 import { Prompt } from "react-router-dom";
+import Button from "../UI/Button";
 
 const LogIn = ({ logInHandler }) => {
   const [isEntering, setIsEntering] = useState(false);
@@ -60,13 +61,9 @@ const LogIn = ({ logInHandler }) => {
     console.log("focused");
   };
 
-  const nameInputClasses = nameInputHasError
-    ? classes["form-control invalid"]
-    : classes["form-control"];
-
-  const emailInputClasses = emailInpuHasError
-    ? classes["form-control invalidmail"]
-    : classes["form-control"];
+  // const emailInputClasses = emailInpuHasError
+  //   ? classes["form-control invalidmail"]
+  //   : classes["form-control"];
 
   return (
     <Fragment>
@@ -76,9 +73,13 @@ const LogIn = ({ logInHandler }) => {
           "Are you sure you want to leave, all the data will be lost"
         }
       />
-      <form onSubmit={formSubmissionHandler} onFocus={formFocusHandler}>
+      <form
+        onSubmit={formSubmissionHandler}
+        onFocus={formFocusHandler}
+        className={classes.mainForm}
+      >
         {/* Name */}
-        <div className={nameInputClasses}>
+        <div className={classes["form-control"]}>
           <label htmlFor="name">Name</label>
           <input
             type="text"
@@ -86,14 +87,17 @@ const LogIn = ({ logInHandler }) => {
             onChange={nameChangeHandler}
             onBlur={nameBlurHandler}
             value={enteredName}
+            className={classes.input}
           />
           {nameInputHasError && (
-            <p className={classes["error-text"]}>please enter valid name!</p>
+            <span className={classes["error-text"]}>
+              please enter valid name!
+            </span>
           )}
         </div>
 
-        <div className={emailInputClasses}>
-          {/* Email */}
+        {/* Email */}
+        <div className={classes["form-control"]}>
           <label htmlFor="email">Your E-mail</label>
           <input
             type="text"
@@ -101,27 +105,33 @@ const LogIn = ({ logInHandler }) => {
             onChange={emailChangeHandler}
             onBlur={emailBlurHandler}
             value={enteredEmail}
+            className={classes.input}
           />
           {emailInpuHasError && (
-            <p className={classes["error-text"]}>
+            <span className={classes["error-text"]}>
               Email must not be empty and should contain '@' symbol.
-            </p>
+            </span>
           )}
           {!emailInpuHasError && startsWithError && (
-            <p className={classes["error-text"]}>
+            <span className={classes["error-text"]}>
               Email cannot be started with '@' symbol.
-            </p>
+            </span>
           )}
         </div>
 
         <div className={classes["form-actions"]}>
-          <button
+          <Button
             onClick={OnButtonClick}
             disabled={!formIsValid}
             className={classes.loginBtn}
           >
             Submit
-          </button>
+          </Button>
+        </div>
+
+        <div className={classes.authButtons}>
+          <Button className={classes.auth}>Authorization</Button>
+          <Button className={classes.registr}>Registration</Button>
         </div>
       </form>
     </Fragment>

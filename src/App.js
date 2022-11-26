@@ -15,7 +15,6 @@ import LogIn from "./components/UserLogging/LogIn";
 
 function App() {
   const [logIn, setLogin] = useState(false);
-  const [gotCurrency, setGotCurrency] = useState(null);
   const location = useLocation();
 
   const OnLogInPage = location.pathname === "/log-in";
@@ -47,18 +46,10 @@ function App() {
     history.push(`/all-coins`);
   };
 
-  const getCurrency = (cur) => {
-    setGotCurrency(cur);
-  };
-
   return (
     <Fragment>
       <header>
-        <MainHeader
-          logOutHandler={logOutHandler}
-          logIn={logIn}
-          getCurrency={getCurrency}
-        />
+        <MainHeader logOutHandler={logOutHandler} logIn={logIn} />
       </header>
       <main>
         <Switch>
@@ -67,7 +58,7 @@ function App() {
           </Route>
 
           <Route path="/all-coins" exact>
-            <Coins currency={gotCurrency} />
+            <Coins />
           </Route>
 
           <Route path="/all-coins/:coins">

@@ -17,7 +17,7 @@ import { useHistory, useLocation } from "react-router-dom";
 //   });
 // };
 
-function Coins({ currency }) {
+function Coins() {
   const [coins, setCoins] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [search, setSearch] = useState("");
@@ -33,7 +33,6 @@ function Coins({ currency }) {
   const location = useLocation();
 
   const queryParams = new URLSearchParams(location.search);
-  // const isSortingAscending = queryParams.get("Namesort") === "asc";
   const mcSorting = queryParams.get("McSort") === "asc";
   const chosenCurrency = queryParams.get("currency") === "usd";
   console.log(chosenCurrency);
@@ -85,7 +84,6 @@ function Coins({ currency }) {
   const fetchSecondPageHandler = () => {
     setIsLoading(true);
     setFetchNextPage((nextPage) => nextPage + 1);
-    // showPagesNumHandler();
     history.push(`/all-coins?page=${fetchNextPage + 1}`);
 
     setSecondPageFetched(true);
@@ -97,7 +95,6 @@ function Coins({ currency }) {
   const prevousPageHandler = () => {
     setIsLoading(true);
     setFetchNextPage((nextPage) => nextPage - 1);
-    // showPagesNumHandler();
     history.push(`/all-coins?page=${fetchNextPage - 1}`);
     setIsLoading(false);
   };
@@ -111,7 +108,9 @@ function Coins({ currency }) {
   //==================== SORT BY MARKET CAP
 
   const sortByMcHandler = () => {
+    setIsLoading(true);
     history.push(`${location.pathname}?McSort=${mcSorting ? "desc" : "asc"}`);
+    setIsLoading(false);
   };
 
   // const sortedCoinsByName = sortCoins(filteredCoins, isSortingAscending);

@@ -28,7 +28,7 @@ const MainHeader = ({ logOutHandler, logIn }) => {
             </NavLink>
           </li>
           <li>
-            <Link to="/log-in" onClick={logOutHandler}>
+            <Link to="/auth-registration-page" onClick={logOutHandler}>
               Log Out
             </Link>
           </li>

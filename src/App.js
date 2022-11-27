@@ -17,7 +17,7 @@ function App() {
   const [logIn, setLogin] = useState(false);
   const location = useLocation();
 
-  const OnLogInPage = location.pathname === "/log-in";
+  const OnLogInPage = location.pathname === "/auth-registration-page";
   const history = useHistory();
 
   useEffect(() => {
@@ -54,7 +54,7 @@ function App() {
       <main>
         <Switch>
           <Route path="/" exact>
-            <Redirect to="/log-in" />
+            <Redirect to="/auth-registration-page" />
           </Route>
 
           <Route path="/all-coins" exact>
@@ -64,7 +64,7 @@ function App() {
           <Route path="/all-coins/:coins">
             <CoinDetails />
           </Route>
-          <Route path="/log-in">
+          <Route path="/auth-registration-page">
             <LogIn logInHandler={logInHandler} />
           </Route>
           <Route path="*">

@@ -1,11 +1,15 @@
 import React, { Fragment, useState } from "react";
 import Uselogin from "../../hooks/use-login";
 import classes from "./Login.module.css";
-import { NavLink, Prompt } from "react-router-dom";
+import { Prompt } from "react-router-dom";
 import Button from "../UI/Button";
+import Singup from "./Singup";
 
 const LogIn = ({ logInHandler }) => {
   const [isEntering, setIsEntering] = useState(false);
+  const [onAuthPage, setOnAuthPage] = useState(true);
+
+  // const history = useHistory();
 
   const {
     value: enteredName,
@@ -14,7 +18,7 @@ const LogIn = ({ logInHandler }) => {
     reset: resetNameInput,
     valueChangeHandler: nameChangeHandler,
     inputBlurHandler: nameBlurHandler,
-  } = Uselogin((value) => value.trim() !== "");
+  } = Uselogin((value) => value.trim() !== "" && value.length >= 8);
 
   const {
     value: enteredEmail,
@@ -60,9 +64,15 @@ const LogIn = ({ logInHandler }) => {
     setIsEntering(true);
   };
 
-  // const emailInputClasses = emailInpuHasError
-  //   ? classes["form-control invalidmail"]
-  //   : classes["form-control"];
+  const authHandler = () => {
+    setIsEntering(false);
+    setOnAuthPage(true);
+  };
+
+  const registrHandler = () => {
+    setIsEntering(false);
+    setOnAuthPage(false);
+  };
 
   return (
     <Fragment>
@@ -78,62 +88,71 @@ const LogIn = ({ logInHandler }) => {
         className={classes.mainForm}
       >
         <div className={classes.authTitle}>
-          <h3>Authorization</h3>
-        </div>
-        {/* Name */}
-        <div className={classes["form-control"]}>
-          <label htmlFor="name">Name</label>
-          <input
-            type="text"
-            id="name"
-            onChange={nameChangeHandler}
-            onBlur={nameBlurHandler}
-            value={enteredName}
-            className={classes.input}
-          />
-          {nameInputHasError && (
-            <span className={classes["error-text"]}>
-              please enter valid name!
-            </span>
-          )}
+          <h3>{onAuthPage ? "Authorization" : "Registration"}</h3>
         </div>
 
-        {/* Email */}
-        <div className={classes["form-control"]}>
-          <label htmlFor="email">Your E-mail</label>
-          <input
-            type="text"
-            id="email"
-            onChange={emailChangeHandler}
-            onBlur={emailBlurHandler}
-            value={enteredEmail}
-            className={classes.input}
-          />
-          {emailInpuHasError && (
-            <span className={classes["error-text"]}>
-              Email must not be empty and should contain '@' symbol.
-            </span>
-          )}
-          {!emailInpuHasError && startsWithError && (
-            <span className={classes["error-text"]}>
-              Email cannot be started with '@' symbol.
-            </span>
-          )}
-        </div>
+        {onAuthPage && (
+          <Fragment>
+            <div className={classes["form-control"]}>
+              <label htmlFor="email">Gmail</label>
+              <input
+                type="text"
+                id="email"
+                onChange={emailChangeHandler}
+                onBlur={emailBlurHandler}
+                value={enteredEmail}
+                className={classes.input}
+              />
+              {emailInpuHasError && (
+                <span className={classes["error-text"]}>
+                  Email must not be empty and should contain '@' symbol.
+                </span>
+              )}
+              {!emailInpuHasError && startsWithError && (
+                <span className={classes["error-text"]}>
+                  Email cannot be started with '@' symbol.
+                </span>
+              )}
+            </div>
+            {/* Password */}
+            <div className={classes["form-control"]}>
+              <label htmlFor="password">Password</label>
+              <input
+                type="password"
+                id="password"
+                onChange={nameChangeHandler}
+                onBlur={nameBlurHandler}
+                value={enteredName}
+                className={classes.input}
+              />
+              {nameInputHasError && (
+                <span className={classes["error-text"]}>
+                  please enter valid password longer then 8 symbols!
+                </span>
+              )}
+            </div>
+            <div className={classes["form-actions"]}>
+              <button
+                onClick={OnButtonClick}
+                disabled={!formIsValid}
+                className={classes.loginBtn}
+              >
+                Submit
+              </button>
+            </div>
+          </Fragment>
+        )}
 
-        <div className={classes["form-actions"]}>
-          <button
-            onClick={OnButtonClick}
-            disabled={!formIsValid}
-            className={classes.loginBtn}
-          >
-            Submit
-          </button>
-        </div>
+        {/* On registration */}
+        {!onAuthPage && <Singup />}
 
-        <div className={classes.authButtons} onMouseOver={OnButtonClick}>
-          <NavLink to="/log-in">Authorization</NavLink>
-          <NavLink to="/sign-up">Registration</NavLink>
+        <div className={classes.authButtons}>
+          <Button onClick={authHandler} className={classes.auth}>
+            Authorization
+          </Button>
+          <Button onClick={registrHandler} className={classes.registr}>
+            Registration
+          </Button>
         </div>
       </form>
     </Fragment>

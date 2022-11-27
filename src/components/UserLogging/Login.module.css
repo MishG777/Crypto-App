@@ -47,7 +47,7 @@ button:disabled:active {
   border: 4px solid rgb(30, 149, 153);
   border-radius: 20px;
   width: 35rem;
-  height: 30rem;
+  height: 32rem;
   margin: 4rem auto;
   display: flex;
   flex-direction: column;
@@ -67,6 +67,7 @@ button:disabled:active {
   margin-bottom: 0.5rem;
   border-bottom: 3px solid rgb(30, 149, 153);
   color: rgb(34, 110, 112);
+  letter-spacing: 0.3px;
 }
 
 .form-control input:focus {
@@ -81,23 +82,27 @@ button:disabled:active {
   border: 2px solid rgb(55, 176, 181);
 }
 
+.form-control .inputErr {
+  border-color: red;
+}
+
 .authButtons {
   border-top: 4px solid rgb(30, 149, 153);
   width: 100%;
   height: 5rem;
-  padding-top: 20px;
+  padding-top: 5px;
 }
 
-.authButtons a {
-  color: rgb(30, 149, 153);
-  text-decoration: none;
-  margin: 20px;
+.authButtons .auth,
+.authButtons .registr {
+  margin: 1rem;
 }
 
-.authButtons a:hover,
-.authButtons a:active {
-  padding-bottom: 0.25rem;
-  border-bottom: 3px solid rgb(30, 149, 153);
+.authButtons .auth:hover,
+.authButtons .auth:active,
+.authButtons .registr:hover,
+.authButtons .registr:active {
+  background-color: rgb(80, 177, 180);
 }
 
 .authTitle {
@@ -107,4 +112,5 @@ button:disabled:active {
   border-top-left-radius: 12px;
   border-top-right-radius: 12px;
   margin-bottom: 20px;
+  letter-spacing: 3px;
 }

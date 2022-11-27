@@ -19,9 +19,9 @@ const CoinItems = ({
         <h4>{name}</h4>
         <div className={classes["inner-data"]}>
           <p className={classes.rank}>rank: {market_cap_rank}</p>
-          <p>symbol: {symbol}</p>
-          <p>{`Price:${currency ? "$" : "€"}${current_price}`}</p>
-          <p>{`MC:${currency ? "$" : "€"}${market_cap.toLocaleString()}`}</p>
+          <p>symbol: {symbol.toUpperCase()}</p>
+          <p>{`Price: ${currency ? "$" : "€"}${current_price}`}</p>
+          <p>{`MC: ${currency ? "$" : "€"}${market_cap.toLocaleString()}`}</p>
         </div>
       </div>
     </Link>

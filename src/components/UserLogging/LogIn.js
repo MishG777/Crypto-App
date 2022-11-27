@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from "react";
 import Uselogin from "../../hooks/use-login";
 import classes from "./Login.module.css";
-import { Prompt } from "react-router-dom";
+import { NavLink, Prompt } from "react-router-dom";
 import Button from "../UI/Button";
 
 const LogIn = ({ logInHandler }) => {
@@ -58,7 +58,6 @@ const LogIn = ({ logInHandler }) => {
   //when we click/focus on form
   const formFocusHandler = () => {
     setIsEntering(true);
-    console.log("focused");
   };
 
   // const emailInputClasses = emailInpuHasError
@@ -78,6 +77,9 @@ const LogIn = ({ logInHandler }) => {
         onFocus={formFocusHandler}
         className={classes.mainForm}
       >
+        <div className={classes.authTitle}>
+          <h3>Authorization</h3>
+        </div>
         {/* Name */}
         <div className={classes["form-control"]}>
           <label htmlFor="name">Name</label>
@@ -120,18 +122,18 @@ const LogIn = ({ logInHandler }) => {
         </div>
 
         <div className={classes["form-actions"]}>
-          <Button
+          <button
             onClick={OnButtonClick}
             disabled={!formIsValid}
             className={classes.loginBtn}
           >
             Submit
-          </Button>
+          </button>
         </div>
 
-        <div className={classes.authButtons}>
-          <Button className={classes.auth}>Authorization</Button>
-          <Button className={classes.registr}>Registration</Button>
+        <div className={classes.authButtons} onMouseOver={OnButtonClick}>
+          <NavLink to="/log-in">Authorization</NavLink>
+          <NavLink to="/sign-up">Registration</NavLink>
         </div>
       </form>
     </Fragment>

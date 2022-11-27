@@ -23,20 +23,12 @@ const MainHeader = ({ logOutHandler, logIn }) => {
             <option>EUR</option>
           </select>
           <li>
-            <NavLink
-              activeClassName={classes.active}
-              id={classes.coins}
-              to="all-coins"
-            >
+            <NavLink id={classes.coins} to="/all-coins">
               Search Coins
             </NavLink>
           </li>
           <li>
-            <Link
-              to="/log-in"
-              onClick={logOutHandler}
-              className={classes.active}
-            >
+            <Link to="/log-in" onClick={logOutHandler}>
               Log Out
             </Link>
           </li>

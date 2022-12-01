@@ -11,6 +11,15 @@ const CoinItems = ({
   market_cap_rank,
   currency,
 }) => {
+  let currencyLogo = "$ ";
+  if (currency === "usd") {
+    currencyLogo = "$ ";
+  }
+
+  if (currency === "eur") {
+    currencyLogo = "€ ";
+  }
+
   return (
     <Link to={`/all-coins/${name}`} className={classes["coin-container"]}>
       <img src={image} alt="crypto" />
@@ -20,8 +29,8 @@ const CoinItems = ({
         <div className={classes["inner-data"]}>
           <p className={classes.rank}>rank: {market_cap_rank}</p>
           <p>symbol: {symbol.toUpperCase()}</p>
-          <p>{`Price: ${currency ? "$" : "€"}${current_price}`}</p>
-          <p>{`MC: ${currency ? "$" : "€"}${market_cap.toLocaleString()}`}</p>
+          <p>{`Price: ${currencyLogo} ${current_price}`}</p>
+          <p>{`MC: ${currencyLogo}${market_cap.toLocaleString()}`}</p>
         </div>
       </div>
     </Link>

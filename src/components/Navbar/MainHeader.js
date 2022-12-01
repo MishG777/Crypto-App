@@ -1,15 +1,15 @@
-import { useState } from "react";
 import { NavLink, Link, useHistory } from "react-router-dom";
 import classes from "./MainHeader.module.css";
 
 const MainHeader = ({ logOutHandler, logIn }) => {
-  const [currency, setCurrency] = useState(false);
+  // const [currency, setCurrency] = useState("");
 
   const history = useHistory();
 
-  const currencyHandler = () => {
-    setCurrency((last) => !last);
-    history.push(`/all-coins?currency=${currency ? "usd" : "eur"}`);
+  const currencyHandler = (e) => {
+    const currency = e.target.value.toLowerCase();
+
+    history.push(`/all-coins?currency=${currency}`);
   };
 
   return (

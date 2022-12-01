@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from "react";
+import React, { useState, useEffect, Fragment, useCallback } from "react";
 import axios from "axios";
 import CoinItems from "./CoinItems";
 import classes from "./Coins.module.css";
@@ -29,17 +29,22 @@ function Coins() {
   const [fetchNextPage, setFetchNextPage] = useState(1);
   const [secondPageFetched, setSecondPageFetched] = useState(false);
 
+  const [currency, setCurrency] = useState("usd");
+
   const history = useHistory();
   const location = useLocation();
 
   const queryParams = new URLSearchParams(location.search);
   const mcSorting = queryParams.get("McSort") === "asc";
-  const chosenCurrency = queryParams.get("currency") === "usd";
+  const chosenCurrency = queryParams.get("currency");
+
+  useEffect(() => {
+    setCurrency(chosenCurrency);
+  }, [chosenCurrency]);
+
   console.log(chosenCurrency);
 
-  let URL = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${
-    chosenCurrency ? "usd" : "eur"
-  }&order=market_cap_${
+  let URL = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${currency}&order=market_cap_${
     mcSorting ? "asc" : "desc"
   }&per_page=${fetchedCoinsAmount}&page=${fetchNextPage}&sparkline=false`;
 
@@ -81,23 +86,25 @@ function Coins() {
 
   //=================== FETCH NEXT PAGE
 
-  const fetchSecondPageHandler = () => {
+  const fetchSecondPageHandler = useCallback(() => {
     setIsLoading(true);
     setFetchNextPage((nextPage) => nextPage + 1);
-    history.push(`/all-coins?page=${fetchNextPage + 1}`);
+    const nextPage = fetchNextPage + 1;
+    history.push(`/all-coins?page=${nextPage}`);
 
     setSecondPageFetched(true);
     setIsLoading(false);
-  };
+  }, [fetchNextPage, history]);
 
   //================= PREVIOUS PAGE
 
-  const prevousPageHandler = () => {
+  const prevousPageHandler = useCallback(() => {
     setIsLoading(true);
     setFetchNextPage((nextPage) => nextPage - 1);
-    history.push(`/all-coins?page=${fetchNextPage - 1}`);
+    const prevPage = fetchNextPage - 1;
+    history.push(`/all-coins?page=${prevPage}`);
     setIsLoading(false);
-  };
+  }, [fetchNextPage, history]);
 
   //=================== SORTING COINS
 
@@ -141,9 +148,7 @@ function Coins() {
         {!isLoading && coins.length > 0 && (
           <div className={classes["all-coins"]}>
             {filteredCoins.map((coin) => {
-              return (
-                <CoinItems currency={chosenCurrency} key={coin.id} {...coin} />
-              );
+              return <CoinItems currency={currency} key={coin.id} {...coin} />;
             })}
           </div>
         )}

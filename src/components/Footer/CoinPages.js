@@ -4,7 +4,7 @@ import classes from "./CoinPages.module.css";
 import PageButtons from "../UI/PageButtons";
 
 export const CoinPages = ({ setFetchNextPage, showPagesNumHandler }) => {
-  const pagesArray = [1, 2, 3, 4, 5, 6, 7];
+  const pagesArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   return (
     <div className={classes.CoinPages}>
       {pagesArray.map((page) => (
@@ -12,8 +12,9 @@ export const CoinPages = ({ setFetchNextPage, showPagesNumHandler }) => {
           onClick={() => {
             setFetchNextPage(page);
             showPagesNumHandler(page);
-            window.scrollTo({ top: 0, behavior: "smooth" });
+            // window.scrollTo({ top: 0, behavior: "smooth" });
           }}
+          key={Math.random()}
         >
           {page}
         </PageButtons>

@@ -2,8 +2,6 @@ import { NavLink, Link, useHistory } from "react-router-dom";
 import classes from "./MainHeader.module.css";
 
 const MainHeader = ({ logOutHandler, logIn }) => {
-  // const [currency, setCurrency] = useState("");
-
   const history = useHistory();
 
   const currencyHandler = (e) => {

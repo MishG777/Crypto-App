@@ -47,7 +47,7 @@ p {
   align-items: center;
   justify-content: space-around;
   width: 95%;
-  height: 72%;
+  height: 85%;
 }
 
 .inner-data .rank {
@@ -55,4 +55,12 @@ p {
   color: white;
   border-radius: 0.4rem;
   padding: 2px 4px;
+}
+
+.green {
+  color: green;
+}
+
+.red {
+  color: red;
 }

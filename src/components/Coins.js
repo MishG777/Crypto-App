@@ -30,7 +30,7 @@ function Coins() {
   const [secondPageFetched, setSecondPageFetched] = useState(false);
 
   const [currency, setCurrency] = useState("usd");
-
+  // console.log(currency);
   const history = useHistory();
   const location = useLocation();
 
@@ -38,13 +38,8 @@ function Coins() {
   const mcSorting = queryParams.get("McSort") === "asc";
   const chosenCurrency = queryParams.get("currency");
 
-  useEffect(() => {
-    setCurrency(chosenCurrency);
-  }, [chosenCurrency]);
-
-  console.log(chosenCurrency);
-
-  let URL = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${currency}&order=market_cap_${
+  //vs=currency=${currency}   ar mushaobs
+  let URL = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_${
     mcSorting ? "asc" : "desc"
   }&per_page=${fetchedCoinsAmount}&page=${fetchNextPage}&sparkline=false`;
 
@@ -56,10 +51,17 @@ function Coins() {
       .then((res) => {
         const CoinsData = res.data;
         setCoins(CoinsData);
+        console.log(CoinsData);
       })
       .catch((error) => setError(error.message));
     setIsLoading(false);
   }, [URL]);
+
+  useEffect(() => {
+    setCurrency(chosenCurrency);
+    // history.push(`/all-coins?currency=${currency}`);
+    console.log("useEffect:" + chosenCurrency);
+  }, [chosenCurrency]);
 
   const handleChange = (e) => {
     setSearch(e.target.value);
@@ -169,7 +171,7 @@ function Coins() {
         {isLoading && (
           <img src={loader} alt="loading..." className={classes.loader} />
         )}
-        <h2 className={classes.error}>{error}</h2>
+        {error && <h2 className={classes.error}>{error}</h2>}
       </div>
       <CoinPages
         showPagesNumHandler={showPagesNumHandler}

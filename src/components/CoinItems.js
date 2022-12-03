@@ -43,7 +43,7 @@ const CoinItems = ({
           <p>{`Price: ${currencyLogo} ${current_price}`}</p>
           <p>{`MC: ${currencyLogo}${market_cap.toLocaleString()}`}</p>
           <p
-            className={percent ? classes.green : classes.red}
+            className={`${percent ? classes.green : classes.red}`}
           >{`24H:  ${market_cap_change_percentage_24h}`}</p>
         </div>
       </div>

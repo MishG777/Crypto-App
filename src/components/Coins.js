@@ -29,14 +29,14 @@ function Coins() {
   const [fetchNextPage, setFetchNextPage] = useState(1);
   const [secondPageFetched, setSecondPageFetched] = useState(false);
 
-  const [currency, setCurrency] = useState("usd");
+  // const [currency, setCurrency] = useState("usd");
   // console.log(currency);
   const history = useHistory();
   const location = useLocation();
 
   const queryParams = new URLSearchParams(location.search);
   const mcSorting = queryParams.get("McSort") === "asc";
-  const chosenCurrency = queryParams.get("currency");
+  // const chosenCurrency = queryParams.get("currency");
 
   //vs=currency=${currency}   ar mushaobs
   let URL = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_${
@@ -57,11 +57,11 @@ function Coins() {
     setIsLoading(false);
   }, [URL]);
 
-  useEffect(() => {
-    setCurrency(chosenCurrency);
-    // history.push(`/all-coins?currency=${currency}`);
-    console.log("useEffect:" + chosenCurrency);
-  }, [chosenCurrency]);
+  // useEffect(() => {
+  //   setCurrency(chosenCurrency);
+  //   // history.push(`/all-coins?currency=${currency}`);
+  //   console.log("useEffect:" + chosenCurrency);
+  // }, [chosenCurrency]);
 
   const handleChange = (e) => {
     setSearch(e.target.value);
@@ -150,7 +150,7 @@ function Coins() {
         {!isLoading && coins.length > 0 && (
           <div className={classes["all-coins"]}>
             {filteredCoins.map((coin) => {
-              return <CoinItems currency={currency} key={coin.id} {...coin} />;
+              return <CoinItems currency={null} key={coin.id} {...coin} />;
             })}
           </div>
         )}

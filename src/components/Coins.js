@@ -17,7 +17,7 @@ import { useHistory, useLocation } from "react-router-dom";
 //   });
 // };
 
-function Coins() {
+function Coins({ currency }) {
   const [coins, setCoins] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [search, setSearch] = useState("");
@@ -39,9 +39,13 @@ function Coins() {
   // const chosenCurrency = queryParams.get("currency");
 
   //vs=currency=${currency}   ar mushaobs
-  let URL = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_${
+  let URL = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${currency}&order=market_cap_${
     mcSorting ? "asc" : "desc"
   }&per_page=${fetchedCoinsAmount}&page=${fetchNextPage}&sparkline=false`;
+
+  // useEffect(() => {
+  //   console.log(currency);
+  // }, [currency]);
 
   useEffect(() => {
     setIsLoading(true);
@@ -51,7 +55,7 @@ function Coins() {
       .then((res) => {
         const CoinsData = res.data;
         setCoins(CoinsData);
-        console.log(CoinsData);
+        // console.log(CoinsData);
       })
       .catch((error) => setError(error.message));
     setIsLoading(false);
@@ -150,7 +154,7 @@ function Coins() {
         {!isLoading && coins.length > 0 && (
           <div className={classes["all-coins"]}>
             {filteredCoins.map((coin) => {
-              return <CoinItems currency={null} key={coin.id} {...coin} />;
+              return <CoinItems currency={currency} key={coin.id} {...coin} />;
             })}
           </div>
         )}

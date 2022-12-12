@@ -13,14 +13,7 @@ const CoinItems = ({
   market_cap_change_percentage_24h,
 }) => {
   const [percent, setPercent] = useState(false);
-  let currencyLogo = "$ ";
-  if (currency === "usd") {
-    currencyLogo = "$ ";
-  }
-
-  if (currency === "eur") {
-    currencyLogo = "€ ";
-  }
+  const [logoCurrency, setlogoCurrency] = useState(false);
 
   useEffect(() => {
     if (market_cap_change_percentage_24h > 0) {
@@ -29,7 +22,13 @@ const CoinItems = ({
     if (market_cap_change_percentage_24h < 0) {
       setPercent(false);
     }
-  }, [market_cap_change_percentage_24h]);
+
+    if (currency === "usd") {
+      setlogoCurrency(true);
+    } else {
+      setlogoCurrency(false);
+    }
+  }, [market_cap_change_percentage_24h, currency]);
 
   return (
     <Link to={`/all-coins/${name}`} className={classes["coin-container"]}>
@@ -40,8 +39,10 @@ const CoinItems = ({
         <div className={classes["inner-data"]}>
           <p className={classes.rank}>rank: {market_cap_rank}</p>
           <p>symbol: {symbol.toUpperCase()}</p>
-          <p>{`Price: ${currencyLogo} ${current_price}`}</p>
-          <p>{`MC: ${currencyLogo}${market_cap.toLocaleString()}`}</p>
+          <p> {`Price: ${logoCurrency ? "$" : "€"} ${current_price}`} </p>
+          <p>{`MC: ${
+            logoCurrency ? "$" : "€"
+          }  ${market_cap.toLocaleString()} `}</p>
           <p
             className={`${percent ? classes.green : classes.red}`}
           >{`24H:  ${market_cap_change_percentage_24h}`}</p>

@@ -1,4 +1,5 @@
 import React, { Fragment, useState, useEffect } from "react";
+
 import {
   Switch,
   Route,
@@ -15,10 +16,15 @@ import LogIn from "./components/UserLogging/LogIn";
 
 function App() {
   const [logIn, setLogin] = useState(false);
+  const [cur, setCur] = useState("usd");
   const location = useLocation();
 
   const OnLogInPage = location.pathname === "/auth-registration-page";
   const history = useHistory();
+
+  const mainCurrencyGot = (currency) => {
+    setCur(currency);
+  };
 
   useEffect(() => {
     const CryptoPage = localStorage.getItem("CryptoPage");
@@ -45,11 +51,14 @@ function App() {
 
     history.push(`/all-coins`);
   };
-
   return (
     <Fragment>
       <header>
-        <MainHeader logOutHandler={logOutHandler} logIn={logIn} />
+        <MainHeader
+          logOutHandler={logOutHandler}
+          logIn={logIn}
+          gotCurrency={mainCurrencyGot}
+        />
       </header>
       <main>
         <Switch>
@@ -58,7 +67,7 @@ function App() {
           </Route>
 
           <Route path="/all-coins" exact>
-            <Coins />
+            <Coins currency={cur} />
           </Route>
 
           <Route path="/all-coins/:coins">

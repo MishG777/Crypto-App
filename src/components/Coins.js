@@ -5,17 +5,8 @@ import classes from "./Coins.module.css";
 import loader from "../components/img/loading.png";
 import { CoinPages } from "./Footer/CoinPages";
 import Button from "./UI/Button";
-import { useHistory, useLocation } from "react-router-dom";
-
-// const sortCoins = (coins, ascending) => {
-//   return coins.sort((quoteA, quoteB) => {
-//     if (ascending) {
-//       return quoteA.id > quoteB.id ? 1 : -1;
-//     } else {
-//       return quoteA.id < quoteB.id ? 1 : -1;
-//     }
-//   });
-// };
+import { useNavigate, useLocation } from "react-router-dom";
+import PriceChangeByTime from "./PriceChangeByTime";
 
 function Coins({ currency }) {
   const [coins, setCoins] = useState([]);
@@ -29,23 +20,18 @@ function Coins({ currency }) {
   const [fetchNextPage, setFetchNextPage] = useState(1);
   const [secondPageFetched, setSecondPageFetched] = useState(false);
 
-  // const [currency, setCurrency] = useState("usd");
-  // console.log(currency);
-  const history = useHistory();
+  const [priceChangeTime, setpriceChangeTime] = useState("24h");
+
+  const navigate = useNavigate();
   const location = useLocation();
 
   const queryParams = new URLSearchParams(location.search);
   const mcSorting = queryParams.get("McSort") === "asc";
-  // const chosenCurrency = queryParams.get("currency");
 
-  //vs=currency=${currency}   ar mushaobs
   let URL = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${currency}&order=market_cap_${
     mcSorting ? "asc" : "desc"
-  }&per_page=${fetchedCoinsAmount}&page=${fetchNextPage}&sparkline=false`;
-
-  // useEffect(() => {
-  //   console.log(currency);
-  // }, [currency]);
+  }&per_page=${fetchedCoinsAmount}&page=${fetchNextPage}&sparkline=false&price_change_percentage=${priceChangeTime}`;
+  //1h, 24h, 7d, 14d, 30d, 200d, 1y
 
   useEffect(() => {
     setIsLoading(true);
@@ -55,39 +41,36 @@ function Coins({ currency }) {
       .then((res) => {
         const CoinsData = res.data;
         setCoins(CoinsData);
-        // console.log(CoinsData);
+        console.log(CoinsData);
       })
       .catch((error) => setError(error.message));
     setIsLoading(false);
   }, [URL]);
 
-  // useEffect(() => {
-  //   setCurrency(chosenCurrency);
-  //   // history.push(`/all-coins?currency=${currency}`);
-  //   console.log("useEffect:" + chosenCurrency);
-  // }, [chosenCurrency]);
-
   const handleChange = (e) => {
     setSearch(e.target.value);
   };
 
-  const filteredCoins = coins.filter((coin) =>
-    coin.name.toLowerCase().includes(search.toLowerCase())
+  const filteredCoins = coins.filter(
+    useCallback(
+      (coin) => coin.name.toLowerCase().includes(search.toLowerCase()),
+      [search]
+    )
   );
 
   //===================FETCH MORE COINS
 
-  const fetchMoreCoins = () => {
+  const fetchMoreCoins = useCallback(() => {
     setIsLoading(true);
     setFetchedCoinsAmount((moreCoins) => moreCoins + moreCoins * 2);
     if (fetchedCoinsAmount > 250) {
       setNoMoreCoins(true);
     }
     setIsLoading(false);
-  };
+  }, [fetchedCoinsAmount]);
 
   const showPagesNumHandler = (page) => {
-    history.push(`/all-coins?page=${page}`);
+    navigate(`/all-coins?page=${page}`);
   };
 
   //=================== FETCH NEXT PAGE
@@ -96,11 +79,11 @@ function Coins({ currency }) {
     setIsLoading(true);
     setFetchNextPage((nextPage) => nextPage + 1);
     const nextPage = fetchNextPage + 1;
-    history.push(`/all-coins?page=${nextPage}`);
+    navigate(`/all-coins?page=${nextPage}`);
 
     setSecondPageFetched(true);
     setIsLoading(false);
-  }, [fetchNextPage, history]);
+  }, [fetchNextPage, navigate]);
 
   //================= PREVIOUS PAGE
 
@@ -108,25 +91,23 @@ function Coins({ currency }) {
     setIsLoading(true);
     setFetchNextPage((nextPage) => nextPage - 1);
     const prevPage = fetchNextPage - 1;
-    history.push(`/all-coins?page=${prevPage}`);
+    navigate(`/all-coins?page=${prevPage}`);
     setIsLoading(false);
-  }, [fetchNextPage, history]);
-
-  //=================== SORTING COINS
-
-  // const changeSortingHandler = () => {
-  //   history.push(`/all-coins?Namesort=${isSortingAscending ? "desc" : "asc"}`);
-  // };
+  }, [fetchNextPage, navigate]);
 
   //==================== SORT BY MARKET CAP
 
-  const sortByMcHandler = () => {
+  const sortByMcHandler = useCallback(() => {
     setIsLoading(true);
-    history.push(`${location.pathname}?McSort=${mcSorting ? "desc" : "asc"}`);
+    navigate(`${location.pathname}?McSort=${mcSorting ? "desc" : "asc"}`);
     setIsLoading(false);
-  };
+  }, [location.pathname, mcSorting, navigate]);
 
-  // const sortedCoinsByName = sortCoins(filteredCoins, isSortingAscending);
+  //========================== GOT TIME FOR price_change_percentage in API
+
+  const gotTimeHandler = (time) => {
+    setpriceChangeTime(time);
+  };
 
   return (
     <Fragment>
@@ -143,18 +124,27 @@ function Coins({ currency }) {
           </form>
         </div>
         <div>
-          {/* <Button onClick={changeSortingHandler}>
-            Sort {isSortingAscending ? "Ascending" : "Descending"}
-          </Button> */}
           <Button onClick={sortByMcHandler}>
             Sort MC by {mcSorting ? "Ascending ⇧" : "Descending ⇩"}
           </Button>
+
+          <PriceChangeByTime changedTime={gotTimeHandler} />
         </div>
 
+        {isLoading && (
+          <img src={loader} alt="loading..." className={classes.loader} />
+        )}
         {!isLoading && coins.length > 0 && (
           <div className={classes["all-coins"]}>
             {filteredCoins.map((coin) => {
-              return <CoinItems currency={currency} key={coin.id} {...coin} />;
+              return (
+                <CoinItems
+                  currency={currency}
+                  key={coin.id}
+                  {...coin}
+                  priceChangeTime={priceChangeTime}
+                />
+              );
             })}
           </div>
         )}
@@ -172,9 +162,6 @@ function Coins({ currency }) {
           </div>
         )}
 
-        {isLoading && (
-          <img src={loader} alt="loading..." className={classes.loader} />
-        )}
         {error && <h2 className={classes.error}>{error}</h2>}
       </div>
       <CoinPages

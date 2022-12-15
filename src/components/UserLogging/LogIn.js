@@ -1,15 +1,12 @@
 import React, { Fragment, useState } from "react";
 import Uselogin from "../../hooks/use-login";
 import classes from "./Login.module.css";
-import { Prompt } from "react-router-dom";
+
 import Button from "../UI/Button";
 import Singup from "./Singup";
 
 const LogIn = ({ logInHandler }) => {
-  const [isEntering, setIsEntering] = useState(false);
   const [onAuthPage, setOnAuthPage] = useState(true);
-
-  // const history = useHistory();
 
   const {
     value: enteredName,
@@ -55,38 +52,21 @@ const LogIn = ({ logInHandler }) => {
 
   const startsWithError = enteredEmail.startsWith("@"); //if email starts with '@'
 
-  const OnButtonClick = () => {
-    setIsEntering(false);
-  };
+  const OnButtonClick = () => {};
 
   //when we click/focus on form
-  const formFocusHandler = () => {
-    setIsEntering(true);
-  };
 
   const authHandler = () => {
-    setIsEntering(false);
     setOnAuthPage(true);
   };
 
   const registrHandler = () => {
-    setIsEntering(false);
     setOnAuthPage(false);
   };
 
   return (
     <Fragment>
-      <Prompt
-        when={isEntering}
-        message={() =>
-          "Are you sure you want to leave, all the data will be lost"
-        }
-      />
-      <form
-        onSubmit={formSubmissionHandler}
-        onFocus={formFocusHandler}
-        className={classes.mainForm}
-      >
+      <form onSubmit={formSubmissionHandler} className={classes.mainForm}>
         <div className={classes.authTitle}>
           <h3>{onAuthPage ? "Authorization" : "Registration"}</h3>
         </div>

@@ -1,11 +1,11 @@
 import React, { Fragment, useState, useEffect } from "react";
 
 import {
-  Switch,
+  Routes,
   Route,
-  Redirect,
-  useHistory,
   useLocation,
+  useNavigate,
+  Navigate,
 } from "react-router-dom";
 import CoinDetails from "./components/CoinDetails";
 import Coins from "./components/Coins";
@@ -20,7 +20,7 @@ function App() {
   const location = useLocation();
 
   const OnLogInPage = location.pathname === "/auth-registration-page";
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const mainCurrencyGot = (currency) => {
     setCur(currency);
@@ -49,7 +49,7 @@ function App() {
     localStorage.setItem("CryptoPage", "2");
     setLogin(true);
 
-    history.push(`/all-coins`);
+    navigate(`/all-coins`);
   };
   return (
     <Fragment>
@@ -61,25 +61,21 @@ function App() {
         />
       </header>
       <main>
-        <Switch>
-          <Route path="/" exact>
-            <Redirect to="/auth-registration-page" />
-          </Route>
+        <Routes>
+          <Route
+            path="/"
+            element={<Navigate to="/auth-registration-page" />}
+          ></Route>
 
-          <Route path="/all-coins" exact>
-            <Coins currency={cur} />
-          </Route>
+          <Route path="/all-coins" element={<Coins currency={cur} />}></Route>
 
-          <Route path="/all-coins/:coins">
-            <CoinDetails />
-          </Route>
-          <Route path="/auth-registration-page">
-            <LogIn logInHandler={logInHandler} />
-          </Route>
-          <Route path="*">
-            <NotFound />
-          </Route>
-        </Switch>
+          <Route path="/all-coins/*" element={<CoinDetails />}></Route>
+          <Route
+            path="/auth-registration-page"
+            element={<LogIn logInHandler={logInHandler} />}
+          ></Route>
+          <Route path="*" element={<NotFound />}></Route>
+        </Routes>
       </main>
     </Fragment>
   );

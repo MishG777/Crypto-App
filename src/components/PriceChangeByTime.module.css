@@ -1,0 +1,8 @@
+.timeChanger {
+  outline: none;
+  border: none;
+  background-color: rgb(32, 161, 165);
+  color: white;
+  padding: 8px 17px;
+  border-radius: 10px;
+}

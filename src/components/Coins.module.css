@@ -61,5 +61,6 @@
   color: red;
 }
 .noMoreFetch {
-  color: rgb(196, 54, 54);
+  color: red;
+  font-weight: bold;
 }

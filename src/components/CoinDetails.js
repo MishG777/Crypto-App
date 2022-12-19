@@ -5,7 +5,7 @@ const CoinDetails = () => {
   const params = useParams();
   console.log(params);
 
-  return <div>{params.coins}</div>;
+  return <div>{params.details}</div>;
 };
 
 export default CoinDetails;

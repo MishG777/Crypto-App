@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import classes from "./CoinItems.module.css";
 import { Link } from "react-router-dom";
+import { useCallback } from "react";
 
 const CoinItems = ({
   image,
@@ -34,7 +35,7 @@ const CoinItems = ({
     Y1: +price_change_percentage_1y_in_currency,
   };
 
-  useEffect(() => {
+  const currencyChangerFn = useCallback(() => {
     if (currency === "usd") {
       setlogoCurrency(true);
     } else {
@@ -42,7 +43,7 @@ const CoinItems = ({
     }
   }, [currency]);
 
-  useEffect(() => {
+  const PriceAndTimeChanger = useCallback(() => {
     if (
       timeChanger.H1 > 0 ||
       timeChanger.H24 > 0 ||
@@ -56,17 +57,7 @@ const CoinItems = ({
     } else {
       setPercent(false);
     }
-    // if (
-    //   timeChanger.H1 < 0 ||
-    //   timeChanger.H24 < 0 ||
-    //   timeChanger.D7 < 0 ||
-    //   timeChanger.D14 < 0 ||
-    //   timeChanger.D30 < 0 ||
-    //   timeChanger.D200 < 0 ||
-    //   timeChanger.Y1 < 0
-    // ) {
-    //   setPercent(false);
-    // }
+
     let tm;
     if (priceChangeTime === "1h") {
       tm = timeChanger.H1.toFixed(3);
@@ -83,6 +74,7 @@ const CoinItems = ({
     } else if (priceChangeTime === "1y") {
       tm = timeChanger.Y1.toFixed(3);
     }
+
     setTime(tm);
   }, [
     priceChangeTime,
@@ -95,26 +87,42 @@ const CoinItems = ({
     timeChanger.Y1,
   ]);
 
+  useEffect(() => {
+    currencyChangerFn();
+    PriceAndTimeChanger();
+  }, [currencyChangerFn, PriceAndTimeChanger]);
+
   return (
-    <Link to={`/all-coins/${name}`} className={classes["coin-container"]}>
+    <Link to={`${name}`} className={classes["coin-container"]}>
       <img src={image} alt="crypto" />
 
       <div className={classes["coin-data"]}>
-        <h4>{name}</h4>
+        <h4 className={classes.name}>{name}</h4>
         <div className={classes["inner-data"]}>
-          <p className={classes.rank}>rank: {market_cap_rank}</p>
-          <p> {symbol.toUpperCase()}</p>
-          <p> {`Price: ${logoCurrency ? "$" : "€"} ${current_price}`} </p>
-          <p>{`MC: ${
-            logoCurrency ? "$" : "€"
-          }  ${market_cap.toLocaleString()} `}</p>
-          <p
-            className={`${percent ? classes.green : classes.red}`}
-          >{`${priceChangeTime}:  ${time} %`}</p>
+          <p className={classes.rank}>
+            <span>rank: </span>
+            {market_cap_rank}
+          </p>
+          <p className={classes.symbol}> {symbol.toUpperCase()}</p>
+
+          <p>
+            <span>Price: </span>
+            {`${logoCurrency ? "$" : "€"}${current_price}`}
+          </p>
+
+          <p>
+            <span>MC: </span>
+            {`${logoCurrency ? "$" : "€"}${market_cap.toLocaleString()} `}
+          </p>
+
+          <p className={`${percent ? classes.green : classes.red}`}>
+            <span>{priceChangeTime}: </span>
+            {` ${time} %`}
+          </p>
         </div>
       </div>
     </Link>
   );
 };
 
-export default CoinItems;
+export default React.memo(CoinItems);

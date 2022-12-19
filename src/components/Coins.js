@@ -136,6 +136,14 @@ function Coins({ currency }) {
         )}
         {!isLoading && coins.length > 0 && (
           <div className={classes["all-coins"]}>
+            <div className={classes.bar}>
+              <h3>Symbol</h3>
+              <h3>Coin</h3>
+              <h3>Rank</h3>
+              <h3>Price</h3>
+              <h3>Market Cap</h3>
+              <h3>Price Volume {priceChangeTime}</h3>
+            </div>
             {filteredCoins.map((coin) => {
               return (
                 <CoinItems

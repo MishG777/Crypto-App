@@ -9,10 +9,6 @@ const PriceChangeByTime = ({ changedTime }) => {
     changedTime(time[1]);
   };
 
-  //   const a = "aa cc";
-  //   const change = a.split(" ");
-  //   console.log(change[1]);
-
   return (
     <select
       ref={timeRef}

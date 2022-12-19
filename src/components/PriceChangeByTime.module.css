@@ -5,4 +5,9 @@
   color: white;
   padding: 8px 17px;
   border-radius: 10px;
+  cursor: pointer;
+}
+.timeChanger:hover,
+.timeChanger:active {
+  background-color: rgb(34, 134, 138);
 }

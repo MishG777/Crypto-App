@@ -69,7 +69,7 @@ function App() {
 
           <Route path="/all-coins" element={<Coins currency={cur} />}></Route>
 
-          <Route path="/all-coins/*" element={<CoinDetails />}></Route>
+          <Route path="/all-coins/:details" element={<CoinDetails />}></Route>
           <Route
             path="/auth-registration-page"
             element={<LogIn logInHandler={logInHandler} />}

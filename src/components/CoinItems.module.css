@@ -71,7 +71,7 @@ p {
   }
 
   .coin-container img {
-    width: 10%;
+    width: 7%;
     margin: 4px;
   }
 
@@ -87,6 +87,7 @@ p {
   .inner-data {
     flex-direction: row;
     border: none;
+    width: 80%;
   }
 
   .inner-data p {
@@ -98,6 +99,11 @@ p {
 
   .inner-data .symbol {
     display: none;
+  }
+
+  .inner-data .rank {
+    padding: 4px 10px;
+    font-weight: bold;
   }
 }
 

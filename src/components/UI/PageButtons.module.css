@@ -9,3 +9,17 @@
   border-radius: 5px;
   cursor: pointer;
 }
+
+@media (max-width: 900px) {
+  .pageButtons {
+    width: 1.6rem;
+    height: 1.6rem;
+    margin: 0.8rem;
+    background-color: white;
+    color: rgb(17, 112, 116);
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+}

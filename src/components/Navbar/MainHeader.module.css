@@ -62,3 +62,9 @@
   padding-bottom: 0.25rem;
   border-bottom: 3px solid white;
 }
+
+.burger {
+  display: none;
+}
+/* @media (max-width: 900px) {
+  } */

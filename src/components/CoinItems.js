@@ -23,7 +23,9 @@ const CoinItems = ({
 }) => {
   const [percent, setPercent] = useState(false);
   const [logoCurrency, setlogoCurrency] = useState(false);
-  const [time, setTime] = useState(price_change_percentage_24h_in_currency);
+  const [percentByTime, setPercentByTime] = useState(
+    price_change_percentage_24h_in_currency
+  );
 
   const timeChanger = {
     H1: +price_change_percentage_1h_in_currency,
@@ -59,6 +61,7 @@ const CoinItems = ({
     }
 
     let tm;
+
     if (priceChangeTime === "1h") {
       tm = timeChanger.H1.toFixed(3);
     } else if (priceChangeTime === "24h") {
@@ -74,9 +77,13 @@ const CoinItems = ({
     } else if (priceChangeTime === "1y") {
       tm = timeChanger.Y1.toFixed(3);
     }
+    if (percentByTime === "NaN" || percentByTime === "undefined") {
+      tm = "...";
+    }
 
-    setTime(tm);
+    setPercentByTime(tm);
   }, [
+    percentByTime,
     priceChangeTime,
     timeChanger.H1,
     timeChanger.H24,
@@ -117,7 +124,7 @@ const CoinItems = ({
 
           <p className={`${percent ? classes.green : classes.red}`}>
             <span>{priceChangeTime}: </span>
-            {` ${time} %`}
+            {` ${percentByTime} %`}
           </p>
         </div>
       </div>

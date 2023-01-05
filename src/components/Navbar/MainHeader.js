@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import { useState } from "react";
 import { AiOutlineMenu, AiOutlineMinusCircle } from "react-icons/ai";
 import { NavLink, Link, useNavigate } from "react-router-dom";
 import classes from "./MainHeader.module.css";
@@ -19,38 +19,35 @@ const MainHeader = ({ logOutHandler, logIn, gotCurrency }) => {
   };
 
   return (
-    <header className={classes.header}>
+    <header className={`${classes.header} ${menuOpen && classes.active}`}>
       <h1 className={classes.logo}>CRYPToAPP</h1>
 
       {logIn && (
-        <div className={classes.Mainbar}>
-          {!menuOpen && (
+        <div>
+          <ul>
+            <select onChange={currencyHandler} className={classes.currency}>
+              <option>USD</option>
+              <option>EUR</option>
+            </select>
+            <li onClick={openMenu}>
+              <NavLink id={classes.coins} to="/all-coins">
+                Search Coins
+              </NavLink>
+            </li>
+            <li onClick={openMenu}>
+              <Link to="/auth-registration-page" onClick={logOutHandler}>
+                Log Out
+              </Link>
+            </li>
+          </ul>
+          {menuOpen && (
             <AiOutlineMenu className={classes.burgerBar} onClick={openMenu} />
           )}
-          {menuOpen && (
+          {!menuOpen && (
             <AiOutlineMinusCircle
               className={classes.closeBurger}
               onClick={openMenu}
             />
-          )}
-
-          {menuOpen && (
-            <ul>
-              <select onChange={currencyHandler} className={classes.currency}>
-                <option>USD</option>
-                <option>EUR</option>
-              </select>
-              <li onClick={openMenu}>
-                <NavLink id={classes.coins} to="/all-coins">
-                  Search Coins
-                </NavLink>
-              </li>
-              <li onClick={openMenu}>
-                <Link to="/auth-registration-page" onClick={logOutHandler}>
-                  Log Out
-                </Link>
-              </li>
-            </ul>
           )}
         </div>
       )}

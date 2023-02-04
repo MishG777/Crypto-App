@@ -74,10 +74,10 @@ const LogIn = ({ logInHandler }) => {
         {onAuthPage && (
           <Fragment>
             <div className={classes["form-control"]}>
-              <label htmlFor="email">Gmail</label>
+              <label htmlFor="gmail">Gmail</label>
               <input
                 type="text"
-                id="email"
+                id="gmail"
                 onChange={emailChangeHandler}
                 onBlur={emailBlurHandler}
                 value={enteredEmail}

@@ -41,7 +41,7 @@ function Coins({ currency }) {
       .then((res) => {
         const CoinsData = res.data;
         setCoins(CoinsData);
-        console.log(CoinsData);
+        // console.log(CoinsData);
       })
       .catch((error) => setError(error.message));
     setIsLoading(false);

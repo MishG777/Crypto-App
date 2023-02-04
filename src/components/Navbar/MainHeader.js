@@ -23,23 +23,25 @@ const MainHeader = ({ logOutHandler, logIn, gotCurrency }) => {
       <h1 className={classes.logo}>CRYPToAPP</h1>
 
       {logIn && (
-        <div>
-          <ul>
-            <select onChange={currencyHandler} className={classes.currency}>
-              <option>USD</option>
-              <option>EUR</option>
-            </select>
-            <li onClick={openMenu}>
-              <NavLink id={classes.coins} to="/all-coins">
-                Search Coins
-              </NavLink>
-            </li>
-            <li onClick={openMenu}>
-              <Link to="/auth-registration-page" onClick={logOutHandler}>
-                Log Out
-              </Link>
-            </li>
-          </ul>
+        <>
+          <div>
+            <ul className={classes.burgerNav}>
+              <select onChange={currencyHandler} className={classes.currency}>
+                <option onClick={openMenu}>USD</option>
+                <option onClick={openMenu}>EUR</option>
+              </select>
+              <li onClick={openMenu}>
+                <NavLink id={classes.coins} to="/all-coins">
+                  Search Coins
+                </NavLink>
+              </li>
+              <li onClick={openMenu}>
+                <Link to="/auth-registration-page" onClick={logOutHandler}>
+                  Log Out
+                </Link>
+              </li>
+            </ul>
+          </div>
           {menuOpen && (
             <AiOutlineMenu className={classes.burgerBar} onClick={openMenu} />
           )}
@@ -49,7 +51,7 @@ const MainHeader = ({ logOutHandler, logIn, gotCurrency }) => {
               onClick={openMenu}
             />
           )}
-        </div>
+        </>
       )}
     </header>
   );

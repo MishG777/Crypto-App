@@ -1,4 +1,4 @@
-.control-group {
+/* .control-group {
   display: flex;
   column-gap: 1rem;
   flex-wrap: wrap;
@@ -7,7 +7,7 @@
 .control-group .form-control {
   min-width: 15rem;
   flex: 1;
-}
+} */
 
 .loginBtn {
   font: inherit;
@@ -121,4 +121,29 @@ button:disabled:active {
   border-top-right-radius: 12px;
   margin-bottom: 20px;
   letter-spacing: 3px;
+}
+
+@media (max-width: 610px) {
+  .authTitle {
+    font-size: 12px;
+  }
+
+  .mainForm {
+    width: 23rem;
+  }
+
+  .form-control .input {
+    width: 17rem;
+    height: 2rem;
+  }
+
+  .error-text {
+    font-size: 8.2px;
+  }
+  .authButtons .auth,
+  .authButtons .registr,
+  .loginBtn {
+    font-size: 10px;
+    letter-spacing: 1px;
+  }
 }

@@ -77,13 +77,9 @@ const CoinItems = ({
     } else if (priceChangeTime === "1y") {
       tm = timeChanger.Y1.toFixed(3);
     }
-    if (percentByTime === "NaN" || percentByTime === "undefined") {
-      tm = "...";
-    }
 
     setPercentByTime(tm);
   }, [
-    percentByTime,
     priceChangeTime,
     timeChanger.H1,
     timeChanger.H24,

@@ -33,6 +33,21 @@ function Coins({ currency }) {
   }&per_page=${fetchedCoinsAmount}&page=${fetchNextPage}&sparkline=false&price_change_percentage=${priceChangeTime}`;
   //1h, 24h, 7d, 14d, 30d, 200d, 1y
 
+  //-----------------Keep entered data
+
+  useEffect(() => {
+    const searchText = JSON.parse(localStorage.getItem("searchedData"));
+    if (searchText !== null || searchText !== "") {
+      setSearch(searchText);
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("searchedData", JSON.stringify(search));
+  }, [search]);
+
+  //------------------------------------
+
   useEffect(() => {
     setIsLoading(true);
     setError(null);
@@ -40,7 +55,9 @@ function Coins({ currency }) {
       .get(URL)
       .then((res) => {
         const CoinsData = res.data;
+
         setCoins(CoinsData);
+
         // console.log(CoinsData);
       })
       .catch((error) => setError(error.message));
@@ -48,14 +65,15 @@ function Coins({ currency }) {
   }, [URL]);
 
   const handleChange = (e) => {
-    setSearch(e.target.value);
+    if (e.target.value !== null) {
+      setSearch(e.target.value);
+    } else {
+      console.log(error);
+    }
   };
 
-  const filteredCoins = coins.filter(
-    useCallback(
-      (coin) => coin.name.toLowerCase().includes(search.toLowerCase()),
-      [search]
-    )
+  const filteredCoins = coins.filter((coin) =>
+    coin.name.toLowerCase().includes(search.toLowerCase())
   );
 
   //===================FETCH MORE COINS
@@ -120,6 +138,7 @@ function Coins({ currency }) {
               placeholder="Search for Crypto Currencies"
               className={classes["coin-input"]}
               onChange={handleChange}
+              value={search}
             />
           </form>
         </div>

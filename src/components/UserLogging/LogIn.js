@@ -52,7 +52,7 @@ const LogIn = ({ logInHandler }) => {
 
   const startsWithError = enteredEmail.startsWith("@"); //if email starts with '@'
 
-  const OnButtonClick = () => {};
+  // const OnButtonClick = () => {};
 
   //when we click/focus on form
 
@@ -112,11 +112,7 @@ const LogIn = ({ logInHandler }) => {
               )}
             </div>
             <div className={classes["form-actions"]}>
-              <button
-                onClick={OnButtonClick}
-                disabled={!formIsValid}
-                className={classes.loginBtn}
-              >
+              <button disabled={!formIsValid} className={classes.loginBtn}>
                 Submit
               </button>
             </div>

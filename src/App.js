@@ -23,8 +23,23 @@ function App() {
   const navigate = useNavigate();
 
   const mainCurrencyGot = (currency) => {
+    navigate(`/all-coins?currency=${currency}`);
     setCur(currency);
   };
+
+  //------------keep currency
+  // useEffect(() => {
+  //   const storageCurreny = JSON.parse(localStorage.getItem("currency"));
+  //   if (storageCurreny !== "") {
+  //     setCur(storageCurreny);
+  //   }
+  // }, []);
+
+  // useEffect(() => {
+  //   localStorage.setItem("currency", JSON.stringify(cur));
+  // }, [cur]);
+
+  //-------------------------
 
   useEffect(() => {
     const CryptoPage = localStorage.getItem("CryptoPage");
@@ -37,7 +52,8 @@ function App() {
       localStorage.removeItem("CryptoPage");
     }
     return () => {
-      console.log("CLEAN UUPP");
+      console.log("cleared");
+      // localStorage.clear();
     };
   }, [OnLogInPage]);
 

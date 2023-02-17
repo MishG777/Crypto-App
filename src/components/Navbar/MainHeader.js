@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { AiOutlineMenu, AiOutlineMinusCircle } from "react-icons/ai";
 import { NavLink, Link, useNavigate } from "react-router-dom";
 import classes from "./MainHeader.module.css";
@@ -8,11 +8,14 @@ const MainHeader = ({ logOutHandler, logIn, gotCurrency }) => {
 
   const navigate = useNavigate();
 
-  const currencyHandler = (e) => {
-    const currency = e.target.value.toLowerCase();
-    navigate(`/all-coins?currency=${currency}`);
-    gotCurrency(currency);
-  };
+  const currencyHandler = useCallback(
+    (e) => {
+      let currency = e.target.value.toLowerCase();
+      navigate(`/all-coins?currency=${currency.toLowerCase()}`);
+      gotCurrency(currency);
+    },
+    [navigate, gotCurrency]
+  );
 
   const openMenu = () => {
     setmenuOpen((prev) => !prev);

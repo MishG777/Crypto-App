@@ -45,6 +45,13 @@ const CoinItems = ({
     }
   }, [currency]);
 
+  // useEffect(() => {
+  //   const storageCur = JSON.parse(localStorage.getItem("currency"));
+  //   if (storageCur !== "") {
+  //     setlogoCurrency(storageCur);
+  //   }
+  // }, []);
+
   const PriceAndTimeChanger = useCallback(() => {
     if (
       timeChanger.H1 > 0 ||

@@ -46,22 +46,29 @@ function Coins({ currency }) {
     localStorage.setItem("searchedData", JSON.stringify(search));
   }, [search]);
 
-  //------------------------------------
+  //------------------------------------ fetching coins
 
   useEffect(() => {
     setIsLoading(true);
     setError(null);
-    axios
-      .get(URL)
-      .then((res) => {
-        const CoinsData = res.data;
+    const timerId = setTimeout(() => {
+      axios
+        .get(URL)
+        .then((res) => {
+          const CoinsData = res.data;
 
-        setCoins(CoinsData);
+          setCoins(CoinsData);
 
-        // console.log(CoinsData);
-      })
-      .catch((error) => setError(error.message));
-    setIsLoading(false);
+          // console.log(CoinsData);
+          setIsLoading(false);
+        })
+        .catch((error) => {
+          setIsLoading(false);
+          setError(error.message);
+        });
+    }, 2000); // 2 second delay
+
+    return () => clearTimeout(timerId);
   }, [URL]);
 
   const handleChange = (e) => {
@@ -73,7 +80,7 @@ function Coins({ currency }) {
   };
 
   const filteredCoins = coins.filter((coin) =>
-    coin.name.toLowerCase().includes(search.toLowerCase())
+    coin.name.toLowerCase().includes(search?.toLowerCase() || "")
   );
 
   //===================FETCH MORE COINS
@@ -138,7 +145,7 @@ function Coins({ currency }) {
               placeholder="Search for Crypto Currencies"
               className={classes["coin-input"]}
               onChange={handleChange}
-              value={search}
+              value={search ? search : ""}
             />
           </form>
         </div>

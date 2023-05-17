@@ -45,13 +45,6 @@ const CoinItems = ({
     }
   }, [currency]);
 
-  // useEffect(() => {
-  //   const storageCur = JSON.parse(localStorage.getItem("currency"));
-  //   if (storageCur !== "") {
-  //     setlogoCurrency(storageCur);
-  //   }
-  // }, []);
-
   const PriceAndTimeChanger = useCallback(() => {
     if (
       timeChanger.H1 > 0 ||
@@ -69,20 +62,30 @@ const CoinItems = ({
 
     let tm;
 
-    if (priceChangeTime === "1h") {
-      tm = timeChanger.H1.toFixed(3);
-    } else if (priceChangeTime === "24h") {
-      tm = timeChanger.H24.toFixed(3);
-    } else if (priceChangeTime === "7d") {
-      tm = timeChanger.D7.toFixed(3);
-    } else if (priceChangeTime === "14d") {
-      tm = timeChanger.D14.toFixed(3);
-    } else if (priceChangeTime === "30d") {
-      tm = timeChanger.D30.toFixed(3);
-    } else if (priceChangeTime === "200d") {
-      tm = timeChanger.D200.toFixed(3);
-    } else if (priceChangeTime === "1y") {
-      tm = timeChanger.Y1.toFixed(3);
+    switch (priceChangeTime) {
+      case "1h":
+        tm = timeChanger.H1.toFixed(3);
+        break;
+      case "24h":
+        tm = timeChanger.H24.toFixed(3);
+        break;
+      case "7d":
+        tm = timeChanger.D7.toFixed(3);
+        break;
+      case "14d":
+        tm = timeChanger.D14.toFixed(3);
+        break;
+      case "30d":
+        tm = timeChanger.D30.toFixed(3);
+        break;
+      case "200d":
+        tm = timeChanger.D200.toFixed(3);
+        break;
+      case "1y":
+        tm = timeChanger.Y1.toFixed(3);
+        break;
+      default:
+        break;
     }
 
     setPercentByTime(tm);
@@ -103,16 +106,16 @@ const CoinItems = ({
   }, [currencyChangerFn, PriceAndTimeChanger]);
 
   return (
-    <Link to={`${name}`} className={classes["coin-container"]}>
+    <Link to={name} className={classes["coin-container"]}>
       <img src={image} alt="crypto" />
 
       <div className={classes["coin-data"]}>
         <h4 className={classes.name}>{name}</h4>
         <div className={classes["inner-data"]}>
-          <p className={classes.rank}>
+          <h6 className={classes.rank}>
             <span>rank: </span>
             {market_cap_rank}
-          </p>
+          </h6>
           <p className={classes.symbol}> {symbol.toUpperCase()}</p>
 
           <p>
@@ -125,10 +128,10 @@ const CoinItems = ({
             {`${logoCurrency ? "$" : "€"}${market_cap.toLocaleString()} `}
           </p>
 
-          <p className={`${percent ? classes.green : classes.red}`}>
+          <h6 className={`${percent ? classes.green : classes.red}`}>
             <span>{priceChangeTime}: </span>
             {` ${percentByTime} %`}
-          </p>
+          </h6>
         </div>
       </div>
     </Link>

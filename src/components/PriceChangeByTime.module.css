@@ -11,3 +11,9 @@
 .timeChanger:active {
   background-color: rgb(34, 134, 138);
 }
+
+@media (max-width: 900px) {
+  .timeChanger {
+    margin-bottom: 1rem;
+  }
+}

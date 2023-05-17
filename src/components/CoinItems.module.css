@@ -47,7 +47,11 @@ p {
   align-items: center;
   justify-content: space-around;
   width: 95%;
-  height: 85%;
+  height: 88%;
+}
+.inner-data h6 {
+  margin: 0;
+  font-size: 14px;
 }
 
 .inner-data span {
@@ -71,7 +75,7 @@ p {
   }
 
   .coin-container img {
-    width: 7%;
+    width: 4%;
     margin: 4px;
   }
 
@@ -81,8 +85,9 @@ p {
     justify-content: space-evenly;
   }
   .coin-data .name {
-    width: 5.5rem;
-    margin-left: 10px;
+    /*width: 5rem;*/
+    margin: 6px auto 6px;
+    font-size: 10px;
   }
   .inner-data {
     flex-direction: row;
@@ -91,7 +96,10 @@ p {
   }
 
   .inner-data p {
-    font-size: 10px;
+    font-size: 8px;
+    border: 0.5px solid rgb(32, 161, 165);
+    border-radius: 8px;
+    padding: 2px 5px;
   }
   .inner-data span {
     display: none;
@@ -102,14 +110,19 @@ p {
   }
 
   .inner-data .rank {
-    padding: 4px 10px;
+    /*padding: 4px 10px;*/
     font-weight: bold;
+    font-size: 8px;
+  }
+  .inner-data h6 {
+    font-size: 8px;
   }
 }
 
 .green {
   background-color: rgb(213, 255, 241);
   padding: 2px 8px;
+
   border-radius: 7px;
   color: green;
 }

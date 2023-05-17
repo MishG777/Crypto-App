@@ -66,7 +66,7 @@ function Coins({ currency }) {
           setIsLoading(false);
           setError(error.message);
         });
-    }, 2000); // 2 second delay
+    }, 1000); // 2 second delay
 
     return () => clearTimeout(timerId);
   }, [URL]);
@@ -112,7 +112,7 @@ function Coins({ currency }) {
 
   //================= PREVIOUS PAGE
 
-  const prevousPageHandler = useCallback(() => {
+  const previousPageHandler = useCallback(() => {
     setIsLoading(true);
     setFetchNextPage((nextPage) => nextPage - 1);
     const prevPage = fetchNextPage - 1;
@@ -190,7 +190,7 @@ function Coins({ currency }) {
               <h4 className={classes.noMoreFetch}>No more coins to fetch!</h4>
             )}
             {secondPageFetched && fetchNextPage > 1 && (
-              <Button onClick={prevousPageHandler}>previous page</Button>
+              <Button onClick={previousPageHandler}>previous page</Button>
             )}
             <Button onClick={fetchSecondPageHandler}>go to next page</Button>
           </div>

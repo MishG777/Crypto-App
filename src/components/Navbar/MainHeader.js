@@ -1,4 +1,4 @@
-import { memo, useState, useCallback } from "react";
+import { memo, useState, useCallback, useEffect } from "react";
 import { AiOutlineMenu, AiOutlineMinusCircle } from "react-icons/ai";
 import { NavLink, Link, useNavigate } from "react-router-dom";
 import classes from "./MainHeader.module.css";
@@ -20,6 +20,17 @@ const MainHeader = ({ logOutHandler, logIn, gotCurrency }) => {
   const openMenu = () => {
     setmenuOpen((prev) => !prev);
   };
+
+  useEffect(() => {
+    // Retrieve menuOpen state from localStorage
+    const isMenuOpen = localStorage.getItem("menuOpen");
+    setmenuOpen(isMenuOpen === "true");
+  }, []);
+
+  useEffect(() => {
+    // Save menuOpen state to localStorage
+    localStorage.setItem("menuOpen", menuOpen);
+  }, [menuOpen]);
 
   return (
     <header className={`${classes.header} ${menuOpen && classes.active}`}>

@@ -1,4 +1,10 @@
-import React, { useState, useEffect, Fragment, useCallback } from "react";
+import React, {
+  useState,
+  useEffect,
+  Fragment,
+  useCallback,
+  useMemo,
+} from "react";
 import axios from "axios";
 import CoinItems from "./CoinItems";
 import classes from "./Coins.module.css";
@@ -7,6 +13,7 @@ import { CoinPages } from "./Footer/CoinPages";
 import Button from "./UI/Button";
 import { useNavigate, useLocation } from "react-router-dom";
 import PriceChangeByTime from "./PriceChangeByTime";
+import CoinsTopBar from "./CoinsTopBar";
 
 function Coins({ currency }) {
   const [coins, setCoins] = useState([]);
@@ -14,7 +21,8 @@ function Coins({ currency }) {
   const [search, setSearch] = useState("");
   const [error, setError] = useState(null);
 
-  const [fetchedCoinsAmount, setFetchedCoinsAmount] = useState(125);
+  const [fetchedCoinsAmount, setFetchedCoinsAmount] = useState(10);
+
   const [noMoreCoins, setNoMoreCoins] = useState(false);
 
   const [fetchNextPage, setFetchNextPage] = useState(1);
@@ -79,9 +87,11 @@ function Coins({ currency }) {
     }
   };
 
-  const filteredCoins = coins.filter((coin) =>
-    coin.name.toLowerCase().includes(search?.toLowerCase() || "")
-  );
+  const filteredCoins = useMemo(() => {
+    return coins.filter((coin) =>
+      coin.name.toLowerCase().includes(search?.toLowerCase() || "")
+    );
+  }, [coins, search]);
 
   //===================FETCH MORE COINS
 
@@ -123,16 +133,14 @@ function Coins({ currency }) {
   //==================== SORT BY MARKET CAP
 
   const sortByMcHandler = useCallback(() => {
-    setIsLoading(true);
     navigate(`${location.pathname}?McSort=${mcSorting ? "desc" : "asc"}`);
-    setIsLoading(false);
   }, [location.pathname, mcSorting, navigate]);
 
   //========================== GOT TIME FOR price_change_percentage in API
 
-  const gotTimeHandler = (time) => {
+  const gotTimeHandler = useCallback((time) => {
     setpriceChangeTime(time);
-  };
+  }, []);
 
   return (
     <Fragment>
@@ -162,13 +170,14 @@ function Coins({ currency }) {
         )}
         {!isLoading && coins.length > 0 && (
           <div className={classes["all-coins"]}>
-            <div className={classes.bar}>
+            {/*<div className={classes.bar}>
               <h3>Symbol</h3>
               <h3>Coin</h3>
               <h3>Price</h3>
               <h3>Market Cap</h3>
               <h3>Price Volume {priceChangeTime}</h3>
-            </div>
+            </div>*/}
+            <CoinsTopBar />
             {filteredCoins.map((coin) => {
               return (
                 <CoinItems

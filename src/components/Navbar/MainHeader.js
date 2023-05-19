@@ -5,6 +5,9 @@ import classes from "./MainHeader.module.css";
 
 const MainHeader = ({ logOutHandler, logIn, gotCurrency }) => {
   const [menuOpen, setmenuOpen] = useState(false);
+  const [selectedCurrency, setSelectedCurrency] = useState(
+    localStorage.getItem("selectedCurrency") || "usd"
+  );
 
   const navigate = useNavigate();
 
@@ -12,6 +15,8 @@ const MainHeader = ({ logOutHandler, logIn, gotCurrency }) => {
     (e) => {
       let currency = e.target.value.toLowerCase();
       navigate(`/all-coins?currency=${currency.toLowerCase()}`);
+      setSelectedCurrency(currency);
+      localStorage.setItem("selectedCurrency", currency);
       gotCurrency(currency);
     },
     [navigate, gotCurrency]
@@ -32,6 +37,11 @@ const MainHeader = ({ logOutHandler, logIn, gotCurrency }) => {
     localStorage.setItem("menuOpen", menuOpen);
   }, [menuOpen]);
 
+  useEffect(() => {
+    // Set the selected currency in localStorage when it changes
+    localStorage.setItem("selectedCurrency", selectedCurrency);
+  }, [selectedCurrency]);
+
   return (
     <header className={`${classes.header} ${menuOpen && classes.active}`}>
       <h1 className={!logIn && classes.logo}>CRYPToAPP</h1>
@@ -40,9 +50,17 @@ const MainHeader = ({ logOutHandler, logIn, gotCurrency }) => {
         <>
           <div>
             <ul className={classes.burgerNav}>
-              <select onChange={currencyHandler} className={classes.currency}>
-                <option onClick={openMenu}>USD</option>
-                <option onClick={openMenu}>EUR</option>
+              <select
+                onChange={currencyHandler}
+                className={classes.currency}
+                value={selectedCurrency}
+              >
+                <option onClick={openMenu} value="usd">
+                  USD
+                </option>
+                <option onClick={openMenu} value="eur">
+                  EUR
+                </option>
               </select>
               <li onClick={openMenu}>
                 <NavLink id={classes.coins} to="/all-coins">

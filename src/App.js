@@ -27,20 +27,6 @@ function App() {
     setCur(currency);
   };
 
-  //------------keep currency
-  // useEffect(() => {
-  //   const storageCurreny = JSON.parse(localStorage.getItem("currency"));
-  //   if (storageCurreny !== "") {
-  //     setCur(storageCurreny);
-  //   }
-  // }, []);
-
-  // useEffect(() => {
-  //   localStorage.setItem("currency", JSON.stringify(cur));
-  // }, [cur]);
-
-  //-------------------------
-
   useEffect(() => {
     const CryptoPage = localStorage.getItem("CryptoPage");
 

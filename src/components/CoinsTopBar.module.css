@@ -1,0 +1,162 @@
+.coin-container1 {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-direction: column;
+  border-radius: 5px;
+  box-shadow: 1px 2px 3px 2px rgba(12, 12, 12, 0.2);
+  backdrop-filter: blur(30px);
+  margin: 15px;
+  border-radius: 30px;
+  width: 230px;
+  height: 310px;
+  cursor: pointer;
+  text-decoration: none;
+  display: none;
+}
+
+.coin-container1:hover {
+  box-shadow: 0px 0px 20px white;
+}
+
+.coin-container1 img {
+  width: 50%;
+}
+h4,
+p {
+  margin: 0;
+  color: white;
+}
+
+.coin-data1 {
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+  color: white;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: column;
+  height: 10rem;
+  width: 90%;
+}
+
+.inner-data1 {
+  border: 1px solid rgb(32, 161, 165);
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  width: 95%;
+  height: 88%;
+}
+.inner-data1 h6 {
+  margin: 0;
+  font-size: 14px;
+}
+
+.inner-data1 span {
+  font-size: inherit;
+}
+
+.inner-data1 .rank {
+  background-color: rgb(32, 161, 165);
+  color: white;
+  border-radius: 0.4rem;
+  padding: 2px 4px;
+}
+
+@media (max-width: 900px) {
+  .coin-container1 {
+    flex-direction: row;
+    width: 100%;
+    height: 3.5rem;
+    margin: 0 0 20px 0;
+    padding: 5px;
+    display: flex;
+  }
+
+  .disappear {
+    display: none;
+  }
+
+  .coin-container1 img {
+    width: 6%;
+    margin: 3px;
+    font-size: 5px;
+  }
+
+  .coin-data1 {
+    flex-direction: row;
+    height: 100%;
+    justify-content: space-evenly;
+  }
+  /*.coin-data1 .name {
+    margin: 6px auto 6px;
+    font-size: 10px;
+  }*/
+
+  .inner-data1 {
+    flex-direction: row;
+    border: none;
+    width: 80%;
+  }
+
+  /*.inner-data1 p {
+    font-size: 8px;
+    border: 0.5px solid rgb(32, 161, 165);
+    border-radius: 4px;
+    padding: 3.5px 5px;
+  }*/
+  .inner-data1 span {
+    display: none;
+  }
+
+  .inner-data1 .symbol {
+    display: none;
+  }
+
+  .inner-data1 .rank {
+    /*padding: 4px 10px;*/
+    /*font-weight: bold;
+      font-size: 8px;*/
+    display: none;
+  }
+  .inner-data1 h6 {
+    font-size: 8px;
+  }
+
+  .green {
+    background-color: rgb(213, 255, 241);
+    padding: 2px 5px;
+    border-radius: 2px;
+    color: green;
+  }
+
+  .red {
+    background-color: rgb(255, 229, 229);
+    padding: 2px 5px;
+    border-radius: 2px;
+    color: red;
+  }
+}
+
+.green {
+  background-color: rgb(213, 255, 241);
+  padding: 2px 8px;
+
+  border-radius: 7px;
+  color: green;
+}
+
+.red {
+  background-color: rgb(255, 229, 229);
+  padding: 2px 8px;
+  border-radius: 7px;
+  color: red;
+}
+
+.grey {
+  color: grey;
+}

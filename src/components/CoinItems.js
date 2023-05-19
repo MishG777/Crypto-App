@@ -97,10 +97,6 @@ const CoinItems = ({
     currencyChangerFn();
   }, [currencyChangerFn]);
 
-  useEffect(() => {
-    console.log("Screen width: " + window.innerWidth);
-  }, []);
-
   const marketCap = market_cap;
   let translatedMarketCap = "";
 

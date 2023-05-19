@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { memo, useState, useCallback } from "react";
 import { AiOutlineMenu, AiOutlineMinusCircle } from "react-icons/ai";
 import { NavLink, Link, useNavigate } from "react-router-dom";
 import classes from "./MainHeader.module.css";
@@ -23,7 +23,7 @@ const MainHeader = ({ logOutHandler, logIn, gotCurrency }) => {
 
   return (
     <header className={`${classes.header} ${menuOpen && classes.active}`}>
-      <h1 className={classes.logo}>CRYPToAPP</h1>
+      <h1 className={!logIn && classes.logo}>CRYPToAPP</h1>
 
       {logIn && (
         <>
@@ -60,4 +60,4 @@ const MainHeader = ({ logOutHandler, logIn, gotCurrency }) => {
   );
 };
 
-export default MainHeader;
+export default memo(MainHeader);

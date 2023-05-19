@@ -66,6 +66,9 @@
   display: none;
 }
 @media (max-width: 700px) {
+  .logo {
+    margin: 0 auto;
+  }
   .burgerBar,
   .closeBurger {
     display: block;
@@ -97,5 +100,13 @@
     border-bottom-left-radius: 5px;
     border: 2px solid white;
     backdrop-filter: blur(12px);
+  }
+  .currency {
+    outline: none;
+    background: none;
+    border: 2px solid white;
+    padding: 2px 10px;
+    color: white;
+    margin: 0;
   }
 }

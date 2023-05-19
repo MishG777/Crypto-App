@@ -66,7 +66,7 @@ function Coins({ currency }) {
           setIsLoading(false);
           setError(error.message);
         });
-    }, 1000); // 2 second delay
+    }, 2000); // 2 second delay
 
     return () => clearTimeout(timerId);
   }, [URL]);
@@ -165,7 +165,6 @@ function Coins({ currency }) {
             <div className={classes.bar}>
               <h3>Symbol</h3>
               <h3>Coin</h3>
-              <h3>Rank</h3>
               <h3>Price</h3>
               <h3>Market Cap</h3>
               <h3>Price Volume {priceChangeTime}</h3>

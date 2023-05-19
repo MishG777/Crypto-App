@@ -46,20 +46,9 @@ const CoinItems = ({
   }, [currency]);
 
   const PriceAndTimeChanger = useCallback(() => {
-    if (
-      timeChanger.H1 > 0 ||
-      timeChanger.H24 > 0 ||
-      timeChanger.D7 > 0 ||
-      timeChanger.D14 > 0 ||
-      timeChanger.D30 > 0 ||
-      timeChanger.D200 > 0 ||
-      timeChanger.Y1 > 0
-    ) {
-      setPercent(true);
-    } else {
-      setPercent(false);
-    }
-
+    const timeKeys = Object.keys(timeChanger);
+    const positiveTimeKeys = timeKeys.filter((key) => timeChanger[key] > 0);
+    setPercent(positiveTimeKeys.length > 0);
     let tm;
 
     switch (priceChangeTime) {
@@ -101,14 +90,33 @@ const CoinItems = ({
   ]);
 
   useEffect(() => {
-    currencyChangerFn();
     PriceAndTimeChanger();
-  }, [currencyChangerFn, PriceAndTimeChanger]);
+  }, [PriceAndTimeChanger]);
+
+  useEffect(() => {
+    currencyChangerFn();
+  }, [currencyChangerFn]);
+
+  useEffect(() => {
+    console.log("Screen width: " + window.innerWidth);
+  }, []);
+
+  const marketCap = market_cap;
+  let translatedMarketCap = "";
+
+  if (marketCap >= 1000000000) {
+    translatedMarketCap = (marketCap / 1000000000).toFixed(1) + "B";
+  } else if (marketCap >= 1000000) {
+    translatedMarketCap = (marketCap / 1000000).toFixed(1) + "M";
+  } else if (marketCap >= 1000) {
+    translatedMarketCap = (marketCap / 1000).toFixed(1) + "K";
+  } else {
+    translatedMarketCap = marketCap.toString();
+  }
 
   return (
     <Link to={name} className={classes["coin-container"]}>
       <img src={image} alt="crypto" />
-
       <div className={classes["coin-data"]}>
         <h4 className={classes.name}>{name}</h4>
         <div className={classes["inner-data"]}>
@@ -120,12 +128,16 @@ const CoinItems = ({
 
           <p>
             <span>Price: </span>
-            {`${logoCurrency ? "$" : "€"}${current_price}`}
+            {`${logoCurrency ? "$" : "€"}${
+              current_price?.toLocaleString() || ""
+            }`}
           </p>
 
           <p>
             <span>MC: </span>
-            {`${logoCurrency ? "$" : "€"}${market_cap.toLocaleString()} `}
+            {`${
+              logoCurrency ? "$" : "€"
+            }${translatedMarketCap.toLocaleString()} `}
           </p>
 
           <h6 className={`${percent ? classes.green : classes.red}`}>

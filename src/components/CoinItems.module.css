@@ -69,14 +69,19 @@ p {
   .coin-container {
     flex-direction: row;
     width: 100%;
-    height: 4rem;
+    height: 3.5rem;
     margin: 0 0 20px 0;
     padding: 5px;
   }
 
+  .disappear {
+    display: none;
+  }
+
   .coin-container img {
-    width: 4%;
-    margin: 4px;
+    width: 6%;
+    margin: 3px;
+    font-size: 5px;
   }
 
   .coin-data {
@@ -85,10 +90,10 @@ p {
     justify-content: space-evenly;
   }
   .coin-data .name {
-    /*width: 5rem;*/
     margin: 6px auto 6px;
     font-size: 10px;
   }
+
   .inner-data {
     flex-direction: row;
     border: none;
@@ -98,8 +103,8 @@ p {
   .inner-data p {
     font-size: 8px;
     border: 0.5px solid rgb(32, 161, 165);
-    border-radius: 8px;
-    padding: 2px 5px;
+    border-radius: 4px;
+    padding: 3.5px 5px;
   }
   .inner-data span {
     display: none;
@@ -111,11 +116,26 @@ p {
 
   .inner-data .rank {
     /*padding: 4px 10px;*/
-    font-weight: bold;
-    font-size: 8px;
+    /*font-weight: bold;
+    font-size: 8px;*/
+    display: none;
   }
   .inner-data h6 {
     font-size: 8px;
+  }
+
+  .green {
+    background-color: rgb(213, 255, 241);
+    padding: 2px 5px;
+    border-radius: 2px;
+    color: green;
+  }
+
+  .red {
+    background-color: rgb(255, 229, 229);
+    padding: 2px 5px;
+    border-radius: 2px;
+    color: red;
   }
 }
 

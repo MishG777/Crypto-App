@@ -8,16 +8,13 @@ function CoinsTopBar() {
       <div className={classes["coin-data1"]}>
         <p className={classes.name}>name</p>
         <div className={classes["inner-data1"]}>
-          <h6 className={classes.rank}>
-            <span>rank: </span>1
-          </h6>
-          <p className={classes.symbol}>name</p>
+          <p className={classes.rank1}>rank</p>
 
           <p>price</p>
 
           <p>Market Cap</p>
 
-          <p>changes</p>
+          <p className={classes.changes}>changes</p>
         </div>
       </div>
     </div>

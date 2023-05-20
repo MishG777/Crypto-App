@@ -190,6 +190,7 @@ function Coins({ currency }) {
             })}
           </div>
         )}
+
         {!noMoreCoins && <Button onClick={fetchMoreCoins}>fetch more</Button>}
 
         {noMoreCoins && (

@@ -27,9 +27,9 @@ const Singup = () => {
         <button className={classes.registrBtn}>Sign Up</button>
       </div>
       <div className={classes.otherSigns}>
-        <button>Sign Up with Gmail</button>
         <button>Sign Up with Binance</button>
         <button>Sign Up with Gmail</button>
+        <button>Sign Up from mobile App</button>
       </div>
     </form>
   );

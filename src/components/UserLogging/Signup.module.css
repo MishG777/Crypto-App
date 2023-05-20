@@ -33,16 +33,25 @@
   justify-content: space-around;
 }
 .flexClass label {
-  color: rgb(64, 117, 119);
-  font-weight: bolder;
-  font-size: 12px;
+  margin-bottom: 0.5rem;
+  border-bottom: 1px solid white;
+  color: white;
   letter-spacing: 0.3px;
-  border-bottom: 2px solid rgb(64, 117, 119);
+}
+
+.flexClass input:focus {
+  outline: none;
+  border-color: rgb(128, 183, 185);
 }
 
 .flexClass input {
-  width: 20rem;
-  height: 1.7rem;
+  width: 18rem;
+  height: 2.5rem;
+  border-radius: 10px;
+  border: 2px solid white;
+  background: none;
+  color: white;
+  caret-color: white;
 }
 
 .otherSigns {
@@ -53,13 +62,14 @@
 }
 
 .otherSigns button {
-  font-size: 0.85rem;
-  background-color: rgb(33, 77, 73);
+  font-size: 0.6rem;
+  background-color: rgb(61, 173, 177);
   color: white;
   border: none;
-  padding: 0.1rem 1rem;
+  padding: 0.2rem 0.3rem;
   border-radius: 4px;
   cursor: pointer;
+  width: 6rem;
 }
 
 .otherSigns button:hover {

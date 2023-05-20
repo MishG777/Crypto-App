@@ -27,16 +27,6 @@ const CoinItems = ({
     price_change_percentage_24h_in_currency
   );
 
-  const timeChanger = {
-    H1: +price_change_percentage_1h_in_currency,
-    H24: +price_change_percentage_24h_in_currency,
-    D7: +price_change_percentage_7d_in_currency,
-    D14: +price_change_percentage_14d_in_currency,
-    D30: +price_change_percentage_30d_in_currency,
-    D200: +price_change_percentage_200d_in_currency,
-    Y1: +price_change_percentage_1y_in_currency,
-  };
-
   const currencyChangerFn = useCallback(() => {
     if (currency === "usd") {
       setlogoCurrency(true);
@@ -45,53 +35,63 @@ const CoinItems = ({
     }
   }, [currency]);
 
-  const PriceAndTimeChanger = useCallback(() => {
-    const timeKeys = Object.keys(timeChanger);
-    const positiveTimeKeys = timeKeys.filter((key) => timeChanger[key] > 0);
-    setPercent(positiveTimeKeys.length > 0);
-    let tm;
+  useEffect(() => {
+    const timeChanger = {
+      H1: +price_change_percentage_1h_in_currency,
+      H24: +price_change_percentage_24h_in_currency,
+      D7: +price_change_percentage_7d_in_currency,
+      D14: +price_change_percentage_14d_in_currency,
+      D30: +price_change_percentage_30d_in_currency,
+      D200: +price_change_percentage_200d_in_currency,
+      Y1: +price_change_percentage_1y_in_currency,
+    };
 
-    switch (priceChangeTime) {
-      case "1h":
-        tm = timeChanger.H1.toFixed(3);
-        break;
-      case "24h":
-        tm = timeChanger.H24.toFixed(3);
-        break;
-      case "7d":
-        tm = timeChanger.D7.toFixed(3);
-        break;
-      case "14d":
-        tm = timeChanger.D14.toFixed(3);
-        break;
-      case "30d":
-        tm = timeChanger.D30.toFixed(3);
-        break;
-      case "200d":
-        tm = timeChanger.D200.toFixed(3);
-        break;
-      case "1y":
-        tm = timeChanger.Y1.toFixed(3);
-        break;
-      default:
-        break;
-    }
+    const PriceAndTimeChanger = () => {
+      const timeKeys = Object.keys(timeChanger);
+      const positiveTimeKeys = timeKeys.filter((key) => timeChanger[key] > 0);
+      setPercent(positiveTimeKeys.length > 0);
+      let tm;
 
-    setPercentByTime(tm);
+      switch (priceChangeTime) {
+        case "1h":
+          tm = timeChanger.H1.toFixed(3);
+          break;
+        case "24h":
+          tm = timeChanger.H24.toFixed(3);
+          break;
+        case "7d":
+          tm = timeChanger.D7.toFixed(3);
+          break;
+        case "14d":
+          tm = timeChanger.D14.toFixed(3);
+          break;
+        case "30d":
+          tm = timeChanger.D30.toFixed(3);
+          break;
+        case "200d":
+          tm = timeChanger.D200.toFixed(3);
+          break;
+        case "1y":
+          tm = timeChanger.Y1.toFixed(3);
+          break;
+        default:
+          break;
+      }
+
+      setPercentByTime(tm);
+    };
+
+    PriceAndTimeChanger();
   }, [
     priceChangeTime,
-    timeChanger.H1,
-    timeChanger.H24,
-    timeChanger.D7,
-    timeChanger.D14,
-    timeChanger.D30,
-    timeChanger.D200,
-    timeChanger.Y1,
+    price_change_percentage_1h_in_currency,
+    price_change_percentage_24h_in_currency,
+    price_change_percentage_7d_in_currency,
+    price_change_percentage_14d_in_currency,
+    price_change_percentage_30d_in_currency,
+    price_change_percentage_200d_in_currency,
+    price_change_percentage_1y_in_currency,
   ]);
-
-  useEffect(() => {
-    PriceAndTimeChanger();
-  }, [PriceAndTimeChanger]);
 
   useEffect(() => {
     currencyChangerFn();

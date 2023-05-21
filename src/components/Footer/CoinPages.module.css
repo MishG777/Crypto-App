@@ -9,6 +9,7 @@
 
 @media (max-width: 900px) {
   .CoinPages {
-    padding: 2px 30px 2px 30px;
+    padding: 1.5px 12px 1.5px 12px;
+    flex-wrap: wrap;
   }
 }

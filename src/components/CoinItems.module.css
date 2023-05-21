@@ -119,12 +119,13 @@ p {
     padding: 4px 4px;
     font-weight: bold;
     font-size: 8px;
-    width: 3rem;
+    width: 1.3rem;
+    /*margin: 0 1rem 0 1rem;*/
     /*display: none;*/
   }
   .inner-data h6 {
     font-size: 8px;
-    width: 3rem;
+    width: 3.2rem;
   }
 
   .green {

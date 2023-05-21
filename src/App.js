@@ -39,12 +39,12 @@ function App() {
     }
     return () => {
       console.log("cleared");
-      // localStorage.clear();
     };
   }, [OnLogInPage]);
 
   const logOutHandler = () => {
     setLogin(false);
+    localStorage.clear();
   };
 
   const logInHandler = () => {

@@ -19,9 +19,9 @@ function Coins({ currency }) {
   const [coins, setCoins] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [search, setSearch] = useState("");
-  const [error, setError] = useState(null);
+  const [error, setError] = useState("");
 
-  const [fetchedCoinsAmount, setFetchedCoinsAmount] = useState(10);
+  const [fetchedCoinsAmount, setFetchedCoinsAmount] = useState(20);
 
   const [noMoreCoins, setNoMoreCoins] = useState(false);
 
@@ -58,7 +58,7 @@ function Coins({ currency }) {
 
   useEffect(() => {
     setIsLoading(true);
-    setError(null);
+    setError("");
     const timerId = setTimeout(() => {
       axios
         .get(URL)
@@ -80,10 +80,10 @@ function Coins({ currency }) {
   }, [URL]);
 
   const handleChange = (e) => {
-    if (e.target.value !== null) {
+    if (e.target.value !== "") {
       setSearch(e.target.value);
     } else {
-      console.log(error);
+      setError("Unsupported Entered Date!");
     }
   };
 
@@ -165,18 +165,8 @@ function Coins({ currency }) {
           <PriceChangeByTime changedTime={gotTimeHandler} />
         </div>
 
-        {isLoading && (
-          <img src={loader} alt="loading..." className={classes.loader} />
-        )}
         {!isLoading && coins.length > 0 && (
           <div className={classes["all-coins"]}>
-            {/*<div className={classes.bar}>
-              <h3>Symbol</h3>
-              <h3>Coin</h3>
-              <h3>Price</h3>
-              <h3>Market Cap</h3>
-              <h3>Price Volume {priceChangeTime}</h3>
-            </div>*/}
             <CoinsTopBar />
             {filteredCoins.map((coin) => {
               return (
@@ -189,6 +179,9 @@ function Coins({ currency }) {
               );
             })}
           </div>
+        )}
+        {isLoading && (
+          <img src={loader} alt="loading..." className={classes.loader} />
         )}
 
         {!noMoreCoins && <Button onClick={fetchMoreCoins}>fetch more</Button>}

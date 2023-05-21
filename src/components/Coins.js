@@ -97,7 +97,7 @@ function Coins({ currency }) {
 
   const fetchMoreCoins = useCallback(() => {
     setIsLoading(true);
-    setFetchedCoinsAmount((moreCoins) => moreCoins + moreCoins * 2);
+    setFetchedCoinsAmount((moreCoins) => moreCoins * 2);
     if (fetchedCoinsAmount > 250) {
       setNoMoreCoins(true);
     }

@@ -23,7 +23,7 @@ function App() {
   const navigate = useNavigate();
 
   const mainCurrencyGot = (currency) => {
-    navigate(`/all-coins?currency=${currency}`);
+    navigate(`${location.pathname}?currency=${currency}`);
     setCur(currency);
   };
 
@@ -71,10 +71,7 @@ function App() {
 
           <Route path="/all-coins" element={<Coins currency={cur} />}></Route>
 
-          <Route
-            path="/all-coins/:details"
-            element={<CoinDetails currency={cur} />}
-          ></Route>
+          <Route path="/all-coins/:details" element={<CoinDetails />}></Route>
           <Route
             path="/auth-registration-page"
             element={<LogIn logInHandler={logInHandler} />}

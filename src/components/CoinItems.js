@@ -111,7 +111,10 @@ const CoinItems = ({
   }
 
   return (
-    <Link to={name} className={classes["coin-container"]}>
+    <Link
+      to={`${name}?currency=${currency}`}
+      className={classes["coin-container"]}
+    >
       <img src={image} alt="crypto" />
       <div className={classes["coin-data"]}>
         <h4 className={classes.name}>{name}</h4>

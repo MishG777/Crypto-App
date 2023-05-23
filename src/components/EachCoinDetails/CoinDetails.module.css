@@ -1,0 +1,9 @@
+.color {
+  color: white;
+  font-size: 30px;
+}
+.coinChart {
+  width: 800px;
+  height: 500px;
+  margin: 20px auto;
+}

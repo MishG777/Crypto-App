@@ -1,10 +1,4 @@
-import React, {
-  useState,
-  useEffect,
-  Fragment,
-  useCallback,
-  useMemo,
-} from "react";
+import React, { useState, useEffect, Fragment, useMemo } from "react";
 import axios from "axios";
 import CoinItems from "./CoinItems";
 import classes from "./Coins.module.css";
@@ -58,7 +52,6 @@ function Coins({ currency }) {
 
   useEffect(() => {
     setIsLoading(true);
-    setError("");
     const timerId = setTimeout(() => {
       axios
         .get(URL)
@@ -74,7 +67,7 @@ function Coins({ currency }) {
           setIsLoading(false);
           setError(error.message);
         });
-    }, 2000); // 2 second delay
+    }, 1500); // 2 second delay
 
     return () => clearTimeout(timerId);
   }, [URL]);
@@ -82,8 +75,6 @@ function Coins({ currency }) {
   const handleChange = (e) => {
     if (e.target.value !== "") {
       setSearch(e.target.value);
-    } else {
-      setError("Unsupported Entered Date!");
     }
   };
 
@@ -95,14 +86,14 @@ function Coins({ currency }) {
 
   //===================FETCH MORE COINS
 
-  const fetchMoreCoins = useCallback(() => {
+  const fetchMoreCoins = () => {
     setIsLoading(true);
     setFetchedCoinsAmount((moreCoins) => moreCoins * 2);
     if (fetchedCoinsAmount > 250) {
       setNoMoreCoins(true);
     }
     setIsLoading(false);
-  }, [fetchedCoinsAmount]);
+  };
 
   const showPagesNumHandler = (page) => {
     navigate(`/all-coins?page=${page}`);
@@ -110,7 +101,7 @@ function Coins({ currency }) {
 
   //=================== FETCH NEXT PAGE
 
-  const fetchSecondPageHandler = useCallback(() => {
+  const fetchSecondPageHandler = () => {
     setIsLoading(true);
     setFetchNextPage((nextPage) => nextPage + 1);
     const nextPage = fetchNextPage + 1;
@@ -118,29 +109,29 @@ function Coins({ currency }) {
 
     setSecondPageFetched(true);
     setIsLoading(false);
-  }, [fetchNextPage, navigate]);
+  };
 
   //================= PREVIOUS PAGE
 
-  const previousPageHandler = useCallback(() => {
+  const previousPageHandler = () => {
     setIsLoading(true);
     setFetchNextPage((nextPage) => nextPage - 1);
     const prevPage = fetchNextPage - 1;
     navigate(`/all-coins?page=${prevPage}`);
     setIsLoading(false);
-  }, [fetchNextPage, navigate]);
+  };
 
   //==================== SORT BY MARKET CAP
 
-  const sortByMcHandler = useCallback(() => {
+  const sortByMcHandler = () => {
     navigate(`${location.pathname}?McSort=${mcSorting ? "desc" : "asc"}`);
-  }, [location.pathname, mcSorting, navigate]);
+  };
 
   //========================== GOT TIME FOR price_change_percentage in API
 
-  const gotTimeHandler = useCallback((time) => {
+  const gotTimeHandler = (time) => {
     setpriceChangeTime(time);
-  }, []);
+  };
 
   return (
     <Fragment>

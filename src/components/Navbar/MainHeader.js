@@ -1,6 +1,6 @@
 import { memo, useState, useCallback, useEffect } from "react";
 import { AiOutlineMenu, AiOutlineMinusCircle } from "react-icons/ai";
-import { NavLink, Link, useNavigate } from "react-router-dom";
+import { NavLink, Link, useNavigate, useLocation } from "react-router-dom";
 import classes from "./MainHeader.module.css";
 
 const MainHeader = ({ logOutHandler, logIn, gotCurrency }) => {
@@ -10,16 +10,18 @@ const MainHeader = ({ logOutHandler, logIn, gotCurrency }) => {
   );
 
   const navigate = useNavigate();
+  const location = useLocation();
+  //console.log(location.pathname);
 
   const currencyHandler = useCallback(
     (e) => {
       let currency = e.target.value.toLowerCase();
-      navigate(`/all-coins?currency=${currency.toLowerCase()}`);
+      navigate(`${location.pathname}?currency=${currency.toLowerCase()}`);
       setSelectedCurrency(currency);
       localStorage.setItem("selectedCurrency", currency);
       gotCurrency(currency);
     },
-    [navigate, gotCurrency]
+    [navigate, gotCurrency, location.pathname]
   );
 
   const openMenu = () => {

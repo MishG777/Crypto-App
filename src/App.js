@@ -7,7 +7,7 @@ import {
   useNavigate,
   Navigate,
 } from "react-router-dom";
-import CoinDetails from "./components/CoinDetails";
+import CoinDetails from "./components/EachCoinDetails/CoinDetails";
 import Coins from "./components/Coins";
 import MainHeader from "./components/Navbar/MainHeader";
 import NotFound from "./components/NotFound";
@@ -71,7 +71,10 @@ function App() {
 
           <Route path="/all-coins" element={<Coins currency={cur} />}></Route>
 
-          <Route path="/all-coins/:details" element={<CoinDetails />}></Route>
+          <Route
+            path="/all-coins/:details"
+            element={<CoinDetails currency={cur} />}
+          ></Route>
           <Route
             path="/auth-registration-page"
             element={<LogIn logInHandler={logInHandler} />}

@@ -12,9 +12,8 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
-  CustomTooltip,
 } from "recharts";
-import { parseISO, format, subDays } from "date-fns";
+import { format } from "date-fns";
 
 const CoinDetails = () => {
   const [graphData, setGraphData] = useState([]);
@@ -27,7 +26,6 @@ const CoinDetails = () => {
   const isUsd = currencyParams.get("currency") === "usd";
 
   let error = "";
-  //console.log(error);
 
   const params = useParams();
   const coin = params.details.toLowerCase().replace(/%20|\s/g, "-");
@@ -75,8 +73,36 @@ const CoinDetails = () => {
     "Dec",
   ];
 
+  const USDorEUR = `${isUsd ? "$" : "€"}`;
+
+  //function CustomTooltip({ active, payload, label }) {
+  //  if (active) {
+  //    return (
+  //      <div className={classes.tooltip}>
+  //        <h4>{label}</h4>
+  //        <h4>{payload[0].value.toFixed(3) + USDorEUR}</h4>
+  //      </div>
+  //    );
+  //  }
+  //  return null;
+  //}
+  function CustomTooltip({ active, payload, label }) {
+    if (active && payload && payload.length) {
+      const data = payload[0].payload;
+      const date = new Date(label);
+      const formattedDate = format(date, "eee | MMM d | yyyy");
+      return (
+        <div className={classes.tooltip}>
+          <h4>{formattedDate}</h4>
+          <h4>{data.Price.toFixed(3) + USDorEUR}</h4>
+        </div>
+      );
+    }
+    return null;
+  }
   return (
     <Fragment>
+      {error}
       {/*<div>
         <button onClick={daysHandler} value={2}>
           2
@@ -90,19 +116,20 @@ const CoinDetails = () => {
           fontSize={10}
           data={graphData}
           margin={{
-            top: 30,
+            top: 50,
             right: 40,
             left: 0,
             bottom: 0,
           }}
         >
-          <CartesianGrid opacity={0.6} strokeDasharray="1" vertical={false} />
+          <CartesianGrid opacity={0.25} strokeDasharray="1" vertical={false} />
 
           {/*<XAxis dataKey="Date" axisLine={false} interval={90} />*/}
           <XAxis
-            interval={50}
+            interval={180}
             dataKey="Date"
             axisLine={false}
+            tickLine={false}
             tickFormatter={(timeStr) => {
               const date = new Date(timeStr);
               const month = monthNames[date.getMonth()];
@@ -118,17 +145,13 @@ const CoinDetails = () => {
             tickLine={false}
             tickFormatter={(price) => {
               if (price >= 1000) {
-                return price / 1000 + "K";
+                return USDorEUR + price / 1000 + "K";
               }
-              return price.toFixed(2);
+              return USDorEUR + price.toFixed(2);
             }}
           />
 
-          <Tooltip
-            formatter={(value) => value.toFixed(3) + `${isUsd ? "$" : "€"}`}
-            animationEasing="ease-in-out"
-            content={<CustomTooltip />}
-          />
+          <Tooltip content={<CustomTooltip />} />
 
           <defs>
             <linearGradient id="GradColor" x1="0" y1="0" x2="0" y2="1">

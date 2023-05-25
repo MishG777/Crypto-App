@@ -3,9 +3,11 @@
   font-size: 30px;
 }
 
-.toltip {
-  color: grey;
-  background-color: transparent;
-  padding: 10px 20px;
-  font-size: medium;
+.tooltip {
+  border-radius: 0.5rem;
+  color: white;
+  background: rgb(94, 94, 179);
+  padding: 1rem;
+  text-align: center;
+  box-shadow: 8px 8px 20px 10px rgba(11, 24, 45, 0.6);
 }

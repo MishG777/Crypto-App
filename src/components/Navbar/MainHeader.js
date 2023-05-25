@@ -11,7 +11,7 @@ const MainHeader = ({ logOutHandler, logIn, gotCurrency }) => {
 
   //const navigate = useNavigate();
   const location = useLocation();
-  console.log(location);
+  //console.log(location);
 
   const currencyHandler = useCallback(
     (e) => {
@@ -46,7 +46,7 @@ const MainHeader = ({ logOutHandler, logIn, gotCurrency }) => {
 
   return (
     <header className={`${classes.header} ${menuOpen && classes.active}`}>
-      <h1 className={!logIn && classes.logo}>CRYPToAPP</h1>
+      <h1 className={`${!logIn && classes.logo}`}>CRYPToAPP</h1>
 
       {logIn && (
         <>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import axios from "axios";
 import { useParams, useLocation } from "react-router-dom";
 import classes from "./CoinDetails.module.css";
@@ -11,26 +11,33 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
-  Legend,
+  ResponsiveContainer,
+  CustomTooltip,
 } from "recharts";
+import { parseISO, format, subDays } from "date-fns";
 
 const CoinDetails = () => {
   const [graphData, setGraphData] = useState([]);
+  //const [days, setDays] = useState(1);
 
   const location = useLocation();
-  //const navigate = useNavigate();
 
   const currencyParams = new URLSearchParams(location.search);
   const currency = currencyParams.get("currency");
   const isUsd = currencyParams.get("currency") === "usd";
 
   let error = "";
-  console.log(error);
+  //console.log(error);
 
   const params = useParams();
   const coin = params.details.toLowerCase().replace(/%20|\s/g, "-");
 
-  let chartURL = `https://api.coingecko.com/api/v3/coins/${coin}/market_chart?vs_currency=${currency}&days=4`;
+  //const daysHandler = (e) => {
+  //  e.preventDefault();
+  //  setDays(e.target.value);
+  //};
+
+  let chartURL = `https://api.coingecko.com/api/v3/coins/${coin}/market_chart?vs_currency=${currency}&days=50`;
 
   useEffect(() => {
     axios
@@ -42,7 +49,7 @@ const CoinDetails = () => {
           const [timestamp, prc] = price;
 
           return {
-            Date: new Date(timestamp).toLocaleString(),
+            Date: new Date(timestamp).toLocaleDateString(),
             Price: prc,
           };
         });
@@ -53,47 +60,92 @@ const CoinDetails = () => {
       });
   }, [chartURL]);
 
+  const monthNames = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+
   return (
-    <div>
-      <AreaChart
-        width={800}
-        height={500}
-        fontSize={10}
-        data={graphData}
-        margin={{
-          top: 30,
-          right: 0,
-          left: 0,
-          bottom: 0,
-        }}
-      >
-        {/*<CartesianGrid stroke="2 2" />*/}
-        <Legend />
-        <XAxis
-          dataKey="Date"
-          //tickFormatter={(timestamp) => new Date(timestamp).toLocaleString()}
-        />
-        <YAxis
-          dataKey="Price"
-          tickFormatter={(price) => {
-            if (price >= 1000) {
-              return price / 1000 + "K";
-            }
-            return price;
+    <Fragment>
+      {/*<div>
+        <button onClick={daysHandler} value={2}>
+          2
+        </button>
+        <button onClick={daysHandler} value={10}>
+          10
+        </button>
+      </div>*/}
+      <ResponsiveContainer width="100%" height={400}>
+        <AreaChart
+          fontSize={10}
+          data={graphData}
+          margin={{
+            top: 30,
+            right: 40,
+            left: 0,
+            bottom: 0,
           }}
-        />
+        >
+          <CartesianGrid opacity={0.6} strokeDasharray="1" vertical={false} />
 
-        <Tooltip
-          formatter={(value) => value.toFixed(2) + `${isUsd ? "$" : "€"}`}
-          contentStyle={{
-            borderRadius: "20px",
-          }}
-          labelClassName={classes.toltip}
-        />
+          {/*<XAxis dataKey="Date" axisLine={false} interval={90} />*/}
+          <XAxis
+            interval={50}
+            dataKey="Date"
+            axisLine={false}
+            tickFormatter={(timeStr) => {
+              const date = new Date(timeStr);
+              const month = monthNames[date.getMonth()];
+              const day = date.getDate();
+              return `${month}, ${day}`;
+            }}
+          />
+          <YAxis
+            tickCount={7}
+            dataKey="Price"
+            name="Price"
+            axisLine={false}
+            tickLine={false}
+            tickFormatter={(price) => {
+              if (price >= 1000) {
+                return price / 1000 + "K";
+              }
+              return price.toFixed(2);
+            }}
+          />
 
-        <Area type="Cross" dataKey="Price" stroke="#8884d2" fill="#mls5" />
-      </AreaChart>
-    </div>
+          <Tooltip
+            formatter={(value) => value.toFixed(3) + `${isUsd ? "$" : "€"}`}
+            animationEasing="ease-in-out"
+            content={<CustomTooltip />}
+          />
+
+          <defs>
+            <linearGradient id="GradColor" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="#8884d2" stopOpacity={0.5} />
+              <stop offset="75%" stopColor="#8884d2" stopOpacity={0.08} />
+            </linearGradient>
+          </defs>
+
+          <Area
+            dataKey="Price"
+            stroke="#a6a2db"
+            strokeWidth={1.5}
+            fill="url(#GradColor)"
+          />
+        </AreaChart>
+      </ResponsiveContainer>
+    </Fragment>
   );
 };
 

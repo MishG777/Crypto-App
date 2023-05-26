@@ -35,13 +35,14 @@ const CoinDetails = () => {
   //  setDays(e.target.value);
   //};
 
-  let chartURL = `https://api.coingecko.com/api/v3/coins/${coin}/market_chart?vs_currency=${currency}&days=50`;
+  const chartURL = `https://api.coingecko.com/api/v3/coins/${coin}/market_chart?vs_currency=${currency}&days=50`;
 
   useEffect(() => {
     axios
       .get(chartURL)
       .then((res) => {
         const chartCoins = res.data;
+        console.log(chartCoins);
 
         const graphDt = chartCoins.prices.map((price) => {
           const [timestamp, prc] = price;
@@ -75,17 +76,6 @@ const CoinDetails = () => {
 
   const USDorEUR = `${isUsd ? "$" : "€"}`;
 
-  //function CustomTooltip({ active, payload, label }) {
-  //  if (active) {
-  //    return (
-  //      <div className={classes.tooltip}>
-  //        <h4>{label}</h4>
-  //        <h4>{payload[0].value.toFixed(3) + USDorEUR}</h4>
-  //      </div>
-  //    );
-  //  }
-  //  return null;
-  //}
   function CustomTooltip({ active, payload, label }) {
     if (active && payload && payload.length) {
       const data = payload[0].payload;
@@ -111,63 +101,77 @@ const CoinDetails = () => {
           10
         </button>
       </div>*/}
-      <ResponsiveContainer width="100%" height={400}>
-        <AreaChart
-          fontSize={10}
-          data={graphData}
-          margin={{
-            top: 50,
-            right: 40,
-            left: 0,
-            bottom: 0,
-          }}
-        >
-          <CartesianGrid opacity={0.25} strokeDasharray="1" vertical={false} />
-
-          {/*<XAxis dataKey="Date" axisLine={false} interval={90} />*/}
-          <XAxis
-            interval={180}
-            dataKey="Date"
-            axisLine={false}
-            tickLine={false}
-            tickFormatter={(timeStr) => {
-              const date = new Date(timeStr);
-              const month = monthNames[date.getMonth()];
-              const day = date.getDate();
-              return `${month}, ${day}`;
+      <div className={classes.mainChartDiv}>
+        <h2 className={classes.coinTitle}>
+          {coin[0].toUpperCase() + coin.slice(1)}
+        </h2>
+        <ResponsiveContainer width="100%" height={350}>
+          <AreaChart
+            fontSize={10}
+            data={graphData}
+            margin={{
+              top: 25,
+              right: 40,
+              left: 0,
+              bottom: 0,
             }}
-          />
-          <YAxis
-            tickCount={7}
-            dataKey="Price"
-            name="Price"
-            axisLine={false}
-            tickLine={false}
-            tickFormatter={(price) => {
-              if (price >= 1000) {
-                return USDorEUR + price / 1000 + "K";
-              }
-              return USDorEUR + price.toFixed(2);
-            }}
-          />
+          >
+            <Area
+              dataKey="Price"
+              stroke="#a6a2db"
+              strokeWidth={1.5}
+              fill="url(#GradColor)"
+            />
 
-          <Tooltip content={<CustomTooltip />} />
+            <CartesianGrid
+              opacity={0.25}
+              strokeDasharray="1"
+              vertical={false}
+            />
 
-          <defs>
-            <linearGradient id="GradColor" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#8884d2" stopOpacity={0.5} />
-              <stop offset="75%" stopColor="#8884d2" stopOpacity={0.08} />
-            </linearGradient>
-          </defs>
+            <XAxis
+              interval={180}
+              dataKey="Date"
+              axisLine={false}
+              tickLine={false}
+              tickFormatter={(timeStr) => {
+                const date = new Date(timeStr);
+                const month = monthNames[date.getMonth()];
+                const day = date.getDate();
+                return `${month}, ${day}`;
+              }}
+              tick={{
+                style: {
+                  fontWeight: "bold",
+                  fontSize: "10px",
+                },
+              }}
+            />
+            <YAxis
+              tickCount={5}
+              dataKey="Price"
+              name="Price"
+              axisLine={false}
+              tickLine={false}
+              tickFormatter={(price) => {
+                if (price >= 1000) {
+                  return USDorEUR + price / 1000 + "K";
+                }
+                return USDorEUR + price.toFixed(2);
+              }}
+            />
 
-          <Area
-            dataKey="Price"
-            stroke="#a6a2db"
-            strokeWidth={1.5}
-            fill="url(#GradColor)"
-          />
-        </AreaChart>
-      </ResponsiveContainer>
+            <Tooltip content={<CustomTooltip />} />
+
+            <defs>
+              <linearGradient id="GradColor" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor="#8884d2" stopOpacity={0.5} />
+                <stop offset="75%" stopColor="#8884d2" stopOpacity={0.08} />
+              </linearGradient>
+            </defs>
+          </AreaChart>
+        </ResponsiveContainer>
+      </div>
     </Fragment>
   );
 };

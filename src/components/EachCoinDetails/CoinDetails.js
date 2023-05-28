@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState, useRef } from "react";
 import axios from "axios";
 import { useParams, useLocation } from "react-router-dom";
 import classes from "./CoinDetails.module.css";
@@ -20,8 +20,10 @@ const CoinDetails = () => {
   const [graphData, setGraphData] = useState([]);
   const [containerWidth, setContainerWidth] = useState("100%");
 
-  //const [days, setDays] = useState(1);
+  const [days, setDays] = useState(50);
+  const [activeButton, setActiveButton] = useState(null);
 
+  const daysRef = useRef(null);
   const location = useLocation();
 
   const currencyParams = new URLSearchParams(location.search);
@@ -35,12 +37,23 @@ const CoinDetails = () => {
   const coin = params.details;
   //.toLowerCase().replace(/%20|\s/g, "-");
 
-  //const daysHandler = (e) => {
-  //  e.preventDefault();
-  //  setDays(e.target.value);
-  //};
+  const daysHandler = (e) => {
+    e.preventDefault();
+    const value = parseInt(e.target.value);
+    setActiveButton(value);
+    setDays(value);
+  };
 
-  const chartURL = `https://api.coingecko.com/api/v3/coins/${coin}/market_chart?vs_currency=${currency}&days=50`;
+  const showDaysHandler = (e) => {
+    e.preventDefault();
+    setDays(daysRef.current.value);
+    setActiveButton(daysRef.current.value);
+    daysRef.current.value = "";
+  };
+
+  console.log(days);
+
+  const chartURL = `https://api.coingecko.com/api/v3/coins/${coin}/market_chart?vs_currency=${currency}&days=${days}`;
 
   //const EachCoinURL = `https://api.coingecko.com/api/v3/coins/${coin}`
 
@@ -106,30 +119,18 @@ const CoinDetails = () => {
         setContainerWidth("80%");
       }
     };
-
-    // Add event listener to listen for screen size changes
     window.addEventListener("resize", handleResize);
-
-    // Call the resize handler initially
     handleResize();
-
-    // Clean up the event listener on unmount
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   return (
     <Fragment>
       {error}
-      {/*<div>
-        <button onClick={daysHandler} value={2}>
-          2
-        </button>
-        <button onClick={daysHandler} value={10}>
-          10
-        </button>
-      </div>*/}
+
+      <h2 className={classes.coinTitle}>{coinName}</h2>
+
       <div className={classes.mainChartDiv}>
-        <h2 className={classes.coinTitle}>{coinName}</h2>
         <ResponsiveContainer width={containerWidth} height={350}>
           <AreaChart
             fontSize={10}
@@ -161,9 +162,11 @@ const CoinDetails = () => {
               tickLine={false}
               tickFormatter={(timeStr) => {
                 const date = new Date(timeStr);
-                const month = monthNames[date.getMonth()];
-                const day = date.getDate();
-                return `${month}, ${day}`;
+                const formattedDate = format(date, "d MMM / yy");
+                //const month = monthNames[date.getMonth()];
+                //const day = date.getDate();
+                //return `${month}, ${day}`;
+                return `${formattedDate}`;
               }}
               tick={{
                 style: {
@@ -196,6 +199,48 @@ const CoinDetails = () => {
             </defs>
           </AreaChart>
         </ResponsiveContainer>
+
+        <div className={classes.chartTime}>
+          <form>
+            <button
+              className={`${classes.chartButton} ${
+                activeButton === 1 ? classes.active : ""
+              }`}
+              onClick={daysHandler}
+              value={1}
+            >
+              24 Hours
+            </button>
+            <button
+              className={`${classes.chartButton} ${
+                activeButton === 30 ? classes.active : ""
+              }`}
+              onClick={daysHandler}
+              value={30}
+            >
+              30 Days
+            </button>
+            <button
+              className={`${classes.chartButton} ${
+                activeButton === 90 ? classes.active : ""
+              }`}
+              onClick={daysHandler}
+              value={90}
+            >
+              3 Month
+            </button>
+          </form>
+
+          <form onSubmit={showDaysHandler} className={classes.inputDays}>
+            <input
+              type="number"
+              placeholder="enter num of days"
+              //onChange={changeDaysHandler}
+              ref={daysRef}
+            />
+            <button type="submit">show</button>
+          </form>
+        </div>
       </div>
 
       <FetchEachCoin coin={coin} />

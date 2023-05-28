@@ -1,4 +1,4 @@
-//import { useEffect } from "react";
+import React from "react";
 import axios from "axios";
 import { Fragment } from "react";
 
@@ -7,10 +7,10 @@ const FetchEachCoin = ({ coin }) => {
   const EachCoinURL = `https://api.coingecko.com/api/v3/coins/${coin}`;
   axios.get(EachCoinURL).then((res) => {
     const eachCoinDetails = res.data;
-    console.log(eachCoinDetails);
+    //console.log(eachCoinDetails);
   });
 
-  return <Fragment></Fragment>;
+  return <div>Fetching each coin</div>;
 };
 
 export default FetchEachCoin;

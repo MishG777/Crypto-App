@@ -27,3 +27,65 @@
   margin-top: 40px;
   /*font-family: Titillium;*/
 }
+
+/*searching days*/
+
+.chartTime {
+  /*border: 2px solid red;*/
+  width: 40rem;
+  margin: 0.8rem 0 0 8rem;
+  height: 2rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.chartTime .chartButton {
+  width: 7.5rem;
+  height: 1.7rem;
+  margin-left: 9px;
+  background: none;
+  color: white;
+  font-size: 11px;
+  outline: none;
+  border: 1.5px solid rgb(94, 94, 179);
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.chartButton:hover {
+  background: rgb(94, 94, 179);
+}
+
+.chartButton.active {
+  background: rgb(94, 94, 179);
+}
+
+.inputDays {
+  display: flex;
+
+  height: 1.7rem;
+}
+.inputDays input {
+  background: none;
+  border: 1.5px solid rgb(94, 94, 179);
+  border-radius: 4px;
+  outline: none;
+  color: white;
+}
+.inputDays input::placeholder {
+  font-size: 10px;
+  color: rgb(245, 242, 242);
+  opacity: 0.5;
+}
+.inputDays button {
+  margin-left: 5px;
+  border: 1.5px solid rgb(94, 94, 179);
+  border-radius: 4px;
+  background: none;
+  color: white;
+  font-size: 9px;
+}
+.inputDays button:hover {
+  background: rgb(94, 94, 179);
+  cursor: pointer;
+}

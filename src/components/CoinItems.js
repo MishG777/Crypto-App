@@ -3,6 +3,7 @@ import classes from "./CoinItems.module.css";
 import { Link } from "react-router-dom";
 import { useCallback } from "react";
 
+//used in Coins.js component
 const CoinItems = ({
   image,
   name,
@@ -11,6 +12,7 @@ const CoinItems = ({
   market_cap,
   market_cap_rank,
   currency,
+  id,
 
   priceChangeTime,
   price_change_percentage_1h_in_currency,
@@ -97,6 +99,10 @@ const CoinItems = ({
     currencyChangerFn();
   }, [currencyChangerFn]);
 
+  //useEffect(() => {
+  //  localStorage.setItem("CoinName", name);
+  //}, [name]);
+
   const marketCap = market_cap;
   let translatedMarketCap = "";
 
@@ -110,9 +116,17 @@ const CoinItems = ({
     translatedMarketCap = marketCap.toString();
   }
 
+  const sendCoinName = () => {
+    localStorage.setItem("CoinName", name);
+  };
+
+  const isloggedin = localStorage.getItem("CryptoPage") === "2";
+  console.log(isloggedin);
+
   return (
     <Link
-      to={`${name}?currency=${currency}`}
+      onClick={sendCoinName}
+      to={isloggedin ? `${id}?currency=${currency}` : "/auth-registration-page"}
       className={classes["coin-container"]}
     >
       <img src={image} alt="crypto" />

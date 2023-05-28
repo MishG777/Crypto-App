@@ -35,7 +35,7 @@ function App() {
     }
     if (OnLogInPage) {
       setLogin(false);
-      localStorage.removeItem("CryptoPage");
+      localStorage.setItem("CryptoPage", 1);
     }
     return () => {
       console.log("cleared");
@@ -50,9 +50,9 @@ function App() {
   const logInHandler = () => {
     localStorage.setItem("CryptoPage", "2");
     setLogin(true);
-
     navigate(`/all-coins`);
   };
+
   return (
     <Fragment>
       <header>
@@ -64,10 +64,7 @@ function App() {
       </header>
       <main>
         <Routes>
-          <Route
-            path="/"
-            element={<Navigate to="/auth-registration-page" />}
-          ></Route>
+          <Route path="/" element={<Navigate to="/all-coins" />}></Route>
 
           <Route path="/all-coins" element={<Coins currency={cur} />}></Route>
 

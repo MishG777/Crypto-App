@@ -2,6 +2,7 @@ import React, { Fragment, useEffect, useState } from "react";
 import axios from "axios";
 import { useParams, useLocation } from "react-router-dom";
 import classes from "./CoinDetails.module.css";
+import FetchEachCoin from "./FetchEachCoin";
 //import { data } from "./PagesData";
 
 import {
@@ -17,6 +18,8 @@ import { format } from "date-fns";
 
 const CoinDetails = () => {
   const [graphData, setGraphData] = useState([]);
+  const [containerWidth, setContainerWidth] = useState("100%");
+
   //const [days, setDays] = useState(1);
 
   const location = useLocation();
@@ -26,9 +29,11 @@ const CoinDetails = () => {
   const isUsd = currencyParams.get("currency") === "usd";
 
   let error = "";
+  const coinName = localStorage.getItem("CoinName");
 
   const params = useParams();
-  const coin = params.details.toLowerCase().replace(/%20|\s/g, "-");
+  const coin = params.details;
+  //.toLowerCase().replace(/%20|\s/g, "-");
 
   //const daysHandler = (e) => {
   //  e.preventDefault();
@@ -37,12 +42,14 @@ const CoinDetails = () => {
 
   const chartURL = `https://api.coingecko.com/api/v3/coins/${coin}/market_chart?vs_currency=${currency}&days=50`;
 
+  //const EachCoinURL = `https://api.coingecko.com/api/v3/coins/${coin}`
+
   useEffect(() => {
     axios
       .get(chartURL)
       .then((res) => {
         const chartCoins = res.data;
-        console.log(chartCoins);
+        //console.log(chartCoins);
 
         const graphDt = chartCoins.prices.map((price) => {
           const [timestamp, prc] = price;
@@ -90,6 +97,26 @@ const CoinDetails = () => {
     }
     return null;
   }
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth <= 650) {
+        setContainerWidth("93%");
+      } else {
+        setContainerWidth("80%");
+      }
+    };
+
+    // Add event listener to listen for screen size changes
+    window.addEventListener("resize", handleResize);
+
+    // Call the resize handler initially
+    handleResize();
+
+    // Clean up the event listener on unmount
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   return (
     <Fragment>
       {error}
@@ -102,17 +129,15 @@ const CoinDetails = () => {
         </button>
       </div>*/}
       <div className={classes.mainChartDiv}>
-        <h2 className={classes.coinTitle}>
-          {coin[0].toUpperCase() + coin.slice(1)}
-        </h2>
-        <ResponsiveContainer width="100%" height={350}>
+        <h2 className={classes.coinTitle}>{coinName}</h2>
+        <ResponsiveContainer width={containerWidth} height={350}>
           <AreaChart
             fontSize={10}
             data={graphData}
             margin={{
               top: 25,
-              right: 40,
-              left: 0,
+              right: 0,
+              left: 40,
               bottom: 0,
             }}
           >
@@ -172,6 +197,8 @@ const CoinDetails = () => {
           </AreaChart>
         </ResponsiveContainer>
       </div>
+
+      <FetchEachCoin coin={coin} />
     </Fragment>
   );
 };

@@ -62,7 +62,7 @@ const CoinDetails = () => {
       .get(chartURL)
       .then((res) => {
         const chartCoins = res.data;
-        //console.log(chartCoins);
+        console.log(chartCoins);
 
         const graphDt = chartCoins.prices.map((price) => {
           const [timestamp, prc] = price;
@@ -78,21 +78,6 @@ const CoinDetails = () => {
         error += error.message;
       });
   }, [chartURL]);
-
-  const monthNames = [
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "May",
-    "Jun",
-    "Jul",
-    "Aug",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dec",
-  ];
 
   const USDorEUR = `${isUsd ? "$" : "€"}`;
 
@@ -201,7 +186,7 @@ const CoinDetails = () => {
         </ResponsiveContainer>
 
         <div className={classes.chartTime}>
-          <form>
+          <form className={classes.timeButtons}>
             <button
               className={`${classes.chartButton} ${
                 activeButton === 1 ? classes.active : ""
@@ -238,7 +223,9 @@ const CoinDetails = () => {
               //onChange={changeDaysHandler}
               ref={daysRef}
             />
-            <button type="submit">show</button>
+            <button type="submit" className={classes.show}>
+              show
+            </button>
           </form>
         </div>
       </div>

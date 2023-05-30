@@ -121,7 +121,6 @@ const CoinItems = ({
   };
 
   const isloggedin = localStorage.getItem("CryptoPage") === "2";
-  console.log(isloggedin);
 
   return (
     <Link

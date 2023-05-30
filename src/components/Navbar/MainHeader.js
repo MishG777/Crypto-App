@@ -42,6 +42,10 @@ const MainHeader = ({ logOutHandler, logIn, gotCurrency }) => {
     localStorage.setItem("selectedCurrency", selectedCurrency);
   }, [selectedCurrency]);
 
+  if (!logIn) {
+    localStorage.clear();
+  }
+
   return (
     <header className={`${classes.header} ${menuOpen && classes.active}`}>
       <h1 className={`${!logIn && classes.logo}`}>CRYPToAPP</h1>

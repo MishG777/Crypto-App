@@ -1,16 +1,40 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Fragment } from "react";
+import classes from "./FetchEachCoin.module.css";
 
 //used in CoinDetails.js
 const FetchEachCoin = ({ coin }) => {
-  const EachCoinURL = `https://api.coingecko.com/api/v3/coins/${coin}`;
-  axios.get(EachCoinURL).then((res) => {
-    const eachCoinDetails = res.data;
-    //console.log(eachCoinDetails);
-  });
+  const [eachCoin, setEachCoin] = useState([]);
 
-  return <div>Fetching each coin</div>;
+  const EachCoinURL = `https://api.coingecko.com/api/v3/coins/${coin}`;
+
+  useEffect(() => {
+    const getEachCoin = async () => {
+      const { data } = await axios.get(EachCoinURL);
+
+      const transformedCoins = {
+        id: data.id,
+        name: data.name,
+        rank: data.rank,
+        symbol: data.symbol,
+        desc: data.description.en,
+        img: data.image.large,
+        mrkData: [data.market_data], //will use map here
+      };
+
+      setEachCoin(transformedCoins);
+    };
+
+    getEachCoin();
+  }, [EachCoinURL]);
+  console.log(eachCoin);
+  return (
+    <div className={classes.mainDiv}>
+      <h3>{eachCoin.symbol}</h3>
+      {/*here i need a component and then pass a prop like {...eachCoin}*/}
+      <p>{eachCoin.desc}</p>
+    </div>
+  );
 };
 
 export default FetchEachCoin;

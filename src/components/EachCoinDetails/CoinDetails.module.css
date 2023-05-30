@@ -62,7 +62,6 @@
 
 .inputDays {
   display: flex;
-
   height: 1.7rem;
 }
 .inputDays input {
@@ -88,4 +87,30 @@
 .inputDays button:hover {
   background: rgb(94, 94, 179);
   cursor: pointer;
+}
+
+@media (max-width: 850px) {
+  .chartTime {
+    /*border: 2px solid red;*/
+    height: 10rem;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 0;
+  }
+
+  .chartTime .timeButtons {
+    flex-direction: column;
+    width: 10rem;
+    /*border: 2px solid green;*/
+  }
+
+  .chartTime .timeButtons .chartButton {
+    margin-top: 7px;
+  }
+  .chartTime .inputDays {
+    /*border: 2px solid yellow;*/
+    margin-top: 5px;
+  }
 }

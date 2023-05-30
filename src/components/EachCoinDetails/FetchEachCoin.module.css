@@ -1,0 +1,14 @@
+.mainDiv {
+  margin-top: 3rem;
+  color: white;
+  /*border: 2px solid red;*/
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin-bottom: 50px;
+}
+
+.mainDiv p {
+  width: 65%;
+}

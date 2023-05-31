@@ -42,15 +42,15 @@ function App() {
     };
   }, [OnLogInPage]);
 
-  const logOutHandler = () => {
-    setLogin(false);
-    localStorage.clear();
-  };
-
   const logInHandler = () => {
     localStorage.setItem("CryptoPage", "2");
     setLogin(true);
     navigate(`/all-coins`);
+  };
+
+  const logOutHandler = () => {
+    setLogin(false);
+    localStorage.clear();
   };
 
   return (

@@ -12,3 +12,9 @@
 .mainDiv p {
   width: 65%;
 }
+
+@media (max-width: 850px) {
+  .mainDiv {
+    margin-top: 10px;
+  }
+}

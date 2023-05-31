@@ -27,12 +27,24 @@ const FetchEachCoin = ({ coin }) => {
 
     getEachCoin();
   }, [EachCoinURL]);
-  console.log(eachCoin);
+  //console.log(eachCoin);
+  console.log(eachCoin.desc);
+
+  let description = "";
+  if (eachCoin.desc) {
+    description += eachCoin.desc
+      .split(". ")
+      .filter((desc) => !desc.includes("<a"))
+      .join(". ");
+  } else {
+    return "No Description for this coin";
+  }
+
   return (
     <div className={classes.mainDiv}>
       <h3>{eachCoin.symbol}</h3>
       {/*here i need a component and then pass a prop like {...eachCoin}*/}
-      <p>{eachCoin.desc}</p>
+      <p>{description}</p>
     </div>
   );
 };

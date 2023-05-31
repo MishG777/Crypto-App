@@ -1,6 +1,6 @@
 import { memo, useState, useCallback, useEffect } from "react";
 import { AiOutlineMenu, AiOutlineMinusCircle } from "react-icons/ai";
-import { NavLink, Link, useLocation } from "react-router-dom";
+import { NavLink, Link, useLocation, useNavigate } from "react-router-dom";
 import classes from "./MainHeader.module.css";
 
 const MainHeader = ({ logOutHandler, logIn, gotCurrency }) => {
@@ -10,6 +10,7 @@ const MainHeader = ({ logOutHandler, logIn, gotCurrency }) => {
   );
 
   const location = useLocation();
+  const navigate = useNavigate();
 
   const currencyHandler = useCallback(
     (e) => {
@@ -48,7 +49,9 @@ const MainHeader = ({ logOutHandler, logIn, gotCurrency }) => {
 
   return (
     <header className={`${classes.header} ${menuOpen && classes.active}`}>
-      <h1 className={`${!logIn && classes.logo}`}>CRYPToAPP</h1>
+      <h1 className={`${!logIn && classes.logo}`} onClick={() => navigate("/")}>
+        CRYPToAPP
+      </h1>
 
       {logIn && (
         <>
@@ -66,6 +69,7 @@ const MainHeader = ({ logOutHandler, logIn, gotCurrency }) => {
                   EUR
                 </option>
               </select>
+
               <li onClick={openMenu}>
                 <NavLink id={classes.coins} to="/all-coins">
                   Search Coins

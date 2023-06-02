@@ -44,10 +44,6 @@ const MainHeader = ({ logOutHandler, logIn /*gotCurrency*/ }) => {
     localStorage.setItem("selectedCurrency", currency);
   }, [currency]);
 
-  if (!logIn) {
-    localStorage.clear();
-  }
-
   return (
     <header className={`${classes.header} ${menuOpen && classes.active}`}>
       <h1 className={`${!logIn && classes.logo}`} onClick={() => navigate("/")}>
@@ -73,13 +69,11 @@ const MainHeader = ({ logOutHandler, logIn /*gotCurrency*/ }) => {
 
               <li onClick={openMenu}>
                 <NavLink id={classes.coins} to="/all-coins">
-                  Search Coins
+                  Currencies
                 </NavLink>
               </li>
               <li onClick={openMenu}>
-                <Link to="/auth-registration-page" onClick={logOutHandler}>
-                  Log Out
-                </Link>
+                <Link onClick={logOutHandler}>Log Out</Link>
               </li>
             </ul>
           </div>

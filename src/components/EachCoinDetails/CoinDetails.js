@@ -3,7 +3,6 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import classes from "./CoinDetails.module.css";
 import FetchEachCoin from "./FetchEachCoin";
-//import { data } from "./PagesData";
 
 import {
   AreaChart,
@@ -13,6 +12,7 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
+  //Legend,
 } from "recharts";
 import { format } from "date-fns";
 import { CryptoState } from "../context/CryptoContext";
@@ -71,7 +71,7 @@ const CoinDetails = () => {
           const [timestamp, prc] = price;
 
           return {
-            Date: new Date(timestamp).toLocaleDateString(),
+            Date: timestamp,
             Price: prc,
           };
         });
@@ -176,6 +176,7 @@ const CoinDetails = () => {
                 return USDorEUR + price.toFixed(2);
               }}
             />
+            {/*<Legend verticalAlign="top" height={20} />*/}
 
             <Tooltip content={<CustomTooltip />} />
 

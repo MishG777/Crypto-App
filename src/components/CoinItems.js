@@ -58,25 +58,25 @@ const CoinItems = ({
 
       switch (priceChangeTime) {
         case "1h":
-          tm = timeChanger.H1.toFixed(3);
+          tm = timeChanger.H1.toFixed(2);
           break;
         case "24h":
-          tm = timeChanger.H24.toFixed(3);
+          tm = timeChanger.H24.toFixed(2);
           break;
         case "7d":
-          tm = timeChanger.D7.toFixed(3);
+          tm = timeChanger.D7.toFixed(2);
           break;
         case "14d":
-          tm = timeChanger.D14.toFixed(3);
+          tm = timeChanger.D14.toFixed(2);
           break;
         case "30d":
-          tm = timeChanger.D30.toFixed(3);
+          tm = timeChanger.D30.toFixed(2);
           break;
         case "200d":
-          tm = timeChanger.D200.toFixed(3);
+          tm = timeChanger.D200.toFixed(2);
           break;
         case "1y":
-          tm = timeChanger.Y1.toFixed(3);
+          tm = timeChanger.Y1.toFixed(2);
           break;
         default:
           break;

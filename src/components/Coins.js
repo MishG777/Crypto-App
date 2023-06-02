@@ -182,7 +182,14 @@ function Coins() {
           <img src={loader} alt="loading..." className={classes.loader} />
         )}
 
-        {!noMoreCoins && <Button onClick={fetchMoreCoins}>fetch more</Button>}
+        {!noMoreCoins && (
+          <Button
+            disabled={localStorage.getItem("CryptoPage") === "2" ? false : true}
+            onClick={fetchMoreCoins}
+          >
+            fetch more
+          </Button>
+        )}
 
         {noMoreCoins && (
           <div>

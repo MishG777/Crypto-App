@@ -37,9 +37,6 @@ function App() {
       setLogin(false);
       localStorage.setItem("CryptoPage", 1);
     }
-    return () => {
-      console.log("cleared");
-    };
   }, [OnLogInPage]);
 
   const logInHandler = () => {

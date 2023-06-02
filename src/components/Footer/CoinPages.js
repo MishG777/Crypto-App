@@ -9,6 +9,7 @@ export const CoinPages = ({ setFetchNextPage, showPagesNumHandler }) => {
     <div className={classes.CoinPages}>
       {pagesArray.map((page) => (
         <PageButtons
+          disabled={localStorage.getItem("CryptoPage") === "2" ? false : true}
           onClick={() => {
             setFetchNextPage(page);
             showPagesNumHandler(page);

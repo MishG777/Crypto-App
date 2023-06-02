@@ -16,16 +16,16 @@ import LogIn from "./components/UserLogging/LogIn";
 
 function App() {
   const [logIn, setLogin] = useState(false);
-  const [cur, setCur] = useState("usd");
+  //const [cur, setCur] = useState("usd");
   const location = useLocation();
 
   const OnLogInPage = location.pathname === "/auth-registration-page";
   const navigate = useNavigate();
 
-  const mainCurrencyGot = (currency) => {
-    navigate(`${location.pathname}?currency=${currency}`);
-    setCur(currency);
-  };
+  //const mainCurrencyGot = (currency) => {
+  //  navigate(`${location.pathname}?currency=${currency}`);
+  //  setCur(currency);
+  //};
 
   useEffect(() => {
     const CryptoPage = localStorage.getItem("CryptoPage");
@@ -59,14 +59,17 @@ function App() {
         <MainHeader
           logOutHandler={logOutHandler}
           logIn={logIn}
-          gotCurrency={mainCurrencyGot}
+          //gotCurrency={mainCurrencyGot}
         />
       </header>
       <main>
         <Routes>
           <Route path="/" element={<Navigate to="/all-coins" />}></Route>
 
-          <Route path="/all-coins" element={<Coins currency={cur} />}></Route>
+          <Route
+            path="/all-coins"
+            element={<Coins /*currency={cur}*/ />}
+          ></Route>
 
           <Route path="/all-coins/:details" element={<CoinDetails />}></Route>
           <Route

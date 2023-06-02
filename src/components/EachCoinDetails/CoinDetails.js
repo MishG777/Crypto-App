@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect, useState, useRef } from "react";
 import axios from "axios";
-import { useParams, useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import classes from "./CoinDetails.module.css";
 import FetchEachCoin from "./FetchEachCoin";
 //import { data } from "./PagesData";
@@ -15,6 +15,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { format } from "date-fns";
+import { CryptoState } from "../context/CryptoContext";
 
 const CoinDetails = () => {
   const [graphData, setGraphData] = useState([]);
@@ -24,11 +25,13 @@ const CoinDetails = () => {
   const [activeButton, setActiveButton] = useState(null);
 
   const daysRef = useRef(null);
-  const location = useLocation();
+  //const location = useLocation();
 
-  const currencyParams = new URLSearchParams(location.search);
-  const currency = currencyParams.get("currency");
-  const isUsd = currencyParams.get("currency") === "usd";
+  const { currency } = CryptoState();
+
+  //const currencyParams = new URLSearchParams(location.search);
+  //const currency = currencyParams.get("currency");
+  const isUsd = currency === "usd";
 
   let error = "";
   const coinName = localStorage.getItem("CoinName");
@@ -85,7 +88,7 @@ const CoinDetails = () => {
     if (active && payload && payload.length) {
       const data = payload[0].payload;
       const date = new Date(label);
-      const formattedDate = format(date, "eee | MMM d | yyyy");
+      const formattedDate = format(date, "eee | MMM d | Y");
       return (
         <div className={classes.tooltip}>
           <h4>{formattedDate}</h4>

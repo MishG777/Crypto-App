@@ -30,7 +30,7 @@
   appearance: none;
   width: 100%;
   outline: none;
-  border: 1px solid rgb(13, 134, 104);
+  border: none;
   border-radius: 10px;
   font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
     "Lucida Sans", Arial, sans-serif;

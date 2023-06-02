@@ -8,8 +8,9 @@ import Button from "./UI/Button";
 import { useNavigate, useLocation } from "react-router-dom";
 import PriceChangeByTime from "./PriceChangeByTime";
 import CoinsTopBar from "./CoinsTopBar";
+import { CryptoState } from "./context/CryptoContext";
 
-function Coins({ currency }) {
+function Coins() {
   const [coins, setCoins] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [search, setSearch] = useState("");
@@ -23,6 +24,9 @@ function Coins({ currency }) {
   const [secondPageFetched, setSecondPageFetched] = useState(false);
 
   const [priceChangeTime, setpriceChangeTime] = useState("24h");
+
+  //context
+  const { currency } = CryptoState();
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -67,7 +71,7 @@ function Coins({ currency }) {
           setIsLoading(false);
           setError(error.message);
         });
-    }, 1500); // 2 second delay
+    }, 1500); // 1.5 second delay
 
     return () => clearTimeout(timerId);
   }, [URL]);
@@ -145,6 +149,9 @@ function Coins({ currency }) {
               className={classes["coin-input"]}
               onChange={handleChange}
               value={search ? search : ""}
+              disabled={
+                localStorage.getItem("CryptoPage") === "2" ? false : true
+              }
             />
           </form>
         </div>

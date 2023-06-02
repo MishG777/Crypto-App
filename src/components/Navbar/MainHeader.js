@@ -1,27 +1,28 @@
-import { memo, useState, useCallback, useEffect } from "react";
+import { memo, useState, useEffect } from "react";
 import { AiOutlineMenu, AiOutlineMinusCircle } from "react-icons/ai";
 import { NavLink, Link, useLocation, useNavigate } from "react-router-dom";
 import classes from "./MainHeader.module.css";
+import { CryptoState } from "../context/CryptoContext";
 
-const MainHeader = ({ logOutHandler, logIn, gotCurrency }) => {
+const MainHeader = ({ logOutHandler, logIn /*gotCurrency*/ }) => {
   const [menuOpen, setmenuOpen] = useState(false);
-  const [selectedCurrency, setSelectedCurrency] = useState(
-    localStorage.getItem("selectedCurrency") || "usd"
-  );
+  //const [selectedCurrency, setSelectedCurrency] = useState(
+  //  localStorage.getItem("selectedCurrency") || "usd"
+  //);
+
+  const { currency, setcurrency } = CryptoState();
+  console.log(currency);
 
   const location = useLocation();
   const navigate = useNavigate();
 
-  const currencyHandler = useCallback(
-    (e) => {
-      let currency = e.target.value.toLowerCase();
-      //navigate(`${location.pathname}?currency=${currency}`);
-      setSelectedCurrency(currency);
-      localStorage.setItem("selectedCurrency", currency);
-      gotCurrency(currency);
-    },
-    [gotCurrency]
-  );
+  const currencyHandler = (e) => {
+    let targetCurrency = e.target.value.toLowerCase();
+    navigate(`${location.pathname}?currency=${currency}`);
+    setcurrency(targetCurrency);
+    localStorage.setItem("selectedCurrency", targetCurrency);
+    //gotCurrency(currency);
+  };
 
   const openMenu = () => {
     setmenuOpen((prev) => !prev);
@@ -40,8 +41,8 @@ const MainHeader = ({ logOutHandler, logIn, gotCurrency }) => {
 
   useEffect(() => {
     // Set the selected currency in localStorage when it changes
-    localStorage.setItem("selectedCurrency", selectedCurrency);
-  }, [selectedCurrency]);
+    localStorage.setItem("selectedCurrency", currency);
+  }, [currency]);
 
   if (!logIn) {
     localStorage.clear();
@@ -60,7 +61,7 @@ const MainHeader = ({ logOutHandler, logIn, gotCurrency }) => {
               <select
                 onChange={currencyHandler}
                 className={classes.currency}
-                value={selectedCurrency}
+                value={currency}
               >
                 <option onClick={openMenu} value="usd">
                   USD

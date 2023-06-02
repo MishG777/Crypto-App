@@ -28,7 +28,7 @@ const FetchEachCoin = ({ coin }) => {
     getEachCoin();
   }, [EachCoinURL]);
   //console.log(eachCoin);
-  console.log(eachCoin.desc);
+  //console.log(eachCoin.desc);
 
   let description = "";
   if (eachCoin.desc) {

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import classes from "./CoinItems.module.css";
 import { Link } from "react-router-dom";
 import { useCallback } from "react";
+import { CryptoState } from "./context/CryptoContext";
 
 //used in Coins.js component
 const CoinItems = ({
@@ -11,7 +12,6 @@ const CoinItems = ({
   current_price,
   market_cap,
   market_cap_rank,
-  currency,
   id,
 
   priceChangeTime,
@@ -28,6 +28,8 @@ const CoinItems = ({
   const [percentByTime, setPercentByTime] = useState(
     price_change_percentage_24h_in_currency
   );
+
+  const { currency } = CryptoState();
 
   const currencyChangerFn = useCallback(() => {
     if (currency === "usd") {

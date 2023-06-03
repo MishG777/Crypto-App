@@ -12,7 +12,6 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
-  //Legend,
 } from "recharts";
 import { format } from "date-fns";
 import { CryptoState } from "../context/CryptoContext";
@@ -25,20 +24,19 @@ const CoinDetails = () => {
   const [activeButton, setActiveButton] = useState(null);
 
   const daysRef = useRef(null);
-  //const location = useLocation();
+  const XintervalRef = useRef(false);
+  console.log(XintervalRef.current);
 
   const { currency } = CryptoState();
 
-  //const currencyParams = new URLSearchParams(location.search);
-  //const currency = currencyParams.get("currency");
   const isUsd = currency === "usd";
+  const USDorEUR = `${isUsd ? "$" : "€"}`;
 
   let error = "";
   const coinName = localStorage.getItem("CoinName");
 
   const params = useParams();
   const coin = params.details;
-  //.toLowerCase().replace(/%20|\s/g, "-");
 
   const daysHandler = (e) => {
     e.preventDefault();
@@ -54,11 +52,9 @@ const CoinDetails = () => {
     daysRef.current.value = "";
   };
 
-  console.log(days);
+  ///////////API
 
   const chartURL = `https://api.coingecko.com/api/v3/coins/${coin}/market_chart?vs_currency=${currency}&days=${days}`;
-
-  //const EachCoinURL = `https://api.coingecko.com/api/v3/coins/${coin}`
 
   useEffect(() => {
     axios
@@ -82,7 +78,7 @@ const CoinDetails = () => {
       });
   }, [chartURL]);
 
-  const USDorEUR = `${isUsd ? "$" : "€"}`;
+  /////////////////////tooltip element
 
   function CustomTooltip({ active, payload, label }) {
     if (active && payload && payload.length) {
@@ -99,18 +95,24 @@ const CoinDetails = () => {
     return null;
   }
 
+  ////////////////////////////chart sizing
+
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth <= 650) {
         setContainerWidth("93%");
+        XintervalRef.current = true;
       } else {
         setContainerWidth("80%");
+        XintervalRef.current = false;
       }
     };
     window.addEventListener("resize", handleResize);
     handleResize();
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  //////////////////////////////////////////
 
   return (
     <Fragment>
@@ -119,15 +121,15 @@ const CoinDetails = () => {
       <h2 className={classes.coinTitle}>{coinName}</h2>
 
       <div className={classes.mainChartDiv}>
-        <ResponsiveContainer width={containerWidth} height={350}>
+        <ResponsiveContainer width={containerWidth} height={370}>
           <AreaChart
             fontSize={10}
             data={graphData}
             margin={{
-              top: 25,
+              top: 20,
               right: 0,
               left: 40,
-              bottom: 0,
+              bottom: 20,
             }}
           >
             <Area
@@ -144,7 +146,7 @@ const CoinDetails = () => {
             />
 
             <XAxis
-              interval={180}
+              interval={XintervalRef.current ? 400 : 180}
               dataKey="Date"
               axisLine={false}
               tickLine={false}
@@ -157,10 +159,12 @@ const CoinDetails = () => {
                 return `${formattedDate}`;
               }}
               tick={{
-                style: {
-                  fontWeight: "bold",
-                  fontSize: "10px",
-                },
+                angle: -45,
+                dy: 15,
+                fill: "white",
+                opacity: 0.8,
+                fontSize: 10,
+                fontWeight: "bold",
               }}
             />
             <YAxis
@@ -169,6 +173,7 @@ const CoinDetails = () => {
               name="Price"
               axisLine={false}
               tickLine={false}
+              tick={{ fill: "white", opacity: 0.8 }}
               tickFormatter={(price) => {
                 if (price >= 1000) {
                   return USDorEUR + price / 1000 + "K";
@@ -176,7 +181,6 @@ const CoinDetails = () => {
                 return USDorEUR + price.toFixed(2);
               }}
             />
-            {/*<Legend verticalAlign="top" height={20} />*/}
 
             <Tooltip content={<CustomTooltip />} />
 

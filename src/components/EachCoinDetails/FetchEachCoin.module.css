@@ -1,16 +1,62 @@
 .mainDiv {
-  margin-top: 3rem;
+  margin: 3rem 6rem;
   color: white;
-  /*border: 2px solid red;*/
+  border: 2px solid red;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
+  /*align-items: center;*/
+  justify-content: flex-start;
+  height: 20rem;
+  /*flex-direction: column;*/
   margin-bottom: 50px;
 }
 
 .mainDiv p {
   width: 65%;
+}
+
+.mainDiv img {
+  width: 10rem;
+  border: 2px solid yellow;
+  border-radius: 50%;
+}
+
+.coinDetails {
+  display: flex;
+  flex-direction: column;
+  /*justify-content: center;*/
+  align-items: center;
+  border: 2px solid green;
+  width: 20rem;
+}
+
+.imageContainer {
+  position: relative;
+  display: inline-block;
+}
+
+.description {
+  position: absolute;
+  white-space: normal !important;
+  overflow-wrap: break-word !important;
+  word-wrap: break-word !important;
+  top: calc(100% - 300px);
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  font-size: 15px;
+  visibility: hidden;
+  background-color: #6365db;
+  color: #fff;
+  border-radius: 20px;
+  padding: 10px;
+  width: 10rem;
+  white-space: nowrap;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.imageContainer:hover + .description {
+  opacity: 1;
+  visibility: visible;
 }
 
 @media (max-width: 850px) {

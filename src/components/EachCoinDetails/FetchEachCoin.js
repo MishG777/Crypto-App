@@ -27,7 +27,7 @@ const FetchEachCoin = ({ coin }) => {
 
     getEachCoin();
   }, [EachCoinURL]);
-  //console.log(eachCoin);
+  console.log(eachCoin);
   //console.log(eachCoin.desc);
 
   let description = "";
@@ -42,9 +42,14 @@ const FetchEachCoin = ({ coin }) => {
 
   return (
     <div className={classes.mainDiv}>
-      <h3>{eachCoin.symbol}</h3>
-      {/*here i need a component and then pass a prop like {...eachCoin}*/}
-      <p>{description}</p>
+      <div className={classes.coinDetails}>
+        <div className={classes.imageContainer}>
+          <img src={eachCoin.img} alt="Coin" />
+        </div>
+        <p className={classes.description}>{description}</p>
+      </div>
+
+      {/*<h3>{eachCoin.symbol}</h3>*/}
     </div>
   );
 };

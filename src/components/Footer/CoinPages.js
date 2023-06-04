@@ -6,7 +6,7 @@ import Stack from "@mui/material/Stack";
 //import PageButtons from "../UI/PageButtons";
 
 export const CoinPages = ({ setFetchNextPage, showPagesNumHandler }) => {
-  const pagesArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  //const pagesArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   return (
     <div className={classes.CoinPages}>
       {/*{pagesArray.map((page) => (

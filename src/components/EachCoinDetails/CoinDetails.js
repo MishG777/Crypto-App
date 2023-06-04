@@ -18,14 +18,13 @@ import { CryptoState } from "../context/CryptoContext";
 
 const CoinDetails = () => {
   const [graphData, setGraphData] = useState([]);
-  const [containerWidth, setContainerWidth] = useState("100%");
+  const [containerWidth, setContainerWidth] = useState("85%");
 
   const [days, setDays] = useState(50);
   const [activeButton, setActiveButton] = useState(null);
 
   const daysRef = useRef(null);
   const XintervalRef = useRef(false);
-  console.log(XintervalRef.current);
 
   const { currency } = CryptoState();
 
@@ -61,7 +60,7 @@ const CoinDetails = () => {
       .get(chartURL)
       .then((res) => {
         const chartCoins = res.data;
-        console.log(chartCoins);
+        //console.log(chartCoins);
 
         const graphDt = chartCoins.prices.map((price) => {
           const [timestamp, prc] = price;
@@ -103,7 +102,7 @@ const CoinDetails = () => {
         setContainerWidth("93%");
         XintervalRef.current = true;
       } else {
-        setContainerWidth("80%");
+        setContainerWidth("85%");
         XintervalRef.current = false;
       }
     };
@@ -128,7 +127,7 @@ const CoinDetails = () => {
             margin={{
               top: 20,
               right: 0,
-              left: 40,
+              left: XintervalRef.current ? 9 : 130,
               bottom: 20,
             }}
           >

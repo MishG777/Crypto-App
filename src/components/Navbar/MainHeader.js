@@ -11,7 +11,6 @@ const MainHeader = ({ logOutHandler, logIn /*gotCurrency*/ }) => {
   //);
 
   const { currency, setcurrency } = CryptoState();
-  console.log(currency);
 
   const location = useLocation();
   const navigate = useNavigate();

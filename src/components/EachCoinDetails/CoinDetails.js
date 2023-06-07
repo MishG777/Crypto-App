@@ -19,7 +19,7 @@ import { CryptoState } from "../context/CryptoContext";
 const CoinDetails = () => {
   const [graphData, setGraphData] = useState([]);
   const [containerWidth, setContainerWidth] = useState("85%");
-
+  const [error, setError] = useState(false);
   const [days, setDays] = useState(50);
   const [activeButton, setActiveButton] = useState(null);
 
@@ -31,7 +31,6 @@ const CoinDetails = () => {
   const isUsd = currency === "usd";
   const USDorEUR = `${isUsd ? "$" : "€"}`;
 
-  let error = "";
   const coinName = localStorage.getItem("CoinName");
 
   const params = useParams();
@@ -46,6 +45,14 @@ const CoinDetails = () => {
 
   const showDaysHandler = (e) => {
     e.preventDefault();
+    console.log(typeof +daysRef.current.value);
+    console.log(+daysRef.current.value);
+    if (+daysRef.current.value <= 0) {
+      setError(true);
+      return;
+    }
+
+    setError(false);
     setDays(daysRef.current.value);
     setActiveButton(daysRef.current.value);
     daysRef.current.value = "";
@@ -73,7 +80,7 @@ const CoinDetails = () => {
         setGraphData(graphDt);
       })
       .catch((error) => {
-        error += error.message;
+        console.log(error);
       });
   }, [chartURL]);
 
@@ -98,7 +105,7 @@ const CoinDetails = () => {
 
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth <= 650) {
+      if (window.innerWidth <= 950) {
         setContainerWidth("93%");
         XintervalRef.current = true;
       } else {
@@ -115,8 +122,6 @@ const CoinDetails = () => {
 
   return (
     <Fragment>
-      {error}
-
       <h2 className={classes.coinTitle}>{coinName}</h2>
 
       <div className={classes.mainChartDiv}>
@@ -127,7 +132,7 @@ const CoinDetails = () => {
             margin={{
               top: 20,
               right: 0,
-              left: XintervalRef.current ? 9 : 130,
+              left: XintervalRef.current ? 9 : 140,
               bottom: 20,
             }}
           >
@@ -145,7 +150,7 @@ const CoinDetails = () => {
             />
 
             <XAxis
-              interval={XintervalRef.current ? 400 : 180}
+              interval={XintervalRef.current ? 200 : 120}
               dataKey="Date"
               axisLine={false}
               tickLine={false}
@@ -222,22 +227,23 @@ const CoinDetails = () => {
               3 Month
             </button>
           </form>
-
           <form onSubmit={showDaysHandler} className={classes.inputDays}>
             <input
               type="number"
-              placeholder="enter num of days"
+              placeholder="chart days.."
               //onChange={changeDaysHandler}
               ref={daysRef}
+              className={error && `${classes.err}`}
             />
             <button type="submit" className={classes.show}>
               show
             </button>
           </form>
+          {/*{error}*/}
         </div>
       </div>
 
-      <FetchEachCoin coin={coin} />
+      <FetchEachCoin coin={coin} USDorEUR={USDorEUR} isUsd={isUsd} />
     </Fragment>
   );
 };

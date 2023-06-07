@@ -29,7 +29,7 @@ export const CoinPages = ({ setFetchNextPage, showPagesNumHandler }) => {
           onChange={(e, page) => {
             setFetchNextPage(page);
             showPagesNumHandler(page);
-            window.scrollTo({ top: 0, behavior: "smooth" });
+            //window.scrollTo({ top: 0, behavior: "smooth" });
           }}
         />
       </Stack>

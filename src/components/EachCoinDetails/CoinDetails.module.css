@@ -32,8 +32,8 @@
 
 .chartTime {
   /*border: 2px solid red;*/
-  width: 40rem;
-  margin: 1.5rem 0 0 8rem;
+  width: 35rem;
+  margin: 1.5rem 0 0 12rem;
   height: 2rem;
   display: flex;
   justify-content: space-between;
@@ -70,6 +70,7 @@
   border-radius: 4px;
   outline: none;
   color: white;
+  width: 5rem;
 }
 .inputDays input::placeholder {
   font-size: 10px;
@@ -87,6 +88,10 @@
 .inputDays button:hover {
   background: rgb(94, 94, 179);
   cursor: pointer;
+}
+
+.err {
+  border: 2px solid red !important;
 }
 
 @media (max-width: 850px) {

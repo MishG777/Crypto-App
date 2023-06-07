@@ -16,7 +16,7 @@ function Coins() {
   const [search, setSearch] = useState("");
   const [error, setError] = useState("");
 
-  const [fetchedCoinsAmount, setFetchedCoinsAmount] = useState(20);
+  const [fetchedCoinsAmount, setFetchedCoinsAmount] = useState(25);
 
   const [noMoreCoins, setNoMoreCoins] = useState(false);
 
@@ -90,14 +90,45 @@ function Coins() {
 
   //===================FETCH MORE COINS
 
+  //const fetchMoreCoins = () => {
+  //  setIsLoading(true);
+  //  setFetchedCoinsAmount((moreCoins) => moreCoins + 25);
+  //  if (fetchedCoinsAmount > 250) {
+  //    setNoMoreCoins(true);
+  //  }
+  //  setIsLoading(false);
+  //};
+
   const fetchMoreCoins = () => {
     setIsLoading(true);
-    setFetchedCoinsAmount((moreCoins) => moreCoins * 2);
+    setFetchedCoinsAmount((prevCoinsAmount) => prevCoinsAmount + 25);
+  };
+
+  useEffect(() => {
     if (fetchedCoinsAmount > 250) {
       setNoMoreCoins(true);
+      setIsLoading(false);
+      return;
     }
-    setIsLoading(false);
-  };
+
+    const nextPageURL = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${currency}&order=market_cap_${
+      mcSorting ? "asc" : "desc"
+    }&per_page=${fetchedCoinsAmount}&page=${fetchNextPage}&sparkline=false&price_change_percentage=${priceChangeTime}`;
+
+    axios
+      .get(nextPageURL)
+      .then((res) => {
+        const newCoins = res.data;
+        setCoins((prevCoins) => [...prevCoins, ...newCoins]);
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        setIsLoading(false);
+        setError(error.message);
+      });
+  }, [fetchNextPage, fetchedCoinsAmount, currency, mcSorting, priceChangeTime]);
+
+  ///////////////////////////////////////////////////////
 
   const showPagesNumHandler = (page) => {
     navigate(`/all-coins?page=${page}`);

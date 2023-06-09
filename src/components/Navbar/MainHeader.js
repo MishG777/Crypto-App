@@ -72,7 +72,9 @@ const MainHeader = ({ logOutHandler, logIn /*gotCurrency*/ }) => {
                 </NavLink>
               </li>
               <li onClick={openMenu}>
-                <Link onClick={logOutHandler}>Log Out</Link>
+                <Link to="/auth-registration-page" onClick={logOutHandler}>
+                  Log Out
+                </Link>
               </li>
             </ul>
           </div>

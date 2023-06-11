@@ -64,7 +64,7 @@ function Coins() {
 
           setCoins(CoinsData);
 
-          //console.log(CoinsData);
+          console.log(CoinsData);
           setIsLoading(false);
         })
         .catch((error) => {

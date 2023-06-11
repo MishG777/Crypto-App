@@ -1,10 +1,9 @@
 .mainDiv {
   margin: 3rem 10rem;
   color: white;
-  /*border: 2px solid red;*/
   display: flex;
   justify-content: flex-start;
-  height: 20rem;
+
   margin-bottom: 50px;
 }
 
@@ -19,6 +18,7 @@
   align-items: center;
   /*border: 2px solid green;*/
   width: 20rem;
+  height: 100%;
 }
 
 .imageContainer {
@@ -69,7 +69,7 @@
 .fewDetails h2,
 .fewDetails h3,
 .fewDetails h4 {
-  margin: 0;
+  margin: 8px 0;
   height: 2rem;
   border-radius: 4px;
   align-items: center;
@@ -79,25 +79,68 @@
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
 }
 
+.coinDetails .leftLowerDiv {
+  position: relative;
+  border: 1px solid #00acee;
+  width: 100%;
+  margin-top: 20px;
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  height: 4rem;
+}
+
+.coinDetails .leftLowerDiv h4 {
+  position: absolute;
+  top: -12px;
+  border-radius: 4px;
+  background-color: #00acee;
+  padding: 2px 7px;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+}
+
+.coinDetails .leftLowerDiv p {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 10px;
+}
+
+.coinDetails .leftLowerDiv p img {
+  width: 23px;
+  margin-left: 5px;
+}
+
+/*right div details*/
+
 .mainDiv .moreDetails {
   /*border: 2px dotted #6365db;*/
   padding: 10px;
-  margin-left: 7px;
+  margin-left: 10px;
   height: 100%;
   width: 100%;
   border-radius: 5px;
   box-shadow: 0px 0px 6px #6365db;
+  height: 25rem;
 }
 
-.innerTopDiv {
+.innerTopDiv,
+.innerThirdDiv {
   height: 20%;
   border-radius: 5px;
   display: flex;
   justify-content: space-around;
-  padding: 5px;
+  padding: 10px;
+  margin-top: 10px;
+  /*border: 1px solid red;*/
 }
 
-.innerTopDiv .centeredText {
+.innerThirdDiv {
+  margin-top: 15px;
+}
+
+.innerTopDiv .centeredText,
+.innerThirdDiv .centeredText {
   position: relative;
   font-size: 12px;
   border: 1px solid #6365db;
@@ -108,7 +151,8 @@
   flex-direction: column;
   border-radius: 5px;
 }
-.innerTopDiv .centeredText text {
+.innerTopDiv .centeredText h4,
+.innerThirdDiv .centeredText h4 {
   position: absolute;
   top: -10px;
   border-radius: 4px;
@@ -116,11 +160,13 @@
   padding: 2px 7px;
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
 }
-.innerTopDiv .centeredText p img {
+.innerTopDiv .centeredText p img,
+.innerThirdDiv .centeredText p img {
   width: 18px;
   margin-left: 4px;
 }
-.innerTopDiv .centeredText p {
+.innerTopDiv .centeredText p,
+.innerThirdDiv .centeredText p {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -129,26 +175,38 @@
 
 /*middle div*/
 
-.moreDetails .highLow {
+.moreDetails .highLow,
+.moreDetails .priceChange {
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 2px solid #6365db;
+  border: 1px solid #6365db;
   margin-top: 15px;
   border-radius: 5px;
   height: 4rem;
 }
 
-.moreDetails .highLow text {
+.moreDetails .highLow h4 {
+  padding: 0 14px !important;
+  top: -10px !important;
+}
+
+.moreDetails .highLow h4,
+.moreDetails .priceChange h4 {
   position: absolute;
-  font-size: 12px;
-  top: -9px;
+  font-size: 14px;
+  top: -13px;
   transform: translateX(-50%, 50%);
   cursor: pointer;
   border-radius: 4px;
   background-color: #6365db;
-  padding: 2px 7px;
+  padding: 5px 15px;
+}
+
+.moreDetails .highLow p,
+.moreDetails .priceChange p {
+  padding-top: 9px;
 }
 
 .green {

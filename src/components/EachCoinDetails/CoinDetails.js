@@ -132,7 +132,7 @@ const CoinDetails = () => {
             margin={{
               top: 20,
               right: 0,
-              left: XintervalRef.current ? 9 : 140,
+              left: XintervalRef.current ? 9 : 220,
               bottom: 20,
             }}
           >

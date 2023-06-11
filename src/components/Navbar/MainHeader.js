@@ -13,7 +13,6 @@ const MainHeader = ({ logOutHandler, logIn /*gotCurrency*/ }) => {
   const { currency, setcurrency } = CryptoState();
 
   const location = useLocation();
-  console.log(location);
   const navigate = useNavigate();
 
   const currencyHandler = (e) => {
@@ -73,10 +72,7 @@ const MainHeader = ({ logOutHandler, logIn /*gotCurrency*/ }) => {
               </select>
 
               <li onClick={openMenu}>
-                <NavLink
-                  id={classes.coins}
-                  to={location.pathname + location.search}
-                >
+                <NavLink id={classes.coins} to={"/all-coins" + location.search}>
                   Currencies
                 </NavLink>
               </li>

@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import classes from "./FetchEachCoin.module.css";
-
+import btc from "../img/btc.png";
 //used in CoinDetails.js
 const FetchEachCoin = ({ coin, USDorEUR, isUsd }) => {
   const [eachCoin, setEachCoin] = useState({});
+  const [ishigh, setIshigh] = useState(false);
 
   const EachCoinURL = `https://api.coingecko.com/api/v3/coins/${coin}`;
 
@@ -29,22 +30,27 @@ const FetchEachCoin = ({ coin, USDorEUR, isUsd }) => {
           mc: isUsd ? mrkData?.market_cap.usd : mrkData?.market_cap.eur,
           mcChange24h: mrkData?.market_cap_change_percentage_24h,
           mcChangeInBtc: mrkData?.market_cap_change_percentage_24h_in_currency,
+          high_24h: isUsd
+            ? mrkData?.high_24h.usd || 0
+            : mrkData?.high_24h.eur || 0,
+          low_24h: isUsd
+            ? mrkData?.low_24h.usd || 0
+            : mrkData?.low_24h.eur || 0,
 
           //price | changes
           prices: {
-            high_24h: isUsd ? mrkData?.high_24h.usd : mrkData?.high_24h.eur,
-            low_24h: isUsd ? mrkData?.low_24h.usd : mrkData?.low_24h.eur,
-            prcChange24h: mrkData?.price_change_percentage_24h,
-            prcChange7D: mrkData?.price_change_percentage_7d,
-            prcChange30D: mrkData?.price_change_percentage_30d,
-            prcChange200d: mrkData?.price_change_percentage_200d,
-            prcChange1yr: mrkData?.price_change_percentage_1y,
+            prcChange24h: mrkData?.price_change_percentage_24h || 0,
+            prcChange7D: mrkData?.price_change_percentage_7d || 0,
+            prcChange30D: mrkData?.price_change_percentage_30d || 0,
+            prcChange200d: mrkData?.price_change_percentage_200d || 0,
+            prcChange1yr: mrkData?.price_change_percentage_1y || 0,
           },
         },
         blocksPerMin: data.block_time_in_minutes,
-        //homepage: data.homepage[0],
         genesisDate: data.genesis_date,
-        price: isUsd ? mrkData?.current_price.usd : mrkData?.current_price.eur,
+        price: isUsd
+          ? mrkData?.current_price.usd || 0
+          : mrkData?.current_price.eur || 0,
         hashing: data.hashing_algorithm,
       };
 
@@ -54,15 +60,30 @@ const FetchEachCoin = ({ coin, USDorEUR, isUsd }) => {
     getEachCoin();
   }, [EachCoinURL, isUsd]);
 
+  //console.log(Object.keys(eachCoin.moreData?.prices));
   const getColorClass = () => {
     if (eachCoin.moreData && eachCoin.moreData.prices) {
-      for (const key in eachCoin.moreData.prices ?? {}) {
-        if (eachCoin.moreData.prices.hasOwnProperty(key)) {
-          const value = eachCoin.moreData.prices[key];
-          if (value >= 0) {
+      //const value = eachCoin.moreData.prices.prcChange24h; //but thats for just one, will do for every
+      //console.log(value);
+
+      //if (value <= 0) {
+      //  return classes.red;
+      //} else if (value > 0) {
+      //  return classes.green;
+      //}
+
+      //2
+
+      for (const key in eachCoin.moreData?.prices) {
+        if (eachCoin.moreData?.prices.hasOwnProperty(key)) {
+          const value = eachCoin.moreData?.prices[key];
+          //console.log(value);
+          if (value > 0) {
             return classes.green;
           } else if (value < 0) {
             return classes.red;
+          } else {
+            return classes.grey;
           }
         }
       }
@@ -97,7 +118,7 @@ const FetchEachCoin = ({ coin, USDorEUR, isUsd }) => {
         <div className={classes.fewDetails}>
           <h2>{eachCoin.rank}</h2>
           <h3>{eachCoin.symbol?.toUpperCase()}</h3>
-          <h4>{eachCoin.price?.toLocaleString() + USDorEUR}</h4>
+          <h4>{eachCoin.price?.toLocaleString() + " " + USDorEUR}</h4>
         </div>
       </div>
 
@@ -105,24 +126,42 @@ const FetchEachCoin = ({ coin, USDorEUR, isUsd }) => {
       <div className={classes.moreDetails}>
         <div className={classes.innerTopDiv}>
           <div className={classes.centeredText}>
-            <p>Circulating supply</p>
+            <text>Circulating supply</text>
             <p>
               {coinData.circ_supply?.toLocaleString()}{" "}
-              {eachCoin.symbol?.toLowerCase()}
+              <img src={eachCoin.img} alt="icon" />
             </p>
           </div>
           <div className={classes.centeredText}>
-            <p>Max supply</p>
+            <text>Max supply</text>
             <p>
-              {coinData.max_suply?.toLocaleString()}{" "}
-              {eachCoin.symbol?.toLowerCase()}
+              {coinData.max_suply?.toLocaleString() || (
+                <span className={classes.infinite}>∞</span>
+              )}{" "}
+              <img src={eachCoin.img} alt="icon" />
             </p>
           </div>
           <div className={classes.centeredText}>
-            <p>Total Volume(btc)</p>
-            <p>{coinData.total_volumeBtc?.toLocaleString()}</p>
+            <text>Total Volume(btc)</text>
+            <p>
+              {coinData.total_volumeBtc?.toLocaleString()}
+              <img src={btc} alt="icon" />
+            </p>
           </div>
         </div>
+
+        {/*middle div*/}
+        <div className={classes.highLow}>
+          <text onClick={() => setIshigh((prev) => !prev)}>
+            {ishigh ? "24h high ⇧" : "24h low ⇩"}
+          </text>
+
+          <p>
+            {ishigh ? coinData.high_24h : coinData.low_24h}
+            {/*{" " + USDorEUR}*/}
+          </p>
+        </div>
+
         <p className={`${color}`}>
           {coinData.prices?.prcChange24h}
           <span>%</span>

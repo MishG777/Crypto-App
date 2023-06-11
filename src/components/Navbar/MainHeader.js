@@ -13,15 +13,20 @@ const MainHeader = ({ logOutHandler, logIn /*gotCurrency*/ }) => {
   const { currency, setcurrency } = CryptoState();
 
   const location = useLocation();
+  console.log(location);
   const navigate = useNavigate();
 
   const currencyHandler = (e) => {
     let targetCurrency = e.target.value.toLowerCase();
-    navigate(`${location.pathname}?currency=${currency}`);
     setcurrency(targetCurrency);
     localStorage.setItem("selectedCurrency", targetCurrency);
+
     //gotCurrency(currency);
   };
+
+  useEffect(() => {
+    navigate(`${location.pathname}?currency=${currency}`);
+  }, [location.pathname, currency, navigate]);
 
   const openMenu = () => {
     setmenuOpen((prev) => !prev);
@@ -29,6 +34,7 @@ const MainHeader = ({ logOutHandler, logIn /*gotCurrency*/ }) => {
 
   useEffect(() => {
     // Retrieve menuOpen state from localStorage
+
     const isMenuOpen = localStorage.getItem("menuOpen");
     setmenuOpen(isMenuOpen === "true");
   }, []);
@@ -67,7 +73,10 @@ const MainHeader = ({ logOutHandler, logIn /*gotCurrency*/ }) => {
               </select>
 
               <li onClick={openMenu}>
-                <NavLink id={classes.coins} to="/all-coins">
+                <NavLink
+                  id={classes.coins}
+                  to={location.pathname + location.search}
+                >
                   Currencies
                 </NavLink>
               </li>

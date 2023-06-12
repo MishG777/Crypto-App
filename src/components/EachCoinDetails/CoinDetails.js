@@ -12,6 +12,7 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
+  ReferenceLine,
 } from "recharts";
 import { format } from "date-fns";
 import { CryptoState } from "../context/CryptoContext";
@@ -109,7 +110,7 @@ const CoinDetails = () => {
         setContainerWidth("93%");
         XintervalRef.current = true;
       } else {
-        setContainerWidth("85%");
+        setContainerWidth("85.5%");
         XintervalRef.current = false;
       }
     };
@@ -119,6 +120,28 @@ const CoinDetails = () => {
   }, []);
 
   //////////////////////////////////////////
+
+  //Date for the highest price /////////////////////////
+
+  const highestPriceEntry = graphData.find(
+    (entry) =>
+      entry.Price === Math.max(...graphData.map((entry) => entry.Price))
+  );
+  const highestPriceDate = highestPriceEntry ? highestPriceEntry.Date : null;
+  const formattedHighestPriceDate = highestPriceDate
+    ? format(highestPriceDate, "eee | MMM d | Y")
+    : "";
+
+  //Date for the lowest price
+
+  const lowestPriceEntry = graphData.find(
+    (entry) =>
+      entry.Price === Math.min(...graphData.map((entry) => entry.Price))
+  );
+  const lowestPriceDate = lowestPriceEntry ? lowestPriceEntry.Date : null;
+  const formattedlowestPriceDate = lowestPriceDate
+    ? format(lowestPriceDate, "eee | MMM d | Y")
+    : "";
 
   return (
     <Fragment>
@@ -132,7 +155,7 @@ const CoinDetails = () => {
             margin={{
               top: 20,
               right: 0,
-              left: XintervalRef.current ? 9 : 220,
+              left: XintervalRef.current ? 9 : 240,
               bottom: 20,
             }}
           >
@@ -143,11 +166,7 @@ const CoinDetails = () => {
               fill="url(#GradColor)"
             />
 
-            <CartesianGrid
-              opacity={0.25}
-              strokeDasharray="1"
-              vertical={false}
-            />
+            <CartesianGrid opacity={0.2} strokeDasharray="1" vertical={false} />
 
             <XAxis
               interval={XintervalRef.current ? 200 : 120}
@@ -187,6 +206,31 @@ const CoinDetails = () => {
             />
 
             <Tooltip content={<CustomTooltip />} />
+            <ReferenceLine
+              y={Math.max(...graphData.map((entry) => entry.Price))}
+              stroke="rgba(181, 182, 252, 0.5)"
+              strokeDasharray="3 3"
+              label={{
+                position: "insideBottom",
+                value: `Highest Price: ${Math.max(
+                  ...graphData.map((entry) => entry.Price?.toFixed(2))
+                )} ${USDorEUR} \n ${formattedHighestPriceDate}`,
+                style: { fill: "white" },
+              }}
+            />
+
+            <ReferenceLine
+              y={Math.min(...graphData.map((entry) => entry.Price))}
+              stroke="rgba(181, 182, 252, 0.5)"
+              strokeDasharray="10 10"
+              label={{
+                position: "insideTop",
+                value: `Lowest Price: ${Math.min(
+                  ...graphData.map((entry) => entry.Price?.toFixed(2))
+                )}  ${USDorEUR} \n ${formattedlowestPriceDate}`,
+                style: { fill: "white" },
+              }}
+            />
 
             <defs>
               <linearGradient id="GradColor" x1="0" y1="0" x2="0" y2="1">

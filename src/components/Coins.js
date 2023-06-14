@@ -1,9 +1,15 @@
-import React, { useState, useEffect, Fragment, useMemo } from "react";
+import React, {
+  useState,
+  useEffect,
+  Fragment,
+  useMemo,
+  useCallback,
+} from "react";
 import axios from "axios";
 import CoinItems from "./CoinItems";
 import classes from "./Coins.module.css";
 import loader from "../components/img/loading.png";
-import { CoinPages } from "./Footer/CoinPages";
+import CoinPages from "./Footer/CoinPages";
 import Button from "./UI/Button";
 import { useNavigate, useLocation } from "react-router-dom";
 import PriceChangeByTime from "./PriceChangeByTime";
@@ -110,23 +116,7 @@ function Coins() {
       setIsLoading(false);
       return;
     }
-
-    const nextPageURL = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${currency}&order=market_cap_${
-      mcSorting ? "asc" : "desc"
-    }&per_page=${fetchedCoinsAmount}&page=${fetchNextPage}&sparkline=false&price_change_percentage=${priceChangeTime}`;
-
-    axios
-      .get(nextPageURL)
-      .then((res) => {
-        const newCoins = res.data;
-        setCoins((prevCoins) => [...prevCoins, ...newCoins]);
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        setIsLoading(false);
-        setError(error.message);
-      });
-  }, [fetchNextPage, fetchedCoinsAmount, currency, mcSorting, priceChangeTime]);
+  }, [fetchedCoinsAmount]);
 
   ///////////////////////////////////////////////////////
 
@@ -158,9 +148,9 @@ function Coins() {
 
   //==================== SORT BY MARKET CAP
 
-  const sortByMcHandler = () => {
+  const sortByMcHandler = useCallback(() => {
     navigate(`${location.pathname}?McSort=${mcSorting ? "desc" : "asc"}`);
-  };
+  }, [location.pathname, mcSorting, navigate]);
 
   //========================== GOT TIME FOR price_change_percentage in API
 

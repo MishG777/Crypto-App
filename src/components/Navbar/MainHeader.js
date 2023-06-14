@@ -4,12 +4,8 @@ import { NavLink, Link, useLocation, useNavigate } from "react-router-dom";
 import classes from "./MainHeader.module.css";
 import { CryptoState } from "../context/CryptoContext";
 
-const MainHeader = ({ logOutHandler, logIn /*gotCurrency*/ }) => {
+const MainHeader = ({ logOutHandler, logIn }) => {
   const [menuOpen, setmenuOpen] = useState(false);
-  //const [selectedCurrency, setSelectedCurrency] = useState(
-  //  localStorage.getItem("selectedCurrency") || "usd"
-  //);
-
   const { currency, setcurrency } = CryptoState();
 
   const location = useLocation();
@@ -19,8 +15,6 @@ const MainHeader = ({ logOutHandler, logIn /*gotCurrency*/ }) => {
     let targetCurrency = e.target.value.toLowerCase();
     setcurrency(targetCurrency);
     localStorage.setItem("selectedCurrency", targetCurrency);
-
-    //gotCurrency(currency);
   };
 
   useEffect(() => {
@@ -32,19 +26,15 @@ const MainHeader = ({ logOutHandler, logIn /*gotCurrency*/ }) => {
   };
 
   useEffect(() => {
-    // Retrieve menuOpen state from localStorage
-
     const isMenuOpen = localStorage.getItem("menuOpen");
     setmenuOpen(isMenuOpen === "true");
   }, []);
 
   useEffect(() => {
-    // Save menuOpen state to localStorage
     localStorage.setItem("menuOpen", menuOpen);
   }, [menuOpen]);
 
   useEffect(() => {
-    // Set the selected currency in localStorage when it changes
     localStorage.setItem("selectedCurrency", currency);
   }, [currency]);
 

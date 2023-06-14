@@ -72,17 +72,6 @@ const FetchEachCoin = ({ coin, USDorEUR, isUsd }) => {
 
   const getColorClass = () => {
     if (eachCoin.moreData && eachCoin.moreData.prices) {
-      //const value = eachCoin.moreData.prices.prcChange24h; //but thats for just one, will do for every
-      //console.log(value);
-
-      //if (value <= 0) {
-      //  return classes.red;
-      //} else if (value > 0) {
-      //  return classes.green;
-      //}
-
-      //2
-
       for (const key in eachCoin.moreData?.prices) {
         if (eachCoin.moreData?.prices.hasOwnProperty(key)) {
           const value = eachCoin.moreData?.prices[key];

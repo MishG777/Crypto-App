@@ -70,7 +70,6 @@ function Coins() {
 
           setCoins(CoinsData);
 
-          console.log(CoinsData);
           setIsLoading(false);
         })
         .catch((error) => {
@@ -96,27 +95,14 @@ function Coins() {
 
   //===================FETCH MORE COINS
 
-  //const fetchMoreCoins = () => {
-  //  setIsLoading(true);
-  //  setFetchedCoinsAmount((moreCoins) => moreCoins + 25);
-  //  if (fetchedCoinsAmount > 250) {
-  //    setNoMoreCoins(true);
-  //  }
-  //  setIsLoading(false);
-  //};
-
   const fetchMoreCoins = () => {
     setIsLoading(true);
-    setFetchedCoinsAmount((prevCoinsAmount) => prevCoinsAmount + 25);
-  };
-
-  useEffect(() => {
+    setFetchedCoinsAmount((moreCoins) => moreCoins + 25);
     if (fetchedCoinsAmount > 250) {
       setNoMoreCoins(true);
-      setIsLoading(false);
-      return;
     }
-  }, [fetchedCoinsAmount]);
+    setIsLoading(false);
+  };
 
   ///////////////////////////////////////////////////////
 

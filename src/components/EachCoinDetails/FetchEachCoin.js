@@ -8,6 +8,8 @@ const FetchEachCoin = ({ coin, USDorEUR, isUsd }) => {
   const [eachCoin, setEachCoin] = useState({});
   const [ishigh, setIshigh] = useState(false);
 
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+
   const EachCoinURL = `https://api.coingecko.com/api/v3/coins/${coin}`;
 
   useEffect(() => {
@@ -105,6 +107,36 @@ const FetchEachCoin = ({ coin, USDorEUR, isUsd }) => {
   const description = getDescription();
   const coinData = eachCoin.moreData || {};
 
+  useEffect(() => {
+    const handleResize = () => {
+      setScreenWidth(window.innerWidth);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  function translateNumber(number) {
+    if (typeof number !== "number" || isNaN(number)) {
+      return "No Data!";
+    }
+
+    if (screenWidth < 1420) {
+      if (number >= 1000000000) {
+        return (number / 1000000000).toFixed(2) + " B";
+      } else if (number >= 1000000) {
+        return (number / 1000000).toFixed(2) + " M";
+      } else if (number >= 1000) {
+        return (number / 1000).toFixed(2) + " K";
+      }
+    }
+
+    return number.toLocaleString();
+  }
+
   return (
     <div className={classes.mainDiv}>
       {/*left*/}
@@ -135,14 +167,15 @@ const FetchEachCoin = ({ coin, USDorEUR, isUsd }) => {
           <div className={classes.centeredText}>
             <h4>Circulating supply</h4>
             <p>
-              {coinData.circ_supply?.toLocaleString()}{" "}
+              {translateNumber(coinData.circ_supply)}{" "}
+              {/*{coinData.circ_supply?.toLocaleString()}*/}
               <img src={eachCoin.img} alt="icon" />
             </p>
           </div>
           <div className={classes.centeredText}>
             <h4>Max supply</h4>
             <p>
-              {coinData.max_suply?.toLocaleString() || (
+              {translateNumber(coinData.max_suply) || (
                 <span className={classes.infinite}>∞</span>
               )}{" "}
               <img src={eachCoin.img} alt="icon" />
@@ -151,7 +184,7 @@ const FetchEachCoin = ({ coin, USDorEUR, isUsd }) => {
           <div className={classes.centeredText}>
             <h4>Total Volume(btc)</h4>
             <p>
-              {coinData.total_volumeBtc?.toLocaleString()}
+              {translateNumber(coinData.total_volumeBtc)}
               <img src={btc} alt="icon" />
             </p>
           </div>
@@ -176,14 +209,14 @@ const FetchEachCoin = ({ coin, USDorEUR, isUsd }) => {
           <div className={classes.centeredText}>
             <h4>Market Cap</h4>
             <p>
-              {coinData.mc?.toLocaleString()}{" "}
+              {translateNumber(coinData.mc)}{" "}
               <img src={eachCoin.img} alt="icon" />
             </p>
           </div>
           <div className={classes.centeredText}>
             <h4>MC Change 24h</h4>
             <p>
-              {coinData.mcChange24h?.toLocaleString() || (
+              {translateNumber(coinData.mcChange24h) || (
                 <span className={classes.infinite}>∞</span>
               )}{" "}
               %

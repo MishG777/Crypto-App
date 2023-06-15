@@ -20,7 +20,7 @@
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
-  /*border: 2px solid green;*/
+
   width: 20rem;
   height: 100%;
 }
@@ -243,6 +243,76 @@
 @media (max-width: 520px), (max-width: 390px) {
   .description {
     top: calc(100% - 500px);
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .mainDiv {
+    flex-direction: column;
+    margin: 1rem 2rem;
+  }
+  .coinDetails {
+    flex-direction: row;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+  }
+  .coinDetails img {
+    width: 5rem;
+  }
+
+  .fewDetails {
+    align-items: center;
+  }
+
+  .fewDetails h2,
+  .fewDetails h3,
+  .fewDetails h4 {
+    height: 1rem;
+    width: 60%;
+    font-size: 0.7rem;
+    padding: 10px;
+  }
+
+  .coinDetails .leftLowerDiv {
+    width: 60%;
+    height: 3rem;
+    padding-top: 3px;
+  }
+
+  .coinDetails .leftLowerDiv h4 {
+    font-size: 12px;
+  }
+
+  .coinDetails .leftLowerDiv p img {
+    width: 1rem;
+  }
+
+  /*right div*/
+
+  .mainDiv .moreDetails {
+    margin: 2rem 0 0 0;
+    width: 100%;
+  }
+  .moreDetails .innerTopDiv {
+    flex-wrap: wrap;
+    height: 7rem;
+  }
+  .innerTopDiv .centeredText {
+    width: 45%;
+    margin: 10px 0 10px 0;
+  }
+
+  .moreDetails .centeredText p img {
+    width: 12px;
+  }
+
+  .moreDetails h4 {
+    font-size: 7px;
+  }
+  .moreDetails .highLow h4,
+  .moreDetails .priceChange h4 {
     font-size: 11px;
   }
 }

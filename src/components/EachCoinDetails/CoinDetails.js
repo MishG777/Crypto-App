@@ -214,7 +214,7 @@ const CoinDetails = () => {
                 position: "insideBottom",
                 value: `Highest Price: ${Math.max(
                   ...graphData.map((entry) => entry.Price?.toFixed(2))
-                )} ${USDorEUR} \n ${formattedHighestPriceDate}`,
+                )} ${USDorEUR} ${"<------>"} ${formattedHighestPriceDate}`,
                 style: { fill: "white" },
               }}
             />
@@ -222,12 +222,12 @@ const CoinDetails = () => {
             <ReferenceLine
               y={Math.min(...graphData.map((entry) => entry.Price))}
               stroke="rgba(181, 182, 252, 0.5)"
-              strokeDasharray="10 10"
+              strokeDasharray="3 3"
               label={{
                 position: "insideTop",
                 value: `Lowest Price: ${Math.min(
                   ...graphData.map((entry) => entry.Price?.toFixed(2))
-                )}  ${USDorEUR} \n ${formattedlowestPriceDate}`,
+                )}  ${USDorEUR} ${"<------>"} ${formattedlowestPriceDate} `,
                 style: { fill: "white" },
               }}
             />

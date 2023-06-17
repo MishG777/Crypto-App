@@ -3,10 +3,14 @@ import axios from "axios";
 import classes from "./FetchEachCoin.module.css";
 import btc from "../img/btc.png";
 import twitter from "../img/twitter.png";
+import { Select, MenuItem } from "@mui/material";
+
 //used in CoinDetails.js
 const FetchEachCoin = ({ coin, USDorEUR, isUsd }) => {
   const [eachCoin, setEachCoin] = useState({});
   const [ishigh, setIshigh] = useState(false);
+
+  const [priceTime, setPriceTime] = useState("24h");
 
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
 
@@ -39,14 +43,16 @@ const FetchEachCoin = ({ coin, USDorEUR, isUsd }) => {
             : mrkData?.low_24h.eur || 0,
 
           //Market Cap | changes
-          mc: isUsd ? mrkData?.market_cap.usd : mrkData?.market_cap.eur,
-          mcChange24h: mrkData?.market_cap_change_percentage_24h,
-          mcChangeInBtc:
+          /*DONE*/ mc: isUsd
+            ? mrkData?.market_cap.usd
+            : mrkData?.market_cap.eur,
+          /*DONE*/ mcChange24h: mrkData?.market_cap_change_percentage_24h,
+          /*DONE*/ mcChangeInBtc:
             mrkData?.market_cap_change_percentage_24h_in_currency.btc,
 
           //price | changes
           prices: {
-            prcChange24h: mrkData?.price_change_percentage_24h || 0,
+            /*DONE*/ prcChange24h: mrkData?.price_change_percentage_24h || 0,
             prcChange7D: mrkData?.price_change_percentage_7d || 0,
             prcChange30D: mrkData?.price_change_percentage_30d || 0,
             prcChange200d: mrkData?.price_change_percentage_200d || 0,
@@ -70,27 +76,6 @@ const FetchEachCoin = ({ coin, USDorEUR, isUsd }) => {
     getEachCoin();
   }, [EachCoinURL, isUsd]);
 
-  //console.log(eachCoin.twitter_followers);
-
-  const getColorClass = () => {
-    if (eachCoin.moreData && eachCoin.moreData.prices) {
-      for (const key in eachCoin.moreData?.prices) {
-        if (eachCoin.moreData?.prices.hasOwnProperty(key)) {
-          const value = eachCoin.moreData?.prices[key];
-          //console.log(value);
-          if (value > 0) {
-            return classes.green;
-          } else if (value < 0) {
-            return classes.red;
-          } else {
-            return classes.grey;
-          }
-        }
-      }
-    }
-    return classes.grey;
-  };
-
   ////////////////////////////
 
   const getDescription = () => {
@@ -103,9 +88,34 @@ const FetchEachCoin = ({ coin, USDorEUR, isUsd }) => {
     return "No Description for this coin";
   };
 
-  const color = getColorClass();
   const description = getDescription();
   const coinData = eachCoin.moreData || {};
+
+  let time = 0;
+  if (priceTime === "24h") {
+    time = coinData.prices?.prcChange24h;
+  } else if (priceTime === "7D") {
+    time = coinData.prices?.prcChange7D;
+  } else if (priceTime === "30D") {
+    time = coinData.prices?.prcChange30D;
+  } else if (priceTime === "200D") {
+    time = coinData.prices?.prcChange200d;
+  } else if (priceTime === "1Y") {
+    time = coinData.prices?.prcChange1yr;
+  }
+
+  const getColorClass = (time) => {
+    const prices = eachCoin.moreData?.prices;
+    if (prices) {
+      if (time > 0) {
+        return classes.green;
+      } else if (time < 0) {
+        return classes.red;
+      }
+    }
+    return classes.grey;
+  };
+  const color = getColorClass(time);
 
   useEffect(() => {
     const handleResize = () => {
@@ -136,6 +146,12 @@ const FetchEachCoin = ({ coin, USDorEUR, isUsd }) => {
 
     return number.toLocaleString();
   }
+
+  const timeChanger = (event) => {
+    setPriceTime(event.target.value);
+  };
+
+  //console.log(typeof coinData.prices?.prcChange24h);
 
   return (
     <div className={classes.mainDiv}>
@@ -232,9 +248,54 @@ const FetchEachCoin = ({ coin, USDorEUR, isUsd }) => {
         </div>
 
         <div className={classes.priceChange}>
-          <h4>Price change 24h</h4>
+          <h4>
+            Price change{" "}
+            <Select
+              sx={{
+                backgroundColor: "transparent",
+                border: "none",
+                borderRadius: 1,
+                height: "20px",
+                padding: 0,
+                color: "white",
+                fontSize: "14px",
+                outline: "none",
+
+                "& .MuiSelect-icon": {
+                  color: "white",
+                },
+              }}
+              MenuProps={{
+                PaperProps: {
+                  style: {
+                    transform: "translateX(100%)",
+                    marginTop: "0.5rem",
+                  },
+                },
+              }}
+              value={priceTime}
+              onChange={timeChanger}
+            >
+              <MenuItem value="24h" sx={{ fontSize: "0.8rem" }}>
+                24h
+              </MenuItem>
+              <MenuItem value="7D" sx={{ fontSize: "0.8rem" }}>
+                7D
+              </MenuItem>
+              <MenuItem value="30D" sx={{ fontSize: "0.8rem" }}>
+                30D
+              </MenuItem>
+              <MenuItem value="200D" sx={{ fontSize: "0.8rem" }}>
+                200D
+              </MenuItem>
+              <MenuItem value="1Y" sx={{ fontSize: "0.8rem" }}>
+                1Y
+              </MenuItem>
+            </Select>
+          </h4>
           <p className={`${color}`}>
-            {coinData.prices?.prcChange24h}
+            {/*{coinData.prices?.prcChange200D}*/}
+            {time}
             <span>%</span>
           </p>
         </div>

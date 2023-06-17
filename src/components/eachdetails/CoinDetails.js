@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState, useRef } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import classes from "./CoinDetails.module.css";
-import FetchEachCoin from "./FetchEachCoin";
+//import FetchEachCoin from "./FetchEachCoin";
 
 import {
   AreaChart,
@@ -12,10 +12,12 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
-  ReferenceLine,
+  ReferenceDot,
 } from "recharts";
 import { format } from "date-fns";
 import { CryptoState } from "../context/CryptoContext";
+import FetchEachCoin from "./FetchEachCoin";
+import Button from "../UI/Button";
 
 const CoinDetails = () => {
   const [graphData, setGraphData] = useState([]);
@@ -23,6 +25,7 @@ const CoinDetails = () => {
   const [error, setError] = useState(false);
   const [days, setDays] = useState(50);
   const [activeButton, setActiveButton] = useState(null);
+  const [showHl, setShowHl] = useState(false);
 
   const daysRef = useRef(null);
   const XintervalRef = useRef(false);
@@ -119,6 +122,13 @@ const CoinDetails = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  ///////////////////show HL///////////////////////
+
+  const showHlHandler = (e) => {
+    e.preventDefault();
+    setShowHl((prev) => !prev);
+  };
+
   //////////////////////////////////////////
 
   //Date for the highest price /////////////////////////
@@ -148,6 +158,11 @@ const CoinDetails = () => {
       <h2 className={classes.coinTitle}>{coinName}</h2>
 
       <div className={classes.mainChartDiv}>
+        <div className={classes.hl}>
+          <Button className={classes.hlButton} onClick={showHlHandler}>
+            {`${showHl ? "hide" : "show"} HL Details`}
+          </Button>
+        </div>
         <ResponsiveContainer width={containerWidth} height={370}>
           <AreaChart
             fontSize={10}
@@ -176,9 +191,7 @@ const CoinDetails = () => {
               tickFormatter={(timeStr) => {
                 const date = new Date(timeStr);
                 const formattedDate = format(date, "d MMM / yy");
-                //const month = monthNames[date.getMonth()];
-                //const day = date.getDate();
-                //return `${month}, ${day}`;
+
                 return `${formattedDate}`;
               }}
               tick={{
@@ -206,31 +219,37 @@ const CoinDetails = () => {
             />
 
             <Tooltip content={<CustomTooltip />} />
-            <ReferenceLine
-              y={Math.max(...graphData.map((entry) => entry.Price))}
-              stroke="rgba(181, 182, 252, 0.5)"
-              strokeDasharray="3 3"
-              label={{
-                position: "insideBottom",
-                value: `Highest Price: ${Math.max(
-                  ...graphData.map((entry) => entry.Price?.toFixed(2))
-                )} ${USDorEUR} ${"<------>"} ${formattedHighestPriceDate}`,
-                style: { fill: "white" },
-              }}
-            />
 
-            <ReferenceLine
-              y={Math.min(...graphData.map((entry) => entry.Price))}
-              stroke="rgba(181, 182, 252, 0.5)"
-              strokeDasharray="3 3"
-              label={{
-                position: "insideTop",
-                value: `Lowest Price: ${Math.min(
-                  ...graphData.map((entry) => entry.Price?.toFixed(2))
-                )}  ${USDorEUR} ${"<------>"} ${formattedlowestPriceDate} `,
-                style: { fill: "white" },
-              }}
-            />
+            {highestPriceEntry && showHl && (
+              <ReferenceDot
+                x={highestPriceEntry.Date}
+                y={highestPriceEntry.Price}
+                r={3}
+                fill="white"
+                label={{
+                  position: "top",
+                  value: `${USDorEUR}${highestPriceEntry.Price.toFixed(
+                    3
+                  )} | ${formattedHighestPriceDate}`,
+                  style: { fill: "white", fontSize: "8px" },
+                }}
+              />
+            )}
+            {lowestPriceEntry && showHl && (
+              <ReferenceDot
+                x={lowestPriceEntry.Date}
+                y={lowestPriceEntry.Price}
+                r={3}
+                fill="white"
+                label={{
+                  position: "bottom",
+                  value: `${USDorEUR}${lowestPriceEntry.Price.toFixed(
+                    3
+                  )} | ${formattedlowestPriceDate}`,
+                  style: { fill: "white", fontSize: "8px" },
+                }}
+              />
+            )}
 
             <defs>
               <linearGradient id="GradColor" x1="0" y1="0" x2="0" y2="1">

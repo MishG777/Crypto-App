@@ -76,7 +76,7 @@ function Coins() {
           setIsLoading(false);
           setError(error.message);
         });
-    }, 1500); // 1.5 second delay
+    }, 1000); // 1.5 second delay
 
     return () => clearTimeout(timerId);
   }, [URL]);
@@ -189,14 +189,7 @@ function Coins() {
           <img src={loader} alt="loading..." className={classes.loader} />
         )}
 
-        {!noMoreCoins && (
-          <Button
-            disabled={localStorage.getItem("CryptoPage") === "2" ? false : true}
-            onClick={fetchMoreCoins}
-          >
-            fetch more
-          </Button>
-        )}
+        {!noMoreCoins && <Button onClick={fetchMoreCoins}>fetch more</Button>}
 
         {noMoreCoins && (
           <div>

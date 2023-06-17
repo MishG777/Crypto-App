@@ -7,7 +7,7 @@ import {
   useNavigate,
   Navigate,
 } from "react-router-dom";
-import CoinDetails from "./components/EachCoinDetails/CoinDetails";
+import CoinDetails from "./components/eachdetails/CoinDetails";
 import Coins from "./components/Coins";
 import MainHeader from "./components/Navbar/MainHeader";
 import NotFound from "./components/NotFound";

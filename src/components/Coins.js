@@ -82,9 +82,7 @@ function Coins() {
   }, [URL]);
 
   const handleChange = (e) => {
-    if (e.target.value !== "") {
-      setSearch(e.target.value);
-    }
+    setSearch(e.target.value);
   };
 
   const filteredCoins = useMemo(() => {

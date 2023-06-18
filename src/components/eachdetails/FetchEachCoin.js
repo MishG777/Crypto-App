@@ -207,7 +207,6 @@ const FetchEachCoin = ({ coin, USDorEUR, isUsd }) => {
         </div>
 
         {/*second div*/}
-
         <div className={classes.highLow}>
           <h4 onClick={() => setIshigh((prev) => !prev)}>
             {ishigh ? "24h high ⇧" : "24h low ⇩"}
@@ -258,8 +257,14 @@ const FetchEachCoin = ({ coin, USDorEUR, isUsd }) => {
                 height: "20px",
                 padding: 0,
                 color: "white",
-                fontSize: "14px",
+                fontSize: "12px",
+                fontWeight: "bold",
                 outline: "none",
+
+                "@media (max-width: 600px)": {
+                  fontSize: "10px",
+                  padding: "1px",
+                },
 
                 "& .MuiSelect-icon": {
                   color: "white",
@@ -269,32 +274,30 @@ const FetchEachCoin = ({ coin, USDorEUR, isUsd }) => {
                 PaperProps: {
                   style: {
                     transform: "translateX(100%)",
-                    marginTop: "0.5rem",
                   },
                 },
               }}
               value={priceTime}
               onChange={timeChanger}
             >
-              <MenuItem value="24h" sx={{ fontSize: "0.8rem" }}>
+              <MenuItem value="24h" sx={{ fontSize: "0.7rem" }}>
                 24h
               </MenuItem>
-              <MenuItem value="7D" sx={{ fontSize: "0.8rem" }}>
+              <MenuItem value="7D" sx={{ fontSize: "0.7rem" }}>
                 7D
               </MenuItem>
-              <MenuItem value="30D" sx={{ fontSize: "0.8rem" }}>
+              <MenuItem value="30D" sx={{ fontSize: "0.7rem" }}>
                 30D
               </MenuItem>
-              <MenuItem value="200D" sx={{ fontSize: "0.8rem" }}>
+              <MenuItem value="200D" sx={{ fontSize: "0.7rem" }}>
                 200D
               </MenuItem>
-              <MenuItem value="1Y" sx={{ fontSize: "0.8rem" }}>
+              <MenuItem value="1Y" sx={{ fontSize: "0.7rem" }}>
                 1Y
               </MenuItem>
             </Select>
           </h4>
-          <p className={`${color}`}>
-            {/*{coinData.prices?.prcChange200D}*/}
+          <p className={`${color} `}>
             {time}
             <span>%</span>
           </p>

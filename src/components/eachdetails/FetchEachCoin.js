@@ -4,6 +4,7 @@ import classes from "./FetchEachCoin.module.css";
 import btc from "../img/btc.png";
 import twitter from "../img/twitter.png";
 import { Select, MenuItem } from "@mui/material";
+import { FaInfinity } from "react-icons/fa";
 
 //used in CoinDetails.js
 const FetchEachCoin = ({ coin, USDorEUR, isUsd }) => {
@@ -131,7 +132,7 @@ const FetchEachCoin = ({ coin, USDorEUR, isUsd }) => {
 
   function translateNumber(number) {
     if (typeof number !== "number" || isNaN(number)) {
-      return "No Data!";
+      return <FaInfinity style={{ fontSize: 15 }} />;
     }
 
     if (screenWidth < 1420) {

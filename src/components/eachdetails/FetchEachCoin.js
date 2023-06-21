@@ -93,16 +93,26 @@ const FetchEachCoin = ({ coin, USDorEUR, isUsd }) => {
   const coinData = eachCoin.moreData || {};
 
   let time = 0;
-  if (priceTime === "24h") {
-    time = coinData.prices?.prcChange24h;
-  } else if (priceTime === "7D") {
-    time = coinData.prices?.prcChange7D;
-  } else if (priceTime === "30D") {
-    time = coinData.prices?.prcChange30D;
-  } else if (priceTime === "200D") {
-    time = coinData.prices?.prcChange200d;
-  } else if (priceTime === "1Y") {
-    time = coinData.prices?.prcChange1yr;
+
+  switch (priceTime) {
+    case "24h":
+      time = coinData.prices?.prcChange24h;
+      break;
+    case "7D":
+      time = coinData.prices?.prcChange7D;
+      break;
+    case "30D":
+      time = coinData.prices?.prcChange30D;
+      break;
+    case "200D":
+      time = coinData.prices?.prcChange200d;
+      break;
+    case "1Y":
+      time = coinData.prices?.prcChange1yr;
+      break;
+    default:
+      time = 0;
+      break;
   }
 
   const getColorClass = (time) => {
@@ -136,7 +146,9 @@ const FetchEachCoin = ({ coin, USDorEUR, isUsd }) => {
     }
 
     if (screenWidth < 1420) {
-      if (number >= 1000000000) {
+      if (number >= 1000000000000) {
+        return (number / 1000000000000).toFixed(2) + " T";
+      } else if (number >= 1000000000) {
         return (number / 1000000000).toFixed(2) + " B";
       } else if (number >= 1000000) {
         return (number / 1000000).toFixed(2) + " M";
@@ -152,7 +164,10 @@ const FetchEachCoin = ({ coin, USDorEUR, isUsd }) => {
     setPriceTime(event.target.value);
   };
 
-  //console.log(typeof coinData.prices?.prcChange24h);
+  let followers = 0;
+  if (eachCoin.twitter_followers) {
+    followers = parseInt(eachCoin.twitter_followers.replace(/,/g, ""));
+  }
 
   return (
     <div className={classes.mainDiv}>
@@ -171,7 +186,7 @@ const FetchEachCoin = ({ coin, USDorEUR, isUsd }) => {
         <div className={classes.leftLowerDiv}>
           <h4>followers</h4>
           <p>
-            {eachCoin.twitter_followers}
+            {translateNumber(followers)}
             <img src={twitter} alt="twitter" />
           </p>
         </div>

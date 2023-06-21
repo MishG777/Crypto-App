@@ -30,16 +30,16 @@
   appearance: none;
   width: 100%;
   outline: none;
-  border: none;
+  border: 2px solid white;
   border-radius: 10px;
   font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
     "Lucida Sans", Arial, sans-serif;
   height: 50px;
   font-size: 12px;
   font-weight: 400;
-  background: rgba(rgb(34, 207, 127), 0.02);
+  background: transparent;
   box-shadow: inset 0 -1px 0 rgba(rgb(34, 207, 127), 0.3);
-  color: rgb(33, 165, 103);
+  color: white;
   transition: all 0.15s ease;
 }
 

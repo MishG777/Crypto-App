@@ -15,6 +15,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import PriceChangeByTime from "./PriceChangeByTime";
 import CoinsTopBar from "./CoinsTopBar";
 import { CryptoState } from "./context/CryptoContext";
+import Banner from "./Banner/Banner";
 
 function Coins() {
   const [coins, setCoins] = useState([]);
@@ -76,7 +77,7 @@ function Coins() {
           setIsLoading(false);
           setError(error.message);
         });
-    }, 1000); // 1.5 second delay
+    }, 1000); // 1 second delay
 
     return () => clearTimeout(timerId);
   }, [URL]);
@@ -102,7 +103,7 @@ function Coins() {
     setIsLoading(false);
   };
 
-  ///////////////////////////////////////////////////////
+  /////////////////////FOR ROUTING////////////////////
 
   const showPagesNumHandler = (page) => {
     navigate(`/all-coins?page=${page}`);
@@ -145,12 +146,14 @@ function Coins() {
   return (
     <Fragment>
       <div className={classes.main}>
+        <Banner />
+
         <div className={classes["coin-search"]}>
           <h1 className={classes["coin-text"]}>Search a Currency</h1>
           <form>
             <input
               type="search"
-              placeholder="Search for Crypto Currencies"
+              placeholder="Search for Crypto Currencies.."
               className={classes["coin-input"]}
               onChange={handleChange}
               value={search ? search : ""}

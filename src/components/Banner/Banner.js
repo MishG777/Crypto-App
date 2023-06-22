@@ -27,7 +27,7 @@ const Banner = () => {
         setError(error.message);
       });
   }, [URL]);
-  console.log(trendingCoins);
+  //console.log(trendingCoins.map((coin) => console.log(coin.item.name)));
 
   const items = trendingCoins.map((coin) => {
     return (
@@ -38,18 +38,24 @@ const Banner = () => {
             ? `${coin.item.id}?currency=${currency}`
             : "/auth-registration-page"
         }
-      ></Link>
+        className={classes.linkk}
+      >
+        <div className={classes.carouselItem}>
+          <img src={coin.item.small} alt={coin.item.name} />
+          <span>{coin.item.name}</span>
+        </div>
+      </Link>
     );
   });
 
-  const responsive = {
-    0: {
-      items: 2,
-    },
-    512: {
-      items: 4,
-    },
-  };
+  //const responsive = {
+  //  0: {
+  //    items: 4,
+  //  },
+  //  512: {
+  //    items: 9,
+  //  },
+  //};
 
   return (
     <div className={classes.mainBanner}>
@@ -60,13 +66,13 @@ const Banner = () => {
 
       <div className={classes.carousel}>
         <AliceCarousel
+          className={classes.mainCarousel}
           mouseTracking
           infinite
           autoPlayInterval={1000}
           animationDuration={1500}
-          disableDotsControls
-          responsive={responsive}
           autoPlay
+          //responsive={responsive}
           items={items}
         />
       </div>

@@ -12,11 +12,37 @@
 .mainBanner p {
   color: white;
   font-weight: 100;
-  font-family: cursive;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
 }
 
 .mainBanner .carousel {
-  border: 2px solid red;
-  width: 100%;
+  display: flex;
+  width: 90%;
   height: 8rem;
+  overflow: hidden;
+}
+
+.mainBanner .carousel ul {
+  display: flex;
+  /*width: 4rem;*/
+}
+.mainBanner .carousel ul li {
+  list-style: none;
+  width: 1rem;
+}
+
+.mainBanner .carousel ul li a {
+  width: 2rem;
+  padding-left: 10px;
+}
+
+.linkk {
+  display: flex;
+}
+
+.carouselItem {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

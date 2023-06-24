@@ -1,10 +1,11 @@
+//used in Coins.js
 import { memo, useEffect, useState } from "react";
 import axios from "axios";
 import classes from "./Banner.module.css";
 import AliceCarousel from "react-alice-carousel";
 import { Link } from "react-router-dom";
 import { CryptoState } from "../context/CryptoContext";
-//import { convertBitcoinToUSD } from "./convertBTC";
+import ConvertBtc from "./ConvertBtc";
 
 const Banner = () => {
   const [trendingCoins, setTrendingCoins] = useState([]);
@@ -28,6 +29,7 @@ const Banner = () => {
         setError(error.message);
       });
   }, [URL]);
+
   console.log(trendingCoins);
 
   const items = trendingCoins.map((coin) => {
@@ -46,7 +48,7 @@ const Banner = () => {
           <div className={classes.trendingsText}>
             <p>{coin.item.market_cap_rank}</p>
             <p>{coin.item.symbol}</p>
-            {/*<p>{coinPrice}</p>*/}
+            <ConvertBtc priceId={coin.item.id} />
           </div>
         </div>
       </Link>
@@ -58,25 +60,27 @@ const Banner = () => {
   //    items: 2,
   //  },
   //  512: {
-  //    items: 5,
+  //    items: 5,carouselItem
   //  },
   //};
 
   return (
     <div className={classes.mainBanner}>
-      <h5>
-        Step into the realm of cryptocurrencies, where virtual wealth knows no
-        borders!
-      </h5>
-      <h4>Trendings</h4>
-
+      <div>
+        <h5>
+          Step into the realm of cryptocurrencies, where virtual wealth knows no
+          borders!
+        </h5>
+        <h4>Trendings</h4>
+      </div>
       <div className={classes.carousel}>
         <AliceCarousel
           mouseTracking
-          infinite
+          //infinite
           autoPlayInterval={1000}
           animationDuration={1500}
           //autoPlay
+          //disableDotsControls
           //responsive={responsive}
           items={items}
         />

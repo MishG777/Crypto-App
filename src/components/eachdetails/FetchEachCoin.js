@@ -5,9 +5,10 @@ import btc from "../img/btc.png";
 import twitter from "../img/twitter.png";
 import { Select, MenuItem } from "@mui/material";
 import { FaInfinity } from "react-icons/fa";
+import { CryptoState } from "../context/CryptoContext";
 
 //used in CoinDetails.js
-const FetchEachCoin = ({ coin, USDorEUR, isUsd }) => {
+const FetchEachCoin = ({ coin, isUsd }) => {
   const [eachCoin, setEachCoin] = useState({});
   const [ishigh, setIshigh] = useState(false);
 
@@ -16,6 +17,8 @@ const FetchEachCoin = ({ coin, USDorEUR, isUsd }) => {
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
 
   const EachCoinURL = `https://api.coingecko.com/api/v3/coins/${coin}`;
+
+  const { symb } = CryptoState();
 
   useEffect(() => {
     const getEachCoin = async () => {
@@ -180,7 +183,7 @@ const FetchEachCoin = ({ coin, USDorEUR, isUsd }) => {
         <div className={classes.fewDetails}>
           <h2>{eachCoin.rank}</h2>
           <h3>{eachCoin.symbol?.toUpperCase()}</h3>
-          <h4>{eachCoin.price?.toLocaleString() + " " + USDorEUR}</h4>
+          <h4>{eachCoin.price?.toLocaleString() + " " + symb}</h4>
         </div>
 
         <div className={classes.leftLowerDiv}>
@@ -230,7 +233,7 @@ const FetchEachCoin = ({ coin, USDorEUR, isUsd }) => {
 
           <p>
             {ishigh ? coinData.high_24h : coinData.low_24h}
-            {" " + USDorEUR}
+            {" " + symb}
           </p>
         </div>
 

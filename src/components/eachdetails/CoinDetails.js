@@ -306,7 +306,7 @@ const CoinDetails = () => {
         </div>
       </div>
 
-      <FetchEachCoin coin={coin} USDorEUR={USDorEUR} isUsd={isUsd} />
+      <FetchEachCoin coin={coin} isUsd={isUsd} />
     </Fragment>
   );
 };

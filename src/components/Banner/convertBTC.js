@@ -1,16 +1,30 @@
-export async function convertBitcoinToUSD(id) {
-  try {
-    const response = await fetch(
-      `https://api.coingecko.com/api/v3/simple/price?ids=${id}&vs_currencies=usd`
-    );
-    const data = await response.json();
+import { useState, useEffect } from "react";
+import { CryptoState } from "../context/CryptoContext";
 
-    //console.log(data);
-    const bitcoinPriceUSD = data[id].usd;
+function ConvertBtc({ priceId }) {
+  const [price, setPrice] = useState(null);
 
-    return bitcoinPriceUSD;
-    // You can use the bitcoinPriceUSD value in your application as needed
-  } catch (error) {
-    console.error("Error:", error);
-  }
+  const { currency } = CryptoState();
+
+  useEffect(() => {
+    async function fetchPrice() {
+      try {
+        const response = await fetch(
+          `https://api.coingecko.com/api/v3/simple/price?ids=${priceId}&vs_currencies=${currency}`
+        );
+        const data = await response.json();
+        const fetchedPrice = data[priceId].usd;
+
+        setPrice(fetchedPrice);
+      } catch (error) {
+        console.error("Error fetching price:", error);
+      }
+    }
+
+    fetchPrice();
+  }, [priceId, currency]);
+
+  return <div>{<p>{price?.toFixed(2) || 0}</p>}</div>;
 }
+
+export default ConvertBtc;

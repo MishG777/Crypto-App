@@ -9,11 +9,13 @@
   border-radius: 7px;
 }
 
-.mainBanner p {
+.mainBanner h6,
+.mainBanner h5 {
   color: white;
   font-weight: 100;
   font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
     "Lucida Sans", Arial, sans-serif;
+  margin: 0;
 }
 
 .mainBanner .carousel {
@@ -23,19 +25,21 @@
   overflow: hidden;
 }
 
-.mainBanner .carousel ul {
+.mainBanner ul {
   display: flex;
-  /*width: 4rem;*/
+  width: 80%;
+  margin: 0;
 }
-.mainBanner .carousel ul li {
+.mainBanner li {
   list-style: none;
-  width: 1rem;
+  width: 7rem !important;
+  /*margin: 0 2rem 0 2rem;*/
+  margin-left: 4rem;
 }
 
-.mainBanner .carousel ul li a {
-  width: 2rem;
-  padding-left: 10px;
-}
+/*.mainBanner a {
+  width: 5rem;
+}*/
 
 .linkk {
   display: flex;
@@ -43,6 +47,21 @@
 
 .carouselItem {
   display: flex;
+  flex-direction: column;
+  width: 8rem;
+  padding: 10px;
   justify-content: center;
   align-items: center;
+  border: 2px solid red;
+}
+
+.carouselItem p {
+  font-size: 12px;
+  /*display: inline-block;*/
+}
+
+.carouselItem .trendingsText {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
 }

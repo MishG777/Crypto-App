@@ -4,6 +4,7 @@ import classes from "./Banner.module.css";
 import AliceCarousel from "react-alice-carousel";
 import { Link } from "react-router-dom";
 import { CryptoState } from "../context/CryptoContext";
+//import { convertBitcoinToUSD } from "./convertBTC";
 
 const Banner = () => {
   const [trendingCoins, setTrendingCoins] = useState([]);
@@ -27,7 +28,7 @@ const Banner = () => {
         setError(error.message);
       });
   }, [URL]);
-  //console.log(trendingCoins.map((coin) => console.log(coin.item.name)));
+  console.log(trendingCoins);
 
   const items = trendingCoins.map((coin) => {
     return (
@@ -42,7 +43,11 @@ const Banner = () => {
       >
         <div className={classes.carouselItem}>
           <img src={coin.item.small} alt={coin.item.name} />
-          <span>{coin.item.name}</span>
+          <div className={classes.trendingsText}>
+            <p>{coin.item.market_cap_rank}</p>
+            <p>{coin.item.symbol}</p>
+            {/*<p>{coinPrice}</p>*/}
+          </div>
         </div>
       </Link>
     );
@@ -50,28 +55,28 @@ const Banner = () => {
 
   //const responsive = {
   //  0: {
-  //    items: 4,
+  //    items: 2,
   //  },
   //  512: {
-  //    items: 9,
+  //    items: 5,
   //  },
   //};
 
   return (
     <div className={classes.mainBanner}>
-      <p>
+      <h5>
         Step into the realm of cryptocurrencies, where virtual wealth knows no
         borders!
-      </p>
+      </h5>
+      <h4>Trendings</h4>
 
       <div className={classes.carousel}>
         <AliceCarousel
-          className={classes.mainCarousel}
           mouseTracking
           infinite
           autoPlayInterval={1000}
           animationDuration={1500}
-          autoPlay
+          //autoPlay
           //responsive={responsive}
           items={items}
         />

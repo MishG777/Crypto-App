@@ -6,6 +6,7 @@ import AliceCarousel from "react-alice-carousel";
 import { Link } from "react-router-dom";
 import { CryptoState } from "../context/CryptoContext";
 import ConvertBtc from "./ConvertBtc";
+import trendingIcon from "../img/trending.png";
 
 const Banner = () => {
   const [trendingCoins, setTrendingCoins] = useState([]);
@@ -56,12 +57,9 @@ const Banner = () => {
   });
 
   //const responsive = {
-  //  0: {
-  //    items: 2,
-  //  },
-  //  512: {
-  //    items: 5,carouselItem
-  //  },
+  //  0: { items: 3 },
+  //  600: { items: 6 },
+  //  1024: { items: 9 },
   //};
 
   return (
@@ -71,15 +69,19 @@ const Banner = () => {
           Step into the realm of cryptocurrencies, where virtual wealth knows no
           borders!
         </h5>
-        <h4>Trendings</h4>
       </div>
+      <h4>
+        {" "}
+        <img src={trendingIcon} alt="trending icon" />
+        Trendings
+      </h4>
       <div className={classes.carousel}>
         <AliceCarousel
           mouseTracking
           //infinite
           autoPlayInterval={1000}
-          animationDuration={1500}
-          //autoPlay
+          animationDuration={3000}
+          autoPlay
           //disableDotsControls
           //responsive={responsive}
           items={items}

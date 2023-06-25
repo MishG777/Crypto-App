@@ -21,20 +21,31 @@
 .mainBanner .carousel {
   display: flex;
   width: 90%;
-  height: 9rem;
+  /*height: 9rem;*/
   overflow: hidden;
 }
 
 .mainBanner ul {
   display: flex;
-  width: 70%;
-  /*margin: 0;*/
+  width: 30%;
 }
+
 .mainBanner li {
+  margin-right: 5rem;
   list-style: none;
-  width: 7rem !important;
-  /*margin: 0 2rem 0 2rem;*/
-  margin-right: 4rem;
+  /*width: 7rem !important;*/
+  margin: 0 2rem 0 2rem;
+  /*margin-right: 2rem;*/
+}
+
+.mainBanner h4 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.mainBanner h4 img {
+  width: 23px;
+  margin-right: 10px;
 }
 
 /*.mainBanner a {
@@ -43,23 +54,30 @@
 
 .linkk {
   display: flex;
+  width: 7rem !important;
+}
+
+.carouselItem img {
+  border-radius: 60%;
 }
 
 .carouselItem {
   display: flex;
   flex-direction: column;
   width: 8rem;
-  height: 8rem;
+  height: 7.4rem;
   padding: 10px;
   justify-content: space-between;
   align-items: center;
-  border: 1px solid white;
+  border: none;
+  box-shadow: 1px 2px 3px 4px rgba(20, 20, 20, 0.4);
+  cursor: pointer;
+  user-select: none;
   border-radius: 5px;
 }
-
 .carouselItem p {
   font-size: 12px;
-  /*display: inline-block;*/
+  display: inline-block;
 }
 
 .carouselItem .trendingsText {

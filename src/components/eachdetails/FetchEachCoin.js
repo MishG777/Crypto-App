@@ -8,7 +8,7 @@ import { FaInfinity } from "react-icons/fa";
 import { CryptoState } from "../context/CryptoContext";
 
 //used in CoinDetails.js
-const FetchEachCoin = ({ coin, isUsd }) => {
+const FetchEachCoin = ({ coin }) => {
   const [eachCoin, setEachCoin] = useState({});
   const [ishigh, setIshigh] = useState(false);
 
@@ -18,7 +18,8 @@ const FetchEachCoin = ({ coin, isUsd }) => {
 
   const EachCoinURL = `https://api.coingecko.com/api/v3/coins/${coin}`;
 
-  const { symb } = CryptoState();
+  const { symb, currency } = CryptoState();
+  const isUsd = currency === "usd";
 
   useEffect(() => {
     const getEachCoin = async () => {

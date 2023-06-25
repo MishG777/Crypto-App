@@ -78,9 +78,9 @@ const Banner = () => {
       <div className={classes.carousel}>
         <AliceCarousel
           mouseTracking
-          //infinite
+          infinite
           autoPlayInterval={1000}
-          animationDuration={3000}
+          animationDuration={2000}
           autoPlay
           //disableDotsControls
           //responsive={responsive}

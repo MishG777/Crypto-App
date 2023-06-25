@@ -64,88 +64,6 @@ p {
   padding: 2px 4px;
 }
 
-@media (max-width: 900px) {
-  .coin-container1 {
-    flex-direction: row;
-    width: 100%;
-    height: 2rem;
-    margin: 0 0 20px 0;
-    padding: 5px;
-    display: flex;
-  }
-
-  .disappear {
-    display: none;
-  }
-
-  .coin-data1 {
-    flex-direction: row;
-    height: 100%;
-    justify-content: space-evenly;
-  }
-  .coin-data1 .name {
-    margin: 6px auto 6px;
-  }
-  .inner-data1 {
-    flex-direction: row;
-    border: none;
-    width: 80%;
-  }
-
-  .inner-data .rank1 {
-    padding: 4px 4px;
-    font-weight: bold;
-    font-size: 8px;
-    width: 1rem;
-    /*display: none;*/
-  }
-
-  .inner-data .rank1,
-  .inner-data .changes {
-    font-size: 8px;
-    width: 3.2rem;
-  }
-
-  p {
-    font-size: 9px;
-    padding: 3.5px 5px;
-    /*width: 3rem;*/
-  }
-  /*.inner-data1 p {
-    font-size: 8px;
-    border: 0.5px solid rgb(32, 161, 165);
-    border-radius: 4px;
-    padding: 3.5px 5px;
-  }*/
-  .inner-data1 span {
-    display: none;
-  }
-
-  .inner-data1 .symbol {
-    display: none;
-  }
-
-  .inner-data1 .rank {
-    padding: 4px 4px;
-    font-weight: bold;
-    width: 1rem;
-  }
-
-  .green {
-    background-color: rgb(213, 255, 241);
-    padding: 2px 5px;
-    border-radius: 2px;
-    color: green;
-  }
-
-  .red {
-    background-color: rgb(255, 229, 229);
-    padding: 2px 5px;
-    border-radius: 2px;
-    color: red;
-  }
-}
-
 .green {
   background-color: rgb(213, 255, 241);
   padding: 2px 8px;
@@ -163,4 +81,48 @@ p {
 
 .grey {
   color: grey;
+}
+
+@media (max-width: 900px) {
+  .coin-container1 {
+    flex-direction: row;
+    width: 100%;
+    height: 2rem;
+    margin: 0 0 20px 0;
+    padding: 5px;
+    display: flex;
+  }
+
+  .disappear {
+    display: none;
+  }
+
+  .coin-data1 {
+    flex-direction: row;
+    height: 100%;
+    width: 100%;
+    justify-content: space-evenly;
+  }
+  .coin-data1 .name {
+    margin: 0 1.3rem 0 0;
+  }
+
+  p {
+    font-size: 9px;
+    padding: 3.5px 5px;
+  }
+
+  .green {
+    background-color: rgb(213, 255, 241);
+    padding: 2px 5px;
+    border-radius: 2px;
+    color: green;
+  }
+
+  .red {
+    background-color: rgb(255, 229, 229);
+    padding: 2px 5px;
+    border-radius: 2px;
+    color: red;
+  }
 }

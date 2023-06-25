@@ -27,15 +27,12 @@
 
 .mainBanner ul {
   display: flex;
-  width: 30%;
+  width: 10rem;
 }
 
 .mainBanner li {
-  margin-right: 5rem;
   list-style: none;
-  /*width: 7rem !important;*/
-  margin: 0 2rem 0 2rem;
-  /*margin-right: 2rem;*/
+  margin-right: 3rem;
 }
 
 .mainBanner h4 {
@@ -48,13 +45,8 @@
   margin-right: 10px;
 }
 
-/*.mainBanner a {
-  width: 5rem;
-}*/
-
 .linkk {
   display: flex;
-  width: 7rem !important;
 }
 
 .carouselItem img {

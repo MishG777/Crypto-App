@@ -30,10 +30,10 @@ const CoinDetails = () => {
   const daysRef = useRef(null);
   const XintervalRef = useRef(false);
 
-  const { currency } = CryptoState();
+  const { currency, symb } = CryptoState();
 
-  const isUsd = currency === "usd";
-  const USDorEUR = `${isUsd ? "$" : "€"}`;
+  //const isUsd = currency === "usd";
+  //const symb = `${isUsd ? "$" : "€"}`;
 
   const coinName = localStorage.getItem("CoinName");
 
@@ -98,7 +98,7 @@ const CoinDetails = () => {
       return (
         <div className={classes.tooltip}>
           <h4>{formattedDate}</h4>
-          <h4>{data.Price.toFixed(3) + USDorEUR}</h4>
+          <h4>{data.Price.toFixed(3) + symb}</h4>
         </div>
       );
     }
@@ -212,9 +212,9 @@ const CoinDetails = () => {
               tick={{ fill: "white", opacity: 0.8 }}
               tickFormatter={(price) => {
                 if (price >= 1000) {
-                  return USDorEUR + price / 1000 + "K";
+                  return symb + price / 1000 + "K";
                 }
-                return USDorEUR + price.toFixed(2);
+                return symb + price.toFixed(2);
               }}
             />
 
@@ -228,7 +228,7 @@ const CoinDetails = () => {
                 fill="white"
                 label={{
                   position: "top",
-                  value: `${USDorEUR}${highestPriceEntry.Price.toFixed(
+                  value: `${symb}${highestPriceEntry.Price.toFixed(
                     3
                   )} | ${formattedHighestPriceDate}`,
                   style: { fill: "white", fontSize: "8px" },
@@ -243,7 +243,7 @@ const CoinDetails = () => {
                 fill="white"
                 label={{
                   position: "bottom",
-                  value: `${USDorEUR}${lowestPriceEntry.Price.toFixed(
+                  value: `${symb}${lowestPriceEntry.Price.toFixed(
                     3
                   )} | ${formattedlowestPriceDate}`,
                   style: { fill: "white", fontSize: "8px" },
@@ -306,7 +306,7 @@ const CoinDetails = () => {
         </div>
       </div>
 
-      <FetchEachCoin coin={coin} isUsd={isUsd} />
+      <FetchEachCoin coin={coin} />
     </Fragment>
   );
 };

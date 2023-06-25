@@ -26,6 +26,10 @@ p {
   margin: 0;
 }
 
+.coin-container .imgDetails {
+  display: none;
+}
+
 .coin-data {
   font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
     "Lucida Sans", Arial, sans-serif;
@@ -80,7 +84,7 @@ p {
 
   .coin-container img {
     width: 6%;
-    margin: 3px;
+    margin: 3px 3px 3px 8px;
     font-size: 5px;
   }
 
@@ -92,6 +96,27 @@ p {
   .coin-data .name {
     margin: 6px auto 6px;
     font-size: 10px;
+    display: none;
+  }
+  /*
+  .coin-container .symbol {
+    font-size: 10px;
+  }*/
+
+  .coin-container .imgDetails {
+    /*border: 1px solid red;*/
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    margin: 2px;
+  }
+
+  .coin-container .imgDetails p,
+  .coin-container .imgDetails .symbol {
+    padding: 0;
+    margin: 2px;
+    font-size: 8px;
   }
 
   .inner-data {
@@ -106,6 +131,10 @@ p {
     border-radius: 4px;
     padding: 3.5px 5px;
     width: 3rem;
+  }
+
+  .inner-data .mc {
+    display: none;
   }
   .inner-data span {
     display: none;
@@ -125,19 +154,19 @@ p {
   }
   .inner-data h6 {
     font-size: 8px;
-    width: 3.2rem;
+    width: 3rem;
   }
 
   .green {
     background-color: rgb(213, 255, 241);
-    padding: 2px 5px;
+    padding: 2px 3px;
     border-radius: 2px;
     color: green;
   }
 
   .red {
     background-color: rgb(255, 229, 229);
-    padding: 2px 5px;
+    padding: 2px 3px;
     border-radius: 2px;
     color: red;
   }
@@ -146,7 +175,6 @@ p {
 .green {
   background-color: rgb(213, 255, 241);
   padding: 2px 8px;
-
   border-radius: 7px;
   color: green;
 }

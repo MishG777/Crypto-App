@@ -109,7 +109,7 @@ const CoinItems = ({
   let translatedMarketCap = "";
 
   if (marketCap >= 1000000000) {
-    translatedMarketCap = (marketCap / 1000000000).toFixed(1) + "B";
+    translatedMarketCap = (marketCap / 1000000000).toFixed(1) + "Bn";
   } else if (marketCap >= 1000000) {
     translatedMarketCap = (marketCap / 1000000).toFixed(1) + "M";
   } else if (marketCap >= 1000) {
@@ -132,6 +132,14 @@ const CoinItems = ({
       className={classes["coin-container"]}
     >
       <img src={image} alt="crypto" />
+      <div className={classes.imgDetails}>
+        <h4 className={classes.symbol}>{symbol.toUpperCase()}</h4>
+        <p>
+          {`${
+            logoCurrency ? "$" : "€"
+          }${translatedMarketCap.toLocaleString()} `}
+        </p>
+      </div>
       <div className={classes["coin-data"]}>
         <h4 className={classes.name}>{name}</h4>
         <div className={classes["inner-data"]}>
@@ -148,7 +156,7 @@ const CoinItems = ({
             }`}
           </p>
 
-          <p>
+          <p className={classes.mc}>
             <span>MC: </span>
             {`${
               logoCurrency ? "$" : "€"

@@ -12,25 +12,6 @@ import Coins from "./components/Coins";
 import MainHeader from "./components/Navbar/MainHeader";
 import NotFound from "./components/NotFound";
 import LogIn from "./components/UserLogging/LogIn";
-//import RootLayout from "./components/RootLayout";
-
-//import { createBrowserRouter, RouterProvider } from "react-router-dom";
-
-//const router = createBrowserRouter([
-//  {
-//    path: "",
-//    element: <RootLayout />,
-//    errorElement: <NotFound />,
-//    children: [
-//      { path: "all-coins", element: <Coins /> },
-//      { path: "all-coins/:details", element: <CoinDetails /> },
-//      {
-//        path: "/auth-registration-page",
-//        element: <LogIn logInHandler={logInHandler} />,
-//      },
-//    ],
-//  },
-//]);
 
 function App() {
   const [logIn, setLogin] = useState(false);
@@ -86,3 +67,22 @@ function App() {
 }
 
 export default App;
+
+//import RootLayout from "./components/RootLayout";
+//import { createBrowserRouter, RouterProvider } from "react-router-dom";
+
+//const router = createBrowserRouter([
+//  {
+//    path: "",
+//    element: <RootLayout />,
+//    errorElement: <NotFound />,
+//    children: [
+//      { path: "/all-coins", element: <Coins /> },
+//      { path: "/all-coins/:details", element: <CoinDetails /> },
+//      {
+//        path: "/auth-registration-page",
+//        element: <LogIn logInHandler={logInHandler} />,
+//      },
+//    ],
+//  },
+//]);

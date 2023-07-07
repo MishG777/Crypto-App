@@ -5,7 +5,7 @@ import classes from "./Banner.module.css";
 import AliceCarousel from "react-alice-carousel";
 import { Link } from "react-router-dom";
 import { CryptoState } from "../context/CryptoContext";
-import ConvertBtc from "./ConvertBtc";
+import ConvertBtc from "./ConvertToBtc";
 import trendingIcon from "../img/trending.png";
 
 const Banner = () => {
@@ -31,7 +31,7 @@ const Banner = () => {
       });
   }, [URL]);
 
-  console.log(trendingCoins);
+  //console.log(trendingCoins);
 
   const items = trendingCoins.map((coin) => {
     return (

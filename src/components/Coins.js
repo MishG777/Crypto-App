@@ -15,7 +15,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import PriceChangeByTime from "./PriceChangeByTime";
 import CoinsTopBar from "./CoinsTopBar";
 import { CryptoState } from "./context/CryptoContext";
-import Banner from "./Banner/Banner";
+import Banner from "./banner/Banner";
 
 function Coins() {
   const [coins, setCoins] = useState([]);

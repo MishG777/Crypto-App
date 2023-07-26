@@ -1,5 +1,5 @@
 //used in Coins.js
-import { memo, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import classes from "./Banner.module.css";
 import AliceCarousel from "react-alice-carousel";
@@ -8,7 +8,7 @@ import { CryptoState } from "../context/CryptoContext";
 import ConvertBtc from "./ConvertToBtc";
 import trendingIcon from "../img/trending.png";
 
-const Banner = () => {
+const MyBanner = () => {
   const [trendingCoins, setTrendingCoins] = useState([]);
   const [error, setError] = useState("");
 
@@ -54,12 +54,6 @@ const Banner = () => {
     );
   });
 
-  //const responsive = {
-  //  0: { items: 3 },
-  //  600: { items: 6 },
-  //  1024: { items: 9 },
-  //};
-
   return (
     <div className={classes.mainBanner}>
       <div>
@@ -80,8 +74,6 @@ const Banner = () => {
           autoPlayInterval={1000}
           animationDuration={2000}
           autoPlay
-          //disableDotsControls
-          //responsive={responsive}
           items={items}
         />
       </div>
@@ -91,4 +83,4 @@ const Banner = () => {
   );
 };
 
-export default memo(Banner);
+export default MyBanner;

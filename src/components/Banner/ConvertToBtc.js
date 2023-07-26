@@ -4,7 +4,7 @@ import { CryptoState } from "../context/CryptoContext";
 function ConvertBtc({ priceId }) {
   const [price, setPrice] = useState(null);
 
-  const { currency } = CryptoState();
+  const { currency, symb } = CryptoState();
 
   useEffect(() => {
     async function fetchPrice() {
@@ -13,7 +13,14 @@ function ConvertBtc({ priceId }) {
           `https://api.coingecko.com/api/v3/simple/price?ids=${priceId}&vs_currencies=${currency}`
         );
         const data = await response.json();
-        const fetchedPrice = data[priceId].usd;
+
+        let fetchedPrice = 0;
+        if (currency === "eur") {
+          fetchedPrice = data[priceId].eur;
+        }
+        if (currency === "usd") {
+          fetchedPrice = data[priceId].usd;
+        }
 
         setPrice(fetchedPrice);
       } catch (error) {
@@ -24,7 +31,16 @@ function ConvertBtc({ priceId }) {
     fetchPrice();
   }, [priceId, currency]);
 
-  return <div>{<p>{price?.toFixed(2) || 0}</p>}</div>;
+  return (
+    <div>
+      {
+        <p>
+          {price?.toFixed(2) || 0}
+          {symb}
+        </p>
+      }
+    </div>
+  );
 }
 
 export default ConvertBtc;

@@ -31,8 +31,6 @@ const Banner = () => {
       });
   }, [URL]);
 
-  //console.log(trendingCoins);
-
   const items = trendingCoins.map((coin) => {
     return (
       <Link

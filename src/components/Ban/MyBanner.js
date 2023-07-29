@@ -1,7 +1,7 @@
 //used in Coins.js
 import { useEffect, useState } from "react";
 import axios from "axios";
-import classes from "./Banner.module.css";
+import classes from "./MyBanner.module.css";
 import AliceCarousel from "react-alice-carousel";
 import { Link } from "react-router-dom";
 import { CryptoState } from "../context/CryptoContext";
